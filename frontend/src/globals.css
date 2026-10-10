@@ -1,0 +1,341 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@custom-variant style-lyra (&:where(.style-lyra *));
+
+@import "./css/pages/app.css";
+
+@theme {
+  --spacing: 0.25rem;
+  --spacing-0_5: 0.125rem;
+  --spacing-1_5: 0.375rem;
+  --spacing-2_5: 0.625rem;
+  --spacing-3_5: 0.875rem;
+  --shadow-lg: 0 24px 70px rgba(5, 12, 24, 0.28);
+  --shadow-sm: 0 4px 14px rgba(5, 12, 24, 0.08);
+  --shadow-md: 0 12px 32px rgba(5, 12, 24, 0.14);
+  --shadow-btn-shadow: 0 10px 24px rgba(163, 230, 53, 0.18);
+  --radius-lg: 14px;
+  --margin-30: 30px;
+  --text-40: 40px;
+
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root,
+.light {
+  --background: #f8fafc;
+  --foreground: #0b1220;
+  --card: #ffffff;
+  --card-foreground: #0b1220;
+  --popover: #ffffff;
+  --popover-foreground: #0b1220;
+  --primary: #123b35;
+  --primary-foreground: #f8fafc;
+  --secondary: #eef3f2;
+  --secondary-foreground: #0b1220;
+  --muted: #eef2f6;
+  --muted-foreground: #64748b;
+  --accent: #a3e635;
+  --accent-foreground: #0b1220;
+  --destructive: #ef4444;
+  --border: #dbe4e8;
+  --input: #dbe4e8;
+  --ring: #a3e635;
+  --chart-1: #22c55e;
+  --chart-2: #123b35;
+  --chart-3: #f59e0b;
+  --chart-4: #94a3b8;
+  --chart-5: #ef4444;
+  --radius: 0.9rem;
+  --sidebar: #0b1220;
+  --sidebar-foreground: #f8fafc;
+  --sidebar-primary: #a3e635;
+  --sidebar-primary-foreground: #0b1220;
+  --sidebar-accent: #123b35;
+  --sidebar-accent-foreground: #a3e635;
+  --sidebar-border: #263244;
+  --sidebar-ring: #a3e635;
+}
+
+.dark {
+  --background: #0b1220;
+  --foreground: #f8fafc;
+  --card: #111827;
+  --card-foreground: #f8fafc;
+  --popover: #111827;
+  --popover-foreground: #f8fafc;
+  --primary: #a3e635;
+  --primary-foreground: #0b1220;
+  --secondary: #123b35;
+  --secondary-foreground: #f8fafc;
+  --muted: #172235;
+  --muted-foreground: #94a3b8;
+  --accent: #123b35;
+  --accent-foreground: #a3e635;
+  --destructive: #ef4444;
+  --border: #263244;
+  --input: #263244;
+  --ring: #a3e635;
+  --sidebar: #0b1220;
+  --sidebar-foreground: #f8fafc;
+  --sidebar-primary: #a3e635;
+  --sidebar-primary-foreground: #0b1220;
+  --sidebar-accent: #123b35;
+  --sidebar-accent-foreground: #a3e635;
+  --sidebar-border: #263244;
+  --sidebar-ring: #a3e635;
+}
+
+:root,
+.light {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+@utility frontend-page {
+  & .container {
+    @apply max-w-[1410px];
+  }
+}
+
+[data-boxed-layout="full"] .container,
+[data-layout="full"] .container {
+  @apply max-w-full;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    min-height: 100vh;
+    background-image: radial-gradient(circle at 85% -10%, color-mix(in srgb, var(--primary) 12%, transparent), transparent 32rem);
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  }
+
+  /*heading text color*/
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold text-foreground;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
+
+  input[type="radio"]:focus {
+    @apply !ring-primary;
+  }
+
+  input[type="radio"]:checked {
+    @apply bg-primary;
+  }
+}
+
+@utility btn-circle-hover {
+  @apply h-9 w-9 flex justify-center items-center rounded-lg hover:bg-primary/5 hover:text-primary cursor-pointer bg-transparent;
+}
+
+/* Card Shadow Control via Data Attribute */
+html[data-card-shadow="true"] [data-slot="card"] {
+  @apply shadow-md ring-0;
+}
+
+html[data-card-shadow="false"] [data-slot="card"] {
+  @apply border shadow-none ring-0;
+}
+
+[data-slot="checkbox"] {
+  /* @apply data-checked:bg-primary data-hover:bg-primary data-checked:border-primary data-checked:text-foreground; */
+}
+
+[data-slot="input"] {
+  @apply focus-visible:border-primary focus-visible:ring-[0px];
+}
+
+[data-slot="textarea"] {
+  @apply focus-visible:border-primary focus-visible:ring-[0px];
+}
+
+/*for sidebar */
+
+[data-sidebar-type="true"] {
+  /* Only apply the icon-only + hover-preview behavior while the sidebar
+     is actually in its real collapsed ("icon") state. When it's expanded
+     (data-collapsible is empty), labels render normally with no overrides. */
+  [data-slot="sidebar"][data-collapsible="icon"] {
+    .sidebar-box .hide-menu {
+      @apply hidden;
+    }
+
+    .sidebar-box:hover {
+      width: 256px !important;
+      @apply transition-all duration-300;
+
+      [data-slot="sidebar-container"],
+      [data-sidebar="sidebar"],
+      [data-sidebar="sidebar-inner"] {
+        width: 256px !important;
+        transition: width 0.3s ease-in-out !important;
+      }
+
+      .hide-menu {
+        display: flex !important;
+      }
+
+      div.hide-menu {
+        display: flex !important;
+        flex-direction: column !important;
+      }
+
+      span.hide-menu {
+        display: inline-block !important;
+        white-space: nowrap !important;
+      }
+
+      /* Powerfully override Shadcn's internal button restrictions on hover */
+      [data-slot="sidebar-menu-button"],
+      [data-sidebar="menu-button"] {
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 44px !important;
+        padding: 0 !important;
+
+        overflow: visible !important;
+        justify-content: flex-start !important;
+      }
+
+
+
+      /* Inner alignment for NavUser and NavSecondary to match standard items */
+      [data-sidebar="menu-button"] .flex.items-center {
+        padding: 8px 12px !important;
+        width: 100% !important;
+        gap: 12px !important;
+      }
+
+
+
+
+    }
+
+    .sidebar-box:not(:hover) {
+
+      /* Ensure icons are perfectly centered in mini mode */
+      [data-sidebar="menu-button"] {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 0 !important;
+        width: 100% !important;
+      }
+
+      [data-sidebar="menu-button"] .flex.items-center {
+        justify-content: center !important;
+        padding: 0 !important;
+        gap: 0 !important;
+        width: 100% !important;
+      }
+
+
+
+    }
+  }
+}
+
+
+[data-slot="chart"] {
+  @apply h-72 w-full;
+}
+
+@utility frontend-page {
+  & .container {
+    @apply max-w-[1410px];
+  }
+}
+
+@utility container {
+  @apply max-w-[1367px] mx-auto;
+}
+
+@theme inline {
+  --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+
+  @keyframes scroll {
+    to {
+      transform: translate(calc(-50% - 0.5rem));
+    }
+  }
+
+
+}
+
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html.dark {
+  color-scheme: dark;
+}

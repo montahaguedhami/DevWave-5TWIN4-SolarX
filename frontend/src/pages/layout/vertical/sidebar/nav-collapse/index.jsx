@@ -1,0 +1,92 @@
+import { Link } from "react-router-dom";
+import NavItem from "../nav-items/index";
+import { cn } from "@/lib/utils";
+import { useLocation } from "react-router-dom";
+import { useSidebar } from "@/components/ui/sidebar";
+function NavCollapse({ menu, className }) {
+  const { pathname } = useLocation();
+  const { state } = useSidebar();
+  const isCollapse = state === "collapsed";
+  const isActiveRoute = (item) => {
+    if (item.url && pathname === item.url) return true;
+    if (item.items) return item.items.some(isActiveRoute);
+    return false;
+  };
+  return <>
+
+      {menu.map((section, index) => <div key={index}>
+          {
+    /* Heading */
+  }
+
+          <span className={cn(
+    "text-xs uppercase block font-semibold text-muted-foreground mb-2 transition-all duration-200",
+    isCollapse ? "text-center group-hover:text-start group-data-[state=expanded]:text-start" : ""
+  )}>
+            {isCollapse ? <>
+                <span className="group-hover:hidden group-data-[state=expanded]:hidden">...</span>
+                <span className="hidden group-hover:inline group-data-[state=expanded]:inline">{section.heading ?? ""}</span>
+              </> : section.heading ?? ""}
+          </span>
+
+          {section.items?.map((item, index2) => {
+    const hasChildren = Array.isArray(item.items) && item.items.length > 0;
+    const active = isActiveRoute(item);
+    if (!hasChildren)
+      return <Link
+        key={index2}
+        to={item.url || "#"}
+        target={item.external ? "_blank" : void 0}
+        className={cn(
+          "flex items-center gap-3  rounded-md transition-all duration-200 ease-in-out ",
+          className
+        )}
+      >
+
+                  <NavItem item={item} hasChildren={false} isActive={active} />
+                </Link>;
+    return <details
+      key={index2}
+      className="group/nav"
+      open={active || item.isActive}
+    >
+                <summary
+      className={cn(
+        "cursor-pointer rounded-md flex items-center transition-all duration-200 ease-in-out"
+      )}
+    >
+                  <NavItem
+      item={item}
+      hasChildren={true}
+      className={className}
+      isActive={active}
+    />
+                </summary>
+
+                <div className="pl-3  ml-5  border-l border-border">
+                  {item.items?.map(
+      (sub, index3) => sub.items ? <NavCollapse
+        key={index3}
+        menu={[{ items: [sub] }]}
+        className={className}
+      /> : <Link
+        key={index3}
+        to={sub.url || "#"}
+        target={sub.external ? "_blank" : void 0}
+        className={cn(
+          "block rounded-md transition-all duration-200 ease-in-out",
+          className
+        )}
+      >
+                        <NavItem item={sub} hasChildren={false} className={cn("px-2! py-1! my-1!", pathname === sub.url && "bg-primary/5 text-primary")} isActive={pathname === sub.url} />
+                      </Link>
+    )}
+                </div>
+              </details>;
+  })}
+        </div>)}
+    </>;
+}
+export {
+  NavCollapse as default
+};
