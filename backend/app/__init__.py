@@ -1,0 +1,1 @@
+"""SolarX backend application package."""
