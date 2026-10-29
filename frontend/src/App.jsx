@@ -9,6 +9,8 @@ import DashboardPage from "@/pages/page";
 import SolarProductionPage from "@/pages/solar-production/page";
 import SolarSimulatorPage from "@/pages/solar-simulator/page";
 import BatteryPage from "@/pages/battery/page";
+import StockagePage from "@/pages/stockage/page";
+import EquipementsPage from "@/pages/equipements/page";
 import ConsumptionPage from "@/pages/consumption/page";
 import SavingsPage from "@/pages/savings/page";
 import EnvironmentalImpactPage from "@/pages/environmental-impact/page";
@@ -53,6 +55,8 @@ function App() {
                   <Route path="solar-production" element={<SolarProductionPage />} />
                   <Route path="solar-simulator" element={<SolarSimulatorPage />} />
                   <Route path="battery" element={<BatteryPage />} />
+                  <Route path="stockage" element={<StockagePage />} />
+                  <Route path="equipements" element={<EquipementsPage />} />
                   <Route path="consumption" element={<ConsumptionPage />} />
                   <Route path="savings" element={<SavingsPage />} />
                   <Route path="environmental-impact" element={<EnvironmentalImpactPage />} />

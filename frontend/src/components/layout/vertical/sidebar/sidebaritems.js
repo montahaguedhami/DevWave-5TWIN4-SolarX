@@ -1,5 +1,5 @@
 import { uniqueId } from "lodash";
-import { LayoutDashboard, Sun, Zap, BatteryCharging, BarChart3, TrendingUp, Globe, Sparkles, Bell, Calculator, Settings, ShieldCheck, LucideIcon } from "lucide-react";
+import { LayoutDashboard, Sun, Zap, BatteryCharging, BarChart3, TrendingUp, Globe, Sparkles, Bell, Calculator, Settings, ShieldCheck, Database, Cpu } from "lucide-react";
 
 const SidebarContent= [
   {
@@ -39,6 +39,18 @@ const SidebarContent= [
         name: "Battery",
         icon: BatteryCharging,
         url: "/battery",
+      },
+      {
+        id: uniqueId(),
+        name: "Stockage",
+        icon: Database,
+        url: "/stockage",
+      },
+      {
+        id: uniqueId(),
+        name: "Équipements",
+        icon: Cpu,
+        url: "/equipements",
       },
     ],
   },
