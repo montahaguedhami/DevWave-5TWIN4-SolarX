@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Bell, AlertTriangle, AlertCircle, Info, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { WeatherAlertsCard } from "@/components/meteo/weather-alerts";
 const demoAlerts = [
   {
     id: "ALT-801",
@@ -83,6 +84,8 @@ function AlertsPage() {
             </Button>)}
         </div>
       </div>
+
+      <WeatherAlertsCard />
 
       {
     /* Alerts List Card */

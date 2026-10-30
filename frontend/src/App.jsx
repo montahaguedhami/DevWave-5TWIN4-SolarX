@@ -15,6 +15,9 @@ import EnvironmentalImpactPage from "@/pages/environmental-impact/page";
 import AiAdvisorPage from "@/pages/ai-advisor/page";
 import MyInstallationPage from "@/pages/my-installation/page";
 import AlertsPage from "@/pages/alerts/page";
+import LocalisationPage from "@/pages/localisation/page";
+import MeteoPage from "@/pages/meteo/page";
+import HistoriqueMeteoPage from "@/pages/historique-meteo/page";
 import AnalyticsPage from "@/pages/analytics/page";
 import SettingsPage from "@/pages/settings/page";
 import NotesAppPage from "@/pages/apps/notes/page";
@@ -59,6 +62,9 @@ function App() {
                   <Route path="ai-advisor" element={<AiAdvisorPage />} />
                   <Route path="my-installation" element={<MyInstallationPage />} />
                   <Route path="alerts" element={<AlertsPage />} />
+                  <Route path="localisation" element={<LocalisationPage />} />
+                  <Route path="meteo" element={<MeteoPage />} />
+                  <Route path="historique-meteo" element={<HistoriqueMeteoPage />} />
                   <Route path="analytics" element={<AnalyticsPage />} />
                   <Route path="settings" element={<SettingsPage />} />
 

@@ -1,5 +1,5 @@
 import { uniqueId } from "lodash";
-import { LayoutDashboard, Sun, Zap, BatteryCharging, BarChart3, TrendingUp, Globe, Sparkles, Bell, Calculator, Settings, ShieldCheck, LucideIcon } from "lucide-react";
+import { LayoutDashboard, Sun, Zap, BatteryCharging, BarChart3, TrendingUp, Globe, Sparkles, Bell, Calculator, Settings, ShieldCheck, MapPin, CloudSun, CalendarDays, LucideIcon } from "lucide-react";
 
 const SidebarContent= [
   {
@@ -62,6 +62,29 @@ const SidebarContent= [
         name: "Environmental Impact",
         icon: Globe,
         url: "/environmental-impact",
+      },
+    ],
+  },
+  {
+    heading: "ENVIRONNEMENT",
+    items: [
+      {
+        id: uniqueId(),
+        name: "Localisation",
+        icon: MapPin,
+        url: "/localisation",
+      },
+      {
+        id: uniqueId(),
+        name: "Météo",
+        icon: CloudSun,
+        url: "/meteo",
+      },
+      {
+        id: uniqueId(),
+        name: "Historique météo",
+        icon: CalendarDays,
+        url: "/historique-meteo",
       },
     ],
   },

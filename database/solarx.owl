@@ -23,7 +23,17 @@
     <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#CompteurIntelligent">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Equipement"/>
     </owl:Class>
-    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ConditionMeteo"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ConditionMeteo">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#situeDans"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ville"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Localisation"/>
+        <rdfs:comment xml:lang="fr">Mesure météorologique (valeur, unité, date) relevée dans une ville et pouvant influencer la production d'une installation.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Condition météo</rdfs:label>
+    </owl:Class>
     <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Consommateur"/>
     <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Consommateur"/>
@@ -64,7 +74,10 @@
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneTransport"/>
     </owl:Class>
     <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneTransport"/>
-    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Localisation"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Localisation">
+        <rdfs:comment xml:lang="fr">Lieu géographique (région ou ville) décrit par un nom et des coordonnées WGS84.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Localisation</rdfs:label>
+    </owl:Class>
     <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maintenance">
     </owl:Class>
     <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MaintenanceCorrective">
@@ -133,6 +146,13 @@
     </owl:Class>
     <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ville">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Localisation"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#situeDans"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Region"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Region"/>
     </owl:Class>
     <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#VitesseVent">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ConditionMeteo"/>
@@ -335,6 +355,10 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Djerba">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ville"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Sud_Tunisie"/>
+        <solarx:latitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">33.8076</solarx:latitude>
+        <solarx:longitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">10.8451</solarx:longitude>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Djerba</solarx:nom>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole"/>
@@ -354,7 +378,9 @@
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ensoleillement"/>
         <solarx:influenceProduction rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ParcSolaire_Djerba"/>
         <solarx:mesureePar rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Capteur_01"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Djerba"/>
         <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T10:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Capteur_01</solarx:sourceDonnees>
         <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">W/m²</solarx:unite>
         <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">850</solarx:valeur>
     </owl:NamedIndividual>
@@ -491,12 +517,17 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Sud_Tunisie">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Region"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sud tunisien</solarx:nom>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Surcharge_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Surcharge"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Tunis">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ville"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Nord_Tunisie"/>
+        <solarx:latitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">36.8065</solarx:latitude>
+        <solarx:longitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">10.1815</solarx:longitude>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Tunis</solarx:nom>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine_Tunis">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine"/>
@@ -509,8 +540,216 @@
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#VitesseVent"/>
         <solarx:influenceProduction rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ParcEolien_Tunis"/>
         <solarx:mesureePar rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Capteur_01"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Tunis"/>
         <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T10:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Capteur_01</solarx:sourceDonnees>
         <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m/s</solarx:unite>
         <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">12</solarx:valeur>
+    </owl:NamedIndividual>
+
+    <!-- ===================== Module Localisation & ConditionMeteo ===================== -->
+
+    <!-- Nouvelles sous-classes de ConditionMeteo (variables fournies par Open-Meteo et utiles au photovoltaïque) -->
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Humidite">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ConditionMeteo"/>
+        <rdfs:label xml:lang="fr">Humidité relative</rdfs:label>
+    </owl:Class>
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#CouvertureNuageuse">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ConditionMeteo"/>
+        <rdfs:label xml:lang="fr">Couverture nuageuse</rdfs:label>
+    </owl:Class>
+    <owl:AllDisjointClasses>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Temperature"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ensoleillement"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Precipitation"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#VitesseVent"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Humidite"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#CouvertureNuageuse"/>
+        </owl:members>
+    </owl:AllDisjointClasses>
+
+    <!-- Propriétés de données ajoutées (valeur, unite, dateMesure, nom et situeDans existants sont réutilisés) -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#latitude">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Localisation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment xml:lang="fr">Latitude WGS84 en degrés décimaux (-90 à 90).</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#longitude">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Localisation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment xml:lang="fr">Longitude WGS84 en degrés décimaux (-180 à 180).</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#sourceDonnees">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ConditionMeteo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="fr">Provenance de la mesure (ex. Open-Meteo, Capteur_01).</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#dateRecuperation">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ConditionMeteo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:comment xml:lang="fr">Instant où la mesure a été récupérée depuis la source (différent de dateMesure, instant d'observation).</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <!-- Régions -->
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Nord_Tunisie">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Region"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Nord tunisien</solarx:nom>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Centre_Tunisie">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Region"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Centre tunisien</solarx:nom>
+    </owl:NamedIndividual>
+
+    <!-- Villes -->
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Bizerte">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ville"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Nord_Tunisie"/>
+        <solarx:latitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">37.2744</solarx:latitude>
+        <solarx:longitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">9.8739</solarx:longitude>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Bizerte</solarx:nom>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Nabeul">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ville"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Nord_Tunisie"/>
+        <solarx:latitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">36.4561</solarx:latitude>
+        <solarx:longitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">10.7376</solarx:longitude>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Nabeul</solarx:nom>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Sousse">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ville"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Centre_Tunisie"/>
+        <solarx:latitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">35.8256</solarx:latitude>
+        <solarx:longitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">10.6084</solarx:longitude>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sousse</solarx:nom>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Sfax">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ville"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Centre_Tunisie"/>
+        <solarx:latitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">34.7406</solarx:latitude>
+        <solarx:longitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">10.7603</solarx:longitude>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sfax</solarx:nom>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Kairouan">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ville"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Centre_Tunisie"/>
+        <solarx:latitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">35.6781</solarx:latitude>
+        <solarx:longitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">10.0963</solarx:longitude>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Kairouan</solarx:nom>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Gabes">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ville"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Sud_Tunisie"/>
+        <solarx:latitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">33.8815</solarx:latitude>
+        <solarx:longitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">10.0982</solarx:longitude>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Gabès</solarx:nom>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Gafsa">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ville"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Sud_Tunisie"/>
+        <solarx:latitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">34.4250</solarx:latitude>
+        <solarx:longitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">8.7842</solarx:longitude>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Gafsa</solarx:nom>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Tozeur">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ville"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Sud_Tunisie"/>
+        <solarx:latitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">33.9197</solarx:latitude>
+        <solarx:longitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">8.1335</solarx:longitude>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Tozeur</solarx:nom>
+    </owl:NamedIndividual>
+
+    <!-- Mesures météo représentatives -->
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Temperature_Tunis">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Temperature"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Tunis"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T10:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Données de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">°C</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">24.5</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Temperature_Djerba">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Temperature"/>
+        <solarx:influenceProduction rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ParcSolaire_Djerba"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Djerba"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T10:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Données de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">°C</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">26.8</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Temperature_Tozeur">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Temperature"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Tozeur"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-07-15T14:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Données de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">°C</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">44.5</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ensoleillement_Tunis">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ensoleillement"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Tunis"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T10:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Données de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">W/m²</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">610</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ensoleillement_Bizerte">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ensoleillement"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Bizerte"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T10:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Données de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">W/m²</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">150</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Precipitation_Tunis">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Precipitation"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Tunis"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T10:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Données de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mm</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Precipitation_Bizerte">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Precipitation"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Bizerte"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T10:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Données de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mm</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">6.4</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Vent_Djerba">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#VitesseVent"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Djerba"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T10:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Données de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m/s</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">8.5</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Vent_Bizerte">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#VitesseVent"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Bizerte"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T10:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Données de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m/s</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">27.3</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Humidite_Tunis">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Humidite"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Tunis"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T10:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Données de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">%</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">62</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#CouvertureNuageuse_Bizerte">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#CouvertureNuageuse"/>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Bizerte"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T10:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Données de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">%</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">90</solarx:valeur>
     </owl:NamedIndividual>
 </rdf:RDF>
