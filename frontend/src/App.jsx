@@ -15,6 +15,7 @@ import ConsumptionPage from "@/pages/consumption/page";
 import SavingsPage from "@/pages/savings/page";
 import EnvironmentalImpactPage from "@/pages/environmental-impact/page";
 import AiAdvisorPage from "@/pages/ai-advisor/page";
+import AssistantIaPage from "@/pages/assistant-ia/page";
 import MyInstallationPage from "@/pages/my-installation/page";
 import AlertsPage from "@/pages/alerts/page";
 import AnalyticsPage from "@/pages/analytics/page";
@@ -61,6 +62,7 @@ function App() {
                   <Route path="savings" element={<SavingsPage />} />
                   <Route path="environmental-impact" element={<EnvironmentalImpactPage />} />
                   <Route path="ai-advisor" element={<AiAdvisorPage />} />
+                  <Route path="assistant-ia" element={<AssistantIaPage />} />
                   <Route path="my-installation" element={<MyInstallationPage />} />
                   <Route path="alerts" element={<AlertsPage />} />
                   <Route path="analytics" element={<AnalyticsPage />} />

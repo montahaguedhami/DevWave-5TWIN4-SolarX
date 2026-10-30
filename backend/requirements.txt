@@ -2,3 +2,11 @@ fastapi>=0.110
 uvicorn[standard]>=0.27
 requests>=2.31
 python-dotenv>=1.0
+
+# IA (NLP -> SPARQL) — voir README, section « Module IA »
+spacy>=3.8,<3.9
+fr_core_news_sm @ https://github.com/explosion/spacy-models/releases/download/fr_core_news_sm-3.8.0/fr_core_news_sm-3.8.0-py3-none-any.whl
+rapidfuzz>=3.9
+rdflib>=7.0
+sentence-transformers>=3.0
+pytest>=8.0

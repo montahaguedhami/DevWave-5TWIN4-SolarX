@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 FUSEKI_URL = os.getenv("FUSEKI_URL", "http://localhost:3030/solarx/sparql")
-SOLARX_NS = os.getenv("SOLARX_NS", "http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#")
+SOLARX_NS = os.getenv("SOLARX_NS", "http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#")
 
 PREFIXES = f"""
 PREFIX :     <{SOLARX_NS}>

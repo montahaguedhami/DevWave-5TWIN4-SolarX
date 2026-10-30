@@ -4,7 +4,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from routers import equipement, stockage
+from routers import equipement, ia, stockage
 from sparql_client import FUSEKI_URL, SparqlError, run_query
 
 app = FastAPI(title="SolarX API", version="0.1.0")
@@ -31,3 +31,6 @@ def health():
 # P2 — Stockage + Équipement
 app.include_router(stockage.router)
 app.include_router(equipement.router)
+
+# IA — question en français -> SPARQL
+app.include_router(ia.router)

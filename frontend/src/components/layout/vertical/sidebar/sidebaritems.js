@@ -1,5 +1,5 @@
 import { uniqueId } from "lodash";
-import { LayoutDashboard, Sun, Zap, BatteryCharging, BarChart3, TrendingUp, Globe, Sparkles, Bell, Calculator, Settings, ShieldCheck, Database, Cpu } from "lucide-react";
+import { LayoutDashboard, Sun, Zap, BatteryCharging, BarChart3, TrendingUp, Globe, Sparkles, Bell, Calculator, Settings, ShieldCheck, Database, Cpu, MessageSquareText } from "lucide-react";
 
 const SidebarContent= [
   {
@@ -80,6 +80,15 @@ const SidebarContent= [
   {
     heading: "SMART",
     items: [
+      {
+        id: uniqueId(),
+        name: "Assistant IA",
+        icon: MessageSquareText,
+        url: "/assistant-ia",
+        badge: true,
+        badgeType: "filled",
+        badgeContent: "NLP",
+      },
       {
         id: uniqueId(),
         name: "AI Advisor",
