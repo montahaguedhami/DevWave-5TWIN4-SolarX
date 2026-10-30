@@ -1,0 +1,1310 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10/"
+     xml:base="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:untitled-ontology-10="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10">
+        <owl:versionIRI rdf:resource="http://www.SolarX.org/smart-energy"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#affecte -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#affecte">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estAffectePar"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Incident"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#InstallationProduction"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneTransport"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Stockage"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#alimente -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#alimente">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estAlimentePar"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Stockage"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Consommateur"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#alimenteStockage -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#alimenteStockage">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estAlimenteParProduction"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Stockage"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Consommateur"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#concerne -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#concerne">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estConcerneePar"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Consommateur"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#InstallationProduction"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Stockage"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#contient -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#contient">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estContenueDans"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ReseauElectrique"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneTransport"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#contientLocalement -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#contientLocalement">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#situeDans"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#dessert -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#dessert">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estDesserviPar"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneTransport"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Consommateur"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#detectePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#detectePar">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Incident"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Capteur"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estAffectePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estAffectePar">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#InstallationProduction"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneTransport"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Stockage"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Incident"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estAlimentePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estAlimentePar"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estAlimenteParProduction -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estAlimenteParProduction"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estConcerneePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estConcerneePar"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estContenueDans -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estContenueDans">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estRelieePar"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estDesserviPar -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estDesserviPar"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estInfluenceePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estInfluenceePar">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#influenceProduction"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#InstallationProduction"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ConditionMeteo"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estMesureProduitePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estMesureProduitePar">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#produitMesure"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estOccupePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estOccupePar">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#occupe"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estPossedePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estPossedePar">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#possede"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estRelieePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estRelieePar">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#relie"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estUtiliseePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#estUtiliseePar">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#utiliseSource"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#influenceProduction -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#influenceProduction">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ConditionMeteo"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#InstallationProduction"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#mesureePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#mesureePar">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ConditionMeteo"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Capteur"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#occupe -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#occupe">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Consommateur"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Consommateur"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#porteSur -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#porteSur">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maintenance"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Equipement"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#possede -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#possede">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#InstallationProduction"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Equipement"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#produitEnergie -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#produitEnergie">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#InstallationProduction"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#SourceEnergie"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#produitMesure -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#produitMesure">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Equipement"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#relie -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#relie">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneTransport"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#InstallationProduction"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#situeDans -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#situeDans">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#InstallationProduction"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Stockage"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Localisation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#utiliseSource -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#utiliseSource">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#InstallationProduction"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#SourceEnergie"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#capaciteKWh -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#capaciteKWh">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Stockage"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#dateEvenement -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#dateEvenement">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#dateMesure -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#dateMesure">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ConditionMeteo"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#description -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#description">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#energieStockeeKWh -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#energieStockeeKWh">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Stockage"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#gravite -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#gravite">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Incident"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#longueurKm -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#longueurKm">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneTransport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#nom -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#nom">
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#puissance -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#puissance"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#puissanceKW -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#puissanceKW">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#InstallationProduction"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#quantite -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#quantite"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#surfaceM2 -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#surfaceM2">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Consommateur"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#tensionKV -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#tensionKV">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneTransport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#unite -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#unite">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ConditionMeteo"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#valeur -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#valeur">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ConditionMeteo"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Alerte -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Alerte">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Incident"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Batterie -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Batterie">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Stockage"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Capteur -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Capteur">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Equipement"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#CentraleHydraulique -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#CentraleHydraulique">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#InstallationProduction"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#CentraleSolaire -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#CentraleSolaire">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#InstallationProduction"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#CompteurIntelligent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#CompteurIntelligent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Equipement"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ConditionMeteo -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ConditionMeteo"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Consommateur -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Consommateur"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Ecole -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Ecole">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Consommateur"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Ensoleillement -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Ensoleillement">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ConditionMeteo"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Entreprise -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Entreprise">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Consommateur"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Eolienne -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Eolienne">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#SourceEnergie"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Equipement -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Equipement"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Evenement -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Evenement"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Hopital -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Hopital">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Consommateur"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Hydraulique -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Hydraulique">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#SourceEnergie"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Incident -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Incident"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Inspection -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Inspection">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maintenance"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#InstallationProduction -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#InstallationProduction"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Institution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Institution">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Consommateur"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneBasseTension -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneBasseTension">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneTransport"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneHauteTension -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneHauteTension">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneTransport"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneMoyenneTension -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneMoyenneTension">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneTransport"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneTransport -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneTransport"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Localisation -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Localisation"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maintenance -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maintenance">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Evenement"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MaintenanceCorrective -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MaintenanceCorrective">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maintenance"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MaintenancePredictive -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MaintenancePredictive">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maintenance"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MaintenancePreventive -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MaintenancePreventive">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maintenance"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maison -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maison">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Consommateur"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MesureConsommation -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MesureConsommation">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MesureProduction -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MesureProduction">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MesureStockage -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MesureStockage">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Onduleur -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Onduleur">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Equipement"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Panne -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Panne">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Incident"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ParcEolien -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ParcEolien">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#InstallationProduction"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Particulier -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Particulier">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Consommateur"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Precipitation -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Precipitation">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ConditionMeteo"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Region -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Region">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Localisation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ReseauDistribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ReseauDistribution">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ReseauElectrique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ReseauElectrique -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ReseauElectrique"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ReseauTransport -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ReseauTransport">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ReseauElectrique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Solaire -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Solaire">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#SourceEnergie"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#SourceEnergie -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#SourceEnergie"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Stockage -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Stockage"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#StockageHydraulique -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#StockageHydraulique">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Stockage"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Surcharge -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Surcharge">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Incident"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Temperature -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Temperature">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ConditionMeteo"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Usine -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Usine">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Consommateur"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Ville -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Ville">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Localisation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#VitesseVent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#VitesseVent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ConditionMeteo"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Alerte_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Alerte_01"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Batterie_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Batterie_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Batterie"/>
+        <untitled-ontology-10:alimente rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maison_Djerba"/>
+        <untitled-ontology-10:capaciteKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">10</untitled-ontology-10:capaciteKWh>
+        <untitled-ontology-10:energieStockeeKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">7</untitled-ontology-10:energieStockeeKWh>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Batterie_02 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Batterie_02">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Batterie"/>
+        <untitled-ontology-10:alimente rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Hopital_Tunis"/>
+        <untitled-ontology-10:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Tunis"/>
+        <untitled-ontology-10:capaciteKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">50</untitled-ontology-10:capaciteKWh>
+        <untitled-ontology-10:energieStockeeKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">20</untitled-ontology-10:energieStockeeKWh>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Capteur_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Capteur_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Capteur"/>
+        <untitled-ontology-10:produitMesure rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure_003"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#CentraleSolaire_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#CentraleSolaire_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#InstallationProduction"/>
+        <untitled-ontology-10:estPossedePar rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Onduleur_01"/>
+        <untitled-ontology-10:produitEnergie rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#EnergieSolaire_01"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Compteur_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Compteur_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#CompteurIntelligent"/>
+        <untitled-ontology-10:produitMesure rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure_002"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Djerba -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Djerba">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Ville"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Ecole_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Ecole_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Ecole"/>
+        <untitled-ontology-10:estPossedePar rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Compteur_01"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Ecole_Tunis -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Ecole_Tunis">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Ecole"/>
+        <untitled-ontology-10:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Tunis"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#EnergieEolienne_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#EnergieEolienne_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#SourceEnergie"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#EnergieSolaire_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#EnergieSolaire_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#SourceEnergie"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Ensoleillement_Djerba -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Ensoleillement_Djerba">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Ensoleillement"/>
+        <untitled-ontology-10:influenceProduction rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ParcSolaire_Djerba"/>
+        <untitled-ontology-10:mesureePar rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Capteur_01"/>
+        <untitled-ontology-10:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T10:00:00</untitled-ontology-10:dateMesure>
+        <untitled-ontology-10:unite>W/m²</untitled-ontology-10:unite>
+        <untitled-ontology-10:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">850</untitled-ontology-10:valeur>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Entreprise_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Entreprise_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Entreprise"/>
+        <untitled-ontology-10:occupe rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Usine_Tunis"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Hopital_Tunis -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Hopital_Tunis">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Hopital"/>
+        <untitled-ontology-10:possede rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Capteur_01"/>
+        <untitled-ontology-10:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Tunis"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Institution_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Institution_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Institution"/>
+        <untitled-ontology-10:occupe rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Ecole_Tunis"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneBasseTension_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneBasseTension_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneBasseTension"/>
+        <untitled-ontology-10:dessert rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Ecole_Tunis"/>
+        <untitled-ontology-10:dessert rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maison_Djerba"/>
+        <untitled-ontology-10:tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.4</untitled-ontology-10:tensionKV>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneHT_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneHT_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneHauteTension"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneTransport"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneHauteTension_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneHauteTension_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneHauteTension"/>
+        <untitled-ontology-10:dessert rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Usine_Tunis"/>
+        <untitled-ontology-10:relie rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ParcEolien_Tunis"/>
+        <untitled-ontology-10:longueurKm rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">35</untitled-ontology-10:longueurKm>
+        <untitled-ontology-10:tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">90</untitled-ontology-10:tensionKV>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneMoyenneTension_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneMoyenneTension_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneMoyenneTension"/>
+        <untitled-ontology-10:relie rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ParcSolaire_Djerba"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maintenance_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maintenance_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MaintenanceCorrective"/>
+        <untitled-ontology-10:porteSur rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Onduleur_01"/>
+        <untitled-ontology-10:dateEvenement rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T11:00:00</untitled-ontology-10:dateEvenement>
+        <untitled-ontology-10:description>Intervention de maintenance sur Onduleur_01 après incident</untitled-ontology-10:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maison_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maison_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maison"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maison_Djerba -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maison_Djerba">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maison"/>
+        <untitled-ontology-10:possede rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Compteur_01"/>
+        <untitled-ontology-10:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Djerba"/>
+        <untitled-ontology-10:surfaceM2 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">120</untitled-ontology-10:surfaceM2>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MesureConsommation_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MesureConsommation_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MesureConsommation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MesureProduction_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MesureProduction_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MesureProduction"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure_001 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure_001">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MesureProduction"/>
+        <untitled-ontology-10:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ParcSolaire_Djerba"/>
+        <untitled-ontology-10:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-09-30T23:00:00</untitled-ontology-10:dateMesure>
+        <untitled-ontology-10:unite>kWh</untitled-ontology-10:unite>
+        <untitled-ontology-10:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">600</untitled-ontology-10:valeur>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure_002 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure_002">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MesureConsommation"/>
+        <untitled-ontology-10:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maison_Djerba"/>
+        <untitled-ontology-10:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-09-30T14:30:00</untitled-ontology-10:dateMesure>
+        <untitled-ontology-10:unite>kWh</untitled-ontology-10:unite>
+        <untitled-ontology-10:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">9</untitled-ontology-10:valeur>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure_003 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure_003">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#MesureStockage"/>
+        <untitled-ontology-10:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Batterie_02"/>
+        <untitled-ontology-10:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-09-30T14:30:00</untitled-ontology-10:dateMesure>
+        <untitled-ontology-10:unite>kWh</untitled-ontology-10:unite>
+        <untitled-ontology-10:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">20</untitled-ontology-10:valeur>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Onduleur_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Onduleur_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Onduleur"/>
+        <untitled-ontology-10:produitMesure rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Mesure_001"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Panne_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Panne_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Panne"/>
+        <untitled-ontology-10:affecte rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneHT_01"/>
+        <untitled-ontology-10:detectePar rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Capteur_01"/>
+        <untitled-ontology-10:dateEvenement rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T10:15:00</untitled-ontology-10:dateEvenement>
+        <untitled-ontology-10:description>Panne détectée sur la ligne haute tension</untitled-ontology-10:description>
+        <untitled-ontology-10:gravite>Élevée</untitled-ontology-10:gravite>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ParcEolien_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ParcEolien_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#InstallationProduction"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ParcEolien_Tunis -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ParcEolien_Tunis">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ParcEolien"/>
+        <untitled-ontology-10:alimenteStockage rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Batterie_02"/>
+        <untitled-ontology-10:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Tunis"/>
+        <untitled-ontology-10:puissanceKW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">250</untitled-ontology-10:puissanceKW>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ParcSolaire_Djerba -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ParcSolaire_Djerba">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#CentraleSolaire"/>
+        <untitled-ontology-10:alimenteStockage rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Batterie_01"/>
+        <untitled-ontology-10:possede rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Onduleur_01"/>
+        <untitled-ontology-10:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Djerba"/>
+        <untitled-ontology-10:utiliseSource rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Soleil_01"/>
+        <untitled-ontology-10:puissanceKW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">100</untitled-ontology-10:puissanceKW>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Particulier_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Particulier_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Particulier"/>
+        <untitled-ontology-10:occupe rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Maison_Djerba"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ReseauDistribution_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ReseauDistribution_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ReseauDistribution"/>
+        <untitled-ontology-10:contient rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneBasseTension_01"/>
+        <untitled-ontology-10:contient rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneMoyenneTension_01"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ReseauNational_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ReseauNational_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ReseauElectrique"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ReseauTransport_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ReseauTransport_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ReseauTransport"/>
+        <untitled-ontology-10:contient rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#LigneHauteTension_01"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Soleil_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Soleil_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Solaire"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#SourceEolienne_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#SourceEolienne_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Eolienne"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#SourceSolaire_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#SourceSolaire_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Solaire"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Sud_Tunisie -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Sud_Tunisie">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Region"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Surcharge_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Surcharge_01"/>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Tunis -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Tunis">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Ville"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Usine_Tunis -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Usine_Tunis">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Usine"/>
+        <untitled-ontology-10:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Tunis"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Vent_01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Vent_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Eolienne"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Vent_Tunis -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Vent_Tunis">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#VitesseVent"/>
+        <untitled-ontology-10:influenceProduction rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#ParcEolien_Tunis"/>
+        <untitled-ontology-10:mesureePar rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/8/untitled-ontology-10#Capteur_01"/>
+        <untitled-ontology-10:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T10:00:00</untitled-ontology-10:dateMesure>
+        <untitled-ontology-10:unite>m/s</untitled-ontology-10:unite>
+        <untitled-ontology-10:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">12</untitled-ontology-10:valeur>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+
