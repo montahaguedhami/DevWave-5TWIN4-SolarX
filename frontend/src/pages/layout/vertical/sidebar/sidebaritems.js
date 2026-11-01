@@ -1,65 +1,77 @@
 import { uniqueId } from "lodash";
-import { LayoutDashboard, Sun, Zap, BatteryCharging, BarChart3, TrendingUp, Globe, Sparkles, Bell, Calculator, Settings, ShieldCheck, MapPin, CloudSun, CalendarDays } from "lucide-react";
+import { LayoutDashboard, Sun, Zap, BatteryCharging, BarChart3, TrendingUp, Globe, Sparkles, Bell, Calculator, Settings, ShieldCheck, MapPin, CloudSun, CalendarDays, Cable, Network, MessageSquareText } from "lucide-react";
 
 const SidebarContent= [
   {
-    heading: "OVERVIEW",
+    heading: "APERÇU",
     items: [
       {
         id: uniqueId(),
-        name: "Dashboard",
+        name: "Tableau de bord",
         icon: LayoutDashboard,
         url: "/",
       },
     ],
   },
   {
-    heading: "ENERGY",
+    heading: "ÉNERGIE",
     items: [
       {
         id: uniqueId(),
-        name: "My Installation",
+        name: "Mon installation",
         icon: ShieldCheck,
         url: "/my-installation",
       },
       {
         id: uniqueId(),
-        name: "Solar Production",
+        name: "Production solaire",
         icon: Sun,
         url: "/solar-production",
       },
       {
         id: uniqueId(),
-        name: "Energy Consumption",
+        name: "Consommation",
         icon: Zap,
         url: "/consumption",
       },
       {
         id: uniqueId(),
-        name: "Battery",
+        name: "Batterie",
         icon: BatteryCharging,
         url: "/battery",
+      },
+      {
+        id: uniqueId(),
+        name: "Lignes",
+        icon: Cable,
+        url: "/lignes",
+      },
+      {
+        id: uniqueId(),
+        name: "Réseaux",
+        icon: Network,
+        url: "/reseaux",
       },
     ],
   },
   {
-    heading: "ANALYTICS",
+    heading: "ANALYSE",
     items: [
       {
         id: uniqueId(),
-        name: "Energy Analytics",
+        name: "Analyse énergétique",
         icon: BarChart3,
         url: "/analytics",
       },
       {
         id: uniqueId(),
-        name: "Savings",
+        name: "Économies",
         icon: TrendingUp,
         url: "/savings",
       },
       {
         id: uniqueId(),
-        name: "Environmental Impact",
+        name: "Impact environnemental",
         icon: Globe,
         url: "/environmental-impact",
       },
@@ -89,11 +101,20 @@ const SidebarContent= [
     ],
   },
   {
-    heading: "SMART",
+    heading: "INTELLIGENCE",
     items: [
       {
         id: uniqueId(),
-        name: "AI Advisor",
+        name: "Assistant IA",
+        icon: MessageSquareText,
+        url: "/assistant-ia",
+        badge: true,
+        badgeType: "filled",
+        badgeContent: "NLP",
+      },
+      {
+        id: uniqueId(),
+        name: "Conseiller IA",
         icon: Sparkles,
         url: "/ai-advisor",
         badge: true,
@@ -102,29 +123,29 @@ const SidebarContent= [
       },
       {
         id: uniqueId(),
-        name: "Alerts",
+        name: "Alertes",
         icon: Bell,
         url: "/alerts",
       },
     ],
   },
   {
-    heading: "TOOLS",
+    heading: "OUTILS",
     items: [
       {
         id: uniqueId(),
-        name: "Solar Simulator",
+        name: "Simulateur solaire",
         icon: Calculator,
         url: "/solar-simulator",
       },
     ],
   },
   {
-    heading: "SYSTEM",
+    heading: "SYSTÈME",
     items: [
       {
         id: uniqueId(),
-        name: "Settings",
+        name: "Paramètres",
         icon: Settings,
         url: "/settings",
       },

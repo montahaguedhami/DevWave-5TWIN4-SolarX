@@ -39,8 +39,8 @@ const LightDark = () => {
     /* Theme Toggle */
   }
       {activeMode === "light" ? <Button
-    aria-label="Switch to dark mode"
-    title="Switch to dark mode"
+    aria-label="Passer en mode sombre"
+    title="Passer en mode sombre"
     variant="ghost"
     className=" h-10 w-10  hover:bg-primary/5  rounded-full cursor-pointer"
     onClick={toggleTheme}
@@ -49,8 +49,8 @@ const LightDark = () => {
         </Button> : (
     // Dark Mode Button
     <Button
-      aria-label="Switch to light mode"
-      title="Switch to light mode"
+      aria-label="Passer en mode clair"
+      title="Passer en mode clair"
       variant="ghost"
       className=" h-10 w-10  hover:bg-primary/5  rounded-full cursor-pointer"
       onClick={toggleTheme}

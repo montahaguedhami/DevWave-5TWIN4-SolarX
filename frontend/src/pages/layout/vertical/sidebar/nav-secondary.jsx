@@ -14,7 +14,7 @@ function NavSecondary() {
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
                                 <Rocket className="size-5 shrink-0" />
-                                <span className="font-medium text-base leading-6 text-foreground">Basic Plan</span>
+                                <span className="font-medium text-base leading-6 text-foreground">Offre de base</span>
                             </div>
                             <span className="font-medium text-base leading-6 text-foreground">70%</span>
                         </div>
@@ -29,14 +29,14 @@ function NavSecondary() {
     /* Usage text */
   }
                     <p className="text-sm font-normal leading-5 text-muted-foreground text-center">
-                        68/100 monthly limit used
+                        68/100 du quota mensuel utilisé
                     </p>
                 </div>
                 {
     /* Upgrade button */
   }
                 <Link to={"https://shadcndashboard.dev/pricing"} target='_blank' className="w-full cursor-pointer h-9 flex items-center justify-center bg-foreground text-background hover:bg-foreground/90 rounded-lg text-sm font-medium">
-                    Upgrade
+                    Passer à l'offre supérieure
                 </Link>
             </div>
         </div>;

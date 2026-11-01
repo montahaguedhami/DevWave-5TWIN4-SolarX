@@ -93,13 +93,14 @@
   --chart-4: #94a3b8;
   --chart-5: #ef4444;
   --radius: 0.9rem;
-  --sidebar: #0b1220;
-  --sidebar-foreground: #f8fafc;
-  --sidebar-primary: #a3e635;
-  --sidebar-primary-foreground: #0b1220;
-  --sidebar-accent: #123b35;
-  --sidebar-accent-foreground: #a3e635;
-  --sidebar-border: #263244;
+  /* menu latéral clair en mode clair (il suit le thème) */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0b1220;
+  --sidebar-primary: #123b35;
+  --sidebar-primary-foreground: #f8fafc;
+  --sidebar-accent: #eef3f2;
+  --sidebar-accent-foreground: #123b35;
+  --sidebar-border: #dbe4e8;
   --sidebar-ring: #a3e635;
 }
 
