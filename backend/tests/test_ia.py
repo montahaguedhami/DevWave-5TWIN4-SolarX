@@ -72,6 +72,33 @@ def test_comptage(assistant, question, nombre):
     assert r["resultats"][0]["nombre"] == nombre, r["sparql"]
 
 
+@pytest.mark.parametrize("question, attendu", [
+    # données Météo + Localisation : l'IA les comprend sans code propre à ces classes
+    ("Quelles villes sont dans le sud tunisien ?", {"Djerba", "Gabes", "Gafsa", "Tozeur"}),
+    ("Quelles mesures météo influencent le parc solaire Djerba ?", {"Ensoleillement_Djerba", "Temperature_Djerba"}),
+    ("Quelles couvertures nuageuses ?", {"CouvertureNuageuse_Bizerte"}),
+])
+def test_meteo_localisation(assistant, question, attendu):
+    r = assistant.ask(question)
+    assert elements(r) == attendu, r["sparql"]
+
+
+@pytest.mark.parametrize("question, extrait", [
+    ("Quelle est la température à Tunis ?", "Temperature_Tunis (24,5 °C)"),      # valeur + unité de la mesure
+    ("Quelle est l'humidité à Tunis ?", "(62 %)"),
+    ("Quelles mesures concernent la maison Djerba ?", "Mesure_002 (9 kWh)"),     # unité lue dans :unite
+    ("Quelle est la température moyenne ?", "°C"),
+    ("Quelle est la latitude de Tunis ?", "36,81°"),
+    ("Quelle est la source des données de Vent_Tunis ?", "Capteur_01"),
+    ("Quelle est la provenance de Vent_Tunis ?", "Capteur_01"),
+    ("Où se trouve Sfax ?", "dans la région Centre tunisien"),
+    ("Combien de villes par région ?", "Sud tunisien : 4"),
+])
+def test_reponses_meteo_localisation(assistant, question, extrait):
+    r = assistant.ask(question)
+    assert extrait in r["reponse"], r["reponse"]
+
+
 def test_somme(assistant):
     r = assistant.ask("Quelle est la capacité totale de stockage ?")
     assert r["intention"] == "somme"

@@ -49,6 +49,8 @@ CLASS_LABELS = {
     "Precipitation": ("précipitation", "précipitations"),
     "Temperature": ("température", "températures"),
     "VitesseVent": ("vitesse du vent", "vitesses du vent"),
+    "Humidite": ("humidité", "humidités"),
+    "CouvertureNuageuse": ("couverture nuageuse", "couvertures nuageuses"),
     "Evenement": ("événement", "événements"),
     "Maintenance": ("maintenance", "maintenances"),
     "Inspection": ("inspection", "inspections"),
@@ -95,7 +97,10 @@ CLASS_SYNONYMS = {
     "Localisation": ["lieu", "endroit", "emplacement", "localisation"],
     "Ville": ["ville", "commune", "cite"],
     "Region": ["region", "gouvernorat", "zone"],
-    "ConditionMeteo": ["meteo", "condition meteo", "condition meteorologique", "climat"],
+    "ConditionMeteo": ["meteo", "condition meteo", "condition meteorologique", "climat",
+                       "mesure meteo", "mesure meteorologique", "releve meteo", "donnee meteo"],
+    "Humidite": ["humidite", "humidite relative", "taux d humidite"],
+    "CouvertureNuageuse": ["couverture nuageuse", "nebulosite", "nuage"],
     "Ensoleillement": ["irradiance", "ensoleillement", "rayonnement"],
     "Precipitation": ["pluie", "precipitation"],
     "VitesseVent": ["vitesse du vent", "vitesse de vent", "vent"],
@@ -149,6 +154,10 @@ DATA_PROPERTY_SYNONYMS = {
     "statut": ["etat"],
     "description": ["description"],
     "unite": ["unite"],
+    "source des donnees": ["sourceDonnees"],
+    "source de donnee": ["sourceDonnees"],
+    "provenance": ["sourceDonnees"],
+    "date de recuperation": ["dateRecuperation"],
 }
 
 # Unité écrite après un nombre -> propriété correspondante
