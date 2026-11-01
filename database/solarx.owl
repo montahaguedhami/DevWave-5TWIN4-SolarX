@@ -401,21 +401,53 @@
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneBasseTension"/>
         <solarx:dessert rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole_Tunis"/>
         <solarx:dessert rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison_Djerba"/>
+        <solarx:longueurKm rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2.5</solarx:longueurKm>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ligne BT Tunis–Djerba (quartiers résidentiels)</solarx:nom>
         <solarx:tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.4</solarx:tensionKV>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneHT_01">
-        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneHauteTension"/>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneBasseTension_02">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneBasseTension"/>
+        <solarx:dessert rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole_01"/>
+        <solarx:dessert rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison_01"/>
+        <solarx:longueurKm rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.2</solarx:longueurKm>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ligne BT école 01 / maison 01</solarx:nom>
+        <solarx:tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.4</solarx:tensionKV>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneHauteTension_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneHauteTension"/>
         <solarx:dessert rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine_Tunis"/>
         <solarx:relie rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ParcEolien_Tunis"/>
         <solarx:longueurKm rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">35</solarx:longueurKm>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ligne HT 90 kV parc éolien – usine Tunis</solarx:nom>
         <solarx:tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">90</solarx:tensionKV>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneHauteTension_02">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneHauteTension"/>
+        <solarx:relie rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#CentraleSolaire_01"/>
+        <solarx:longueurKm rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">150</solarx:longueurKm>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ligne HT 225 kV centrale solaire 01</solarx:nom>
+        <solarx:tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">225</solarx:tensionKV>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneHauteTension_03">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneHauteTension"/>
+        <solarx:relie rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ParcEolien_01"/>
+        <solarx:longueurKm rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">85</solarx:longueurKm>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ligne HT 150 kV parc éolien 01</solarx:nom>
+        <solarx:tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">150</solarx:tensionKV>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneMoyenneTension_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneMoyenneTension"/>
         <solarx:relie rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ParcSolaire_Djerba"/>
+        <solarx:longueurKm rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">12</solarx:longueurKm>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ligne MT parc solaire Djerba</solarx:nom>
+        <solarx:tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30</solarx:tensionKV>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneMoyenneTension_02">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneMoyenneTension"/>
+        <solarx:dessert rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Hopital_Tunis"/>
+        <solarx:longueurKm rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">8</solarx:longueurKm>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ligne MT hôpital Tunis</solarx:nom>
+        <solarx:tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30</solarx:tensionKV>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maintenance_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MaintenanceCorrective"/>
@@ -467,7 +499,7 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Panne_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Panne"/>
-        <solarx:affecte rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneHT_01"/>
+        <solarx:affecte rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneHauteTension_01"/>
         <solarx:detectePar rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Capteur_01"/>
         <solarx:dateOccurrence rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T10:15:00</solarx:dateOccurrence>
         <solarx:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Panne détectée sur la ligne haute tension</solarx:description>
@@ -498,13 +530,20 @@
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ReseauDistribution"/>
         <solarx:contient rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneBasseTension_01"/>
         <solarx:contient rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneMoyenneTension_01"/>
+        <solarx:contient rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneMoyenneTension_02"/>
+        <solarx:contient rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneBasseTension_02"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Réseau de distribution Tunis–Djerba</solarx:nom>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ReseauNational_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ReseauElectrique"/>
+        <solarx:contient rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneHauteTension_02"/>
+        <solarx:contient rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneHauteTension_03"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Réseau électrique national</solarx:nom>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ReseauTransport_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ReseauTransport"/>
         <solarx:contient rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneHauteTension_01"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Réseau de transport Nord</solarx:nom>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Soleil_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Solaire"/>
