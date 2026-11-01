@@ -2,12 +2,15 @@
 
 from fastapi import APIRouter
 
-from app.api.v1.endpoints import health, localisation, meteo
+from app.api.v1.endpoints import health, ia, lignes, localisation, meteo, reseaux
 
 api_router = APIRouter()
 api_router.include_router(health.router, tags=["health"])
 api_router.include_router(localisation.router, prefix="/localisation", tags=["localisation"])
 api_router.include_router(meteo.router, prefix="/meteo", tags=["meteo"])
+api_router.include_router(lignes.router, prefix="/lignes", tags=["lignes"])
+api_router.include_router(reseaux.router, prefix="/reseaux", tags=["reseaux"])
+api_router.include_router(ia.router, prefix="/ia", tags=["ia"])
 
 # TODO (team): register routers for new entities here, e.g.
 # from app.api.v1.endpoints import notes
