@@ -93,6 +93,9 @@ def test_meteo_localisation(assistant, question, attendu):
     ("Quelle est la provenance de Vent_Tunis ?", "Capteur_01"),
     ("Où se trouve Sfax ?", "dans la région Centre tunisien"),
     ("Combien de villes par région ?", "Sud tunisien : 4"),
+    # aucune mesure enregistrée : la réponse nomme la ville et explique comment l'obtenir
+    ("quel est la temperature a kairouan", "pas de température pour Kairouan"),
+    ("Quelle est l'humidité à Gafsa ?", "pas d'humidité pour Gafsa. La page Météo"),
 ])
 def test_reponses_meteo_localisation(assistant, question, extrait):
     r = assistant.ask(question)

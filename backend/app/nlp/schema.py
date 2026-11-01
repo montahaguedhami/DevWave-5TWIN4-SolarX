@@ -53,6 +53,9 @@ class OntologySchema:
     def types_of(self, individual: str) -> set[str]:
         return self.individuals.get(individual, set())
 
+    def is_a_class(self, sub: str, cls: str) -> bool:
+        return cls in self.ancestors(sub)
+
     def is_a(self, individual: str, cls: str) -> bool:
         return any(cls in self.ancestors(t) for t in self.types_of(individual))
 

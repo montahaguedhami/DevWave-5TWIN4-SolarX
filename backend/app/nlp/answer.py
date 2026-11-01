@@ -157,7 +157,14 @@ def write_answer(plan: QueryPlan, rows: list[dict], schema: OntologySchema) -> s
     # lister
     n = len(rows)
     if n == 0:
-        return f"Aucun résultat : aucun élément de type « {class_label(plan.target)} » ne correspond à la question."
+        if not plan.context:
+            return f"Aucun résultat : aucun élément de type « {class_label(plan.target)} » ne correspond à la question."
+        mot = class_label(plan.target)
+        de = "d'" if mot[0] in "aeiouéèêh" else "de "
+        texte = f"Aucun résultat : l'ontologie ne contient pas {de}{mot} pour {', '.join(plan.context)}."
+        if plan.target and schema.is_a_class(plan.target, "ConditionMeteo"):
+            texte += " La page Météo peut enregistrer la mesure du jour pour cette ville."
+        return texte
     def item(r):
         if r.get("valeur") is None:
             return name(r)
