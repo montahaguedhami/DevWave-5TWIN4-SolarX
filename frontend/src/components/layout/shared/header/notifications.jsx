@@ -37,7 +37,7 @@ const Notifications = ({ className }) => {
   >
           <div className="flex items-center px-6 justify-between">
             <h3 className="text-lg font-semibold">Notifications</h3>
-            {unreadCount > 0 && <Badge className="px-3 bg-primary dark:bg-primary hover:bg-primary">{unreadCount} new</Badge>}
+            {unreadCount > 0 && <Badge className="px-3 bg-primary dark:bg-primary hover:bg-primary">{unreadCount} nouvelles</Badge>}
           </div>
 
           {
@@ -84,7 +84,7 @@ const Notifications = ({ className }) => {
   }
           <div className="pt-5 px-6">
             <Button className="w-full bg-[var(--primary)] text-primary-foreground font-bold hover:bg-[var(--primary)]" nativeButton={false} render={<Link to="/alerts" />}>
-              See All Notifications
+              Voir toutes les notifications
             </Button>
           </div>
         </DropdownMenuContent>
