@@ -12,8 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 function Header() {
   const { toggleSidebar } = useSidebar();
-  const [currentInstallation, setCurrentInstallation] = useState("Villa Soleil Residence");
-  const [currentLang, setCurrentLang] = useState("US");
+  const [currentInstallation, setCurrentInstallation] = useState("Résidence Villa Soleil");
   const [isFullscreen, setIsFullscreen] = useState(false);
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
@@ -44,7 +43,7 @@ function Header() {
     size="icon"
     className="p-2 hover:bg-muted dark:hover:bg-muted text-muted-foreground dark:text-muted-foreground rounded-full transition cursor-pointer"
     onClick={toggleSidebar}
-    title="Toggle sidebar"
+    title="Afficher / masquer le menu"
   >
               <PanelLeft className="w-5 h-5" />
             </Button>
@@ -66,21 +65,21 @@ function Header() {
               <DropdownMenuContent align="start" className="bg-card dark:bg-card border border-border dark:border-border text-foreground dark:text-foreground shadow-md">
                 <DropdownMenuItem
     className="text-xs cursor-pointer hover:bg-muted dark:hover:bg-muted"
-    onClick={() => setCurrentInstallation("Villa Soleil Residence")}
+    onClick={() => setCurrentInstallation("Résidence Villa Soleil")}
   >
-                  Villa Soleil Residence (Tunis)
+                  Résidence Villa Soleil (Tunis)
                 </DropdownMenuItem>
                 <DropdownMenuItem
     className="text-xs cursor-pointer hover:bg-muted dark:hover:bg-muted"
-    onClick={() => setCurrentInstallation("Sousse Coastal Annex")}
+    onClick={() => setCurrentInstallation("Annexe côtière de Sousse")}
   >
-                  Sousse Coastal Annex (Sousse)
+                  Annexe côtière de Sousse (Sousse)
                 </DropdownMenuItem>
                 <DropdownMenuItem
     className="text-xs cursor-pointer hover:bg-muted dark:hover:bg-muted"
-    onClick={() => setCurrentInstallation("Monastir Solar Plant")}
+    onClick={() => setCurrentInstallation("Centrale solaire de Monastir")}
   >
-                  Monastir Solar Plant (Monastir)
+                  Centrale solaire de Monastir (Monastir)
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -114,31 +113,10 @@ function Header() {
     variant="ghost"
     size="icon"
     className="h-9 w-9 rounded-full text-muted-foreground dark:text-muted-foreground hover:bg-muted dark:hover:bg-muted"
-    title="Help & Messages"
+    title="Aide et messages"
   >
               <MessageSquare className="w-4 h-4" />
             </Button>
-
-            {
-    /* Language Selector Dropdown */
-  }
-            <DropdownMenu>
-              <DropdownMenuTrigger className="h-9 px-2.5 rounded-full text-xs font-bold text-foreground dark:text-muted-foreground hover:bg-muted dark:hover:bg-muted flex items-center gap-1 cursor-pointer">
-                <span className="text-sm">🇺🇸</span>
-                <span className="hidden sm:inline">{currentLang}</span>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-card dark:bg-card border border-border dark:border-border">
-                <DropdownMenuItem className="text-xs cursor-pointer" onClick={() => setCurrentLang("US")}>
-                  🇺🇸 English (US)
-                </DropdownMenuItem>
-                <DropdownMenuItem className="text-xs cursor-pointer" onClick={() => setCurrentLang("FR")}>
-                  🇫🇷 Français (FR)
-                </DropdownMenuItem>
-                <DropdownMenuItem className="text-xs cursor-pointer" onClick={() => setCurrentLang("TN")}>
-                  🇹🇳 العربية (TN)
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
 
             {
     /* Fullscreen Toggle */
@@ -148,7 +126,7 @@ function Header() {
     size="icon"
     className="h-9 w-9 rounded-full text-muted-foreground dark:text-muted-foreground hover:bg-muted dark:hover:bg-muted hidden md:flex"
     onClick={toggleFullscreen}
-    title="Toggle Fullscreen"
+    title="Plein écran"
   >
               <Maximize className="w-4 h-4" />
             </Button>
@@ -160,7 +138,7 @@ function Header() {
     variant="ghost"
     size="icon"
     className="h-9 w-9 rounded-full text-muted-foreground dark:text-muted-foreground hover:bg-muted dark:hover:bg-muted hidden md:flex"
-    title="Dashboard Filter Settings"
+    title="Réglages du tableau de bord"
   >
               <SlidersHorizontal className="w-4 h-4" />
             </Button>

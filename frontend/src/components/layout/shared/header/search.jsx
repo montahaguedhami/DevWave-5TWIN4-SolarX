@@ -35,7 +35,7 @@ function Search() {
     className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
   />
         <Input
-    placeholder="Search...."
+    placeholder="Rechercher..."
     className="rounded-lg pl-10!"
     required
     value={query}

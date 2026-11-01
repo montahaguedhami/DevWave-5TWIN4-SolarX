@@ -11,7 +11,7 @@ function Layout({ children }) {
     style={{ "--sidebar-width-icon": "52px" }}
   >
       <AppSidebar />
-      <SidebarInset className="bg-transparent border-0 overflow-x-hidden">
+      <SidebarInset className="bg-background border-0 overflow-x-hidden">
         <Header />
         <div className="flex flex-1 flex-col gap-4 p-4">
           <div className={cn("w-full mx-auto", "container")}>

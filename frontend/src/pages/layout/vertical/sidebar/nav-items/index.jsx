@@ -46,7 +46,7 @@ function NavItem({
     /* Badge */
   }
         {item.badge && <span
-    className={`ms-auto  hide-menu text-xs rounded-full px-2 py-0.5 ${item.badgeType === "filled" ? "bg-primary text-foreground dark:text-black" : "border border-primary text-primary"}`}
+    className={`ms-auto  hide-menu text-xs rounded-full px-2 py-0.5 ${item.badgeType === "filled" ? "bg-primary text-primary-foreground" : "border border-primary text-primary"}`}
   >
             {item.badgeContent}
           </span>}
