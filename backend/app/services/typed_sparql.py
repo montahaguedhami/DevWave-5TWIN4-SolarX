@@ -20,6 +20,9 @@ from app.services.fuseki import FusekiClient, FusekiUnavailable, iri
 
 PREFIXES = SOLARX_PREFIXES.replace("PREFIX solarx:", "PREFIX :", 1)
 
+# Un seul client pour toute l'API : httpx.post en recrée un à chaque appel (environ 400 ms sous Windows)
+_client = httpx.Client()
+
 
 def term(local_name: str) -> str:
     """Nom local validé (``iri`` refuse tout caractère dangereux) -> ``:Nom``."""
@@ -52,7 +55,7 @@ class TypedSparql:
 
     def run(self, query: str) -> list[dict]:
         try:
-            response = httpx.post(
+            response = _client.post(
                 f"{self.fuseki.base_url}/query",
                 data={"query": PREFIXES + query},
                 headers={"Accept": "application/sparql-results+json"},
