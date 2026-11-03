@@ -1,36 +1,77 @@
 import { useState } from "react";
-import { Network, Cable, Ruler, Home, Factory, ArrowRight } from "lucide-react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Network, Cable, Ruler, Home, ChevronRight, Pencil, Plus, Trash2 } from "lucide-react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Kpi, EtatLigne, Chargement, Erreur, TYPE_LABEL, TYPE_COLOR, label, formatKm, formatKv } from "@/components/reseau/ui";
-import { useApi } from "@/services/reseau-api";
+import { Kpi, EtatLigne, Chargement, Erreur, TYPE_LABEL, TYPE_COLOR, nomDe, formatKm, formatKv } from "@/components/reseau/ui";
+import { SchemaFlux } from "@/components/reseau/schema-flux";
+import { FormReseau, Confirmer } from "@/components/reseau/formulaires";
+import { reseauxApi, useApi } from "@/services/reseau-api";
 
-function Noeud({ icon: Icon, children, className }) {
-  return (
-    <span className={`inline-flex items-center gap-1 rounded-md border px-2 py-1 ${className}`}>
-      <Icon className="w-3 h-3" /> {children}
-    </span>
-  );
-}
-
-function DetailReseau({ reseauId }) {
-  const detail = useApi(`/reseaux/${reseauId}`);
+function DetailReseau({ reseau, onSupprime }) {
+  const navigate = useNavigate();
+  const detail = useApi(`/reseaux/${reseau.id}`);
+  const [edition, setEdition] = useState(false);
+  const [suppression, setSuppression] = useState(false);
   if (detail.error) return <Erreur error={detail.error} />;
   if (!detail.data) return <Chargement />;
-  const { lignes, flux } = detail.data;
+  const { lignes } = detail.data;
+  const ouvrir = (id) => navigate(`/lignes?ligne=${id}`);
 
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+    <div className="space-y-4">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="text-sm text-muted-foreground">
+          Réseau sélectionné : <span className="font-semibold text-foreground">{nomDe(reseau)}</span>
+        </div>
+        <div className="flex gap-2">
+          <Button variant="outline" size="sm" onClick={() => setEdition(true)}>
+            <Pencil className="w-3.5 h-3.5" /> Modifier
+          </Button>
+          <Button variant="destructive" size="sm" disabled={lignes.length > 0} onClick={() => setSuppression(true)}>
+            <Trash2 className="w-3.5 h-3.5" /> Supprimer
+          </Button>
+        </div>
+      </div>
+      {lignes.length > 0 && (
+        <div className="text-xs text-muted-foreground text-right -mt-2">Pour supprimer ce réseau, retirez d'abord ses lignes avec « Modifier ».</div>
+      )}
+
       <Card expandable={false}>
         <CardHeader>
-          <CardTitle className="text-lg font-bold text-foreground">Lignes du réseau</CardTitle>
-          <CardDescription className="text-xs">Relation contient (réseau → ligne)</CardDescription>
+          <CardTitle className="text-lg font-bold text-foreground">Flux d'énergie : {nomDe(reseau)}</CardTitle>
+          <CardDescription className="text-xs">
+            Les installations produisent, les lignes transportent, les consommateurs reçoivent. Cliquez sur une ligne pour voir son détail.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {lignes.length === 0 ? (
             <div className="text-sm text-muted-foreground text-center py-6">Ce réseau ne contient aucune ligne.</div>
           ) : (
+            <>
+              <SchemaFlux lignes={lignes} onSelect={ouvrir} />
+              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                {Object.entries(TYPE_COLOR).map(([t, c]) => (
+                  <span key={t} className="flex items-center gap-1.5">
+                    <span className="inline-block w-4 h-0.5" style={{ background: c }} /> {TYPE_LABEL[t]}
+                  </span>
+                ))}
+                <span>Pointillés : ligne en panne</span>
+              </div>
+            </>
+          )}
+        </CardContent>
+      </Card>
+
+      {lignes.length > 0 && (
+        <Card expandable={false}>
+          <CardHeader>
+            <CardTitle className="text-lg font-bold text-foreground">Lignes du réseau</CardTitle>
+            <CardDescription className="text-xs">{lignes.length} ligne(s), de la plus haute à la plus basse tension</CardDescription>
+          </CardHeader>
+          <CardContent>
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
@@ -40,15 +81,13 @@ function DetailReseau({ reseauId }) {
                     <TableHead className="text-right">Tension</TableHead>
                     <TableHead className="text-right">Longueur</TableHead>
                     <TableHead>État</TableHead>
+                    <TableHead />
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {lignes.map((l) => (
-                    <TableRow key={l.id}>
-                      <TableCell>
-                        <div className="font-medium text-foreground">{l.nom || label(l.id)}</div>
-                        <div className="text-xs text-muted-foreground">{l.id}</div>
-                      </TableCell>
+                    <TableRow key={l.id} className="cursor-pointer" onClick={() => ouvrir(l.id)}>
+                      <TableCell className="font-medium text-foreground">{nomDe(l)}</TableCell>
                       <TableCell>
                         <span className="inline-flex items-center gap-1.5 text-xs whitespace-nowrap">
                           <span className="w-2 h-2 rounded-full" style={{ background: TYPE_COLOR[l.type] }} />
@@ -58,72 +97,78 @@ function DetailReseau({ reseauId }) {
                       <TableCell className="text-right font-mono">{formatKv(l.tensionKV)}</TableCell>
                       <TableCell className="text-right font-mono">{formatKm(l.longueurKm)}</TableCell>
                       <TableCell><EtatLigne etat={l.etat} /></TableCell>
+                      <TableCell className="text-right"><ChevronRight className="w-4 h-4 text-muted-foreground inline" /></TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
             </div>
-          )}
-        </CardContent>
-      </Card>
-
-      <Card expandable={false}>
-        <CardHeader>
-          <CardTitle className="text-lg font-bold text-foreground">Flux d'énergie</CardTitle>
-          <CardDescription className="text-xs">Chemin dans le graphe : installation --relie--&gt; ligne --dessert--&gt; consommateur</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-2">
-          {flux.length === 0 && <div className="text-sm text-muted-foreground text-center py-6">Aucun flux.</div>}
-          {flux.map((f, i) => (
-            <div key={i} className="flex flex-wrap items-center gap-2 text-xs">
-              <Noeud icon={Factory} className={f.installation ? "border-sky-500/40 bg-sky-500/10 text-sky-600 dark:text-sky-400" : "border-border text-muted-foreground"}>
-                {f.installation ? label(f.installation) : "aucune installation"}
-              </Noeud>
-              <ArrowRight className="w-3.5 h-3.5 text-muted-foreground" />
-              <Noeud icon={Cable} className="border-primary/40 bg-primary/10 font-semibold text-foreground">{label(f.ligne)}</Noeud>
-              <ArrowRight className="w-3.5 h-3.5 text-muted-foreground" />
-              <Noeud icon={Home} className={f.consommateur ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" : "border-border text-muted-foreground"}>
-                {f.consommateur ? label(f.consommateur) : "aucun consommateur"}
-              </Noeud>
+            <div className="mt-3 text-right">
+              <Link to={`/lignes?reseau=${reseau.id}`} className="text-xs font-medium text-primary hover:underline">
+                Voir ces lignes sur la carte →
+              </Link>
             </div>
-          ))}
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      )}
+
+      <FormReseau open={edition} reseau={reseau} lignesActuelles={lignes} onClose={() => setEdition(false)} onSaved={() => setEdition(false)} />
+      <Confirmer
+        open={suppression}
+        onClose={() => setSuppression(false)}
+        titre="Supprimer ce réseau ?"
+        texte={`« ${nomDe(reseau)} » sera retiré de l'ontologie.`}
+        onConfirm={async () => {
+          await reseauxApi.supprimer(reseau.id);
+          setSuppression(false);
+          onSupprime();
+        }}
+      />
     </div>
   );
 }
 
 function ReseauxPage() {
-  const [reseau, setReseau] = useState(null);
+  // réseau sélectionné dans l'adresse : /reseaux?id=ReseauNational_01
+  const [params, setParams] = useSearchParams();
+  const [ajout, setAjout] = useState(false);
   const list = useApi("/reseaux");
+  const stats = useApi("/reseaux/stats");
   const nets = list.data || [];
-  const selected = reseau || nets[0]?.id;
-  const chartData = nets.map((r) => ({ name: r.nom || label(r.id), km: r.longueurTotaleKm, lignes: r.nombreLignes }));
+  const selected = nets.find((r) => r.id === params.get("id")) || nets[0];
+  const chartData = nets.map((r) => ({ name: nomDe(r), km: r.longueurTotaleKm, lignes: r.nombreLignes }));
+  const error = list.error || stats.error;
+  const s = stats.data;
 
   return (
     <div className="space-y-6 pb-8">
-      <div>
-        <h1 className="text-3xl font-extrabold tracking-tight text-foreground flex items-center gap-2.5">
-          <div className="p-2 rounded-xl bg-card/50 text-primary border border-border">
-            <Network className="w-5 h-5" />
-          </div>
-          Réseaux électriques
-        </h1>
-        <p className="text-sm text-muted-foreground mt-1">
-          Réseaux de transport et de distribution, et les lignes qu'ils contiennent, issus de l'ontologie SolarX (requêtes SPARQL).
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-extrabold tracking-tight text-foreground flex items-center gap-2.5">
+            <div className="p-2 rounded-xl bg-card/50 text-primary border border-border">
+              <Network className="w-5 h-5" />
+            </div>
+            Réseaux électriques
+          </h1>
+          <p className="text-sm text-muted-foreground mt-1">
+            Réseaux de transport et de distribution, et les lignes qu'ils contiennent, issus de l'ontologie SolarX.
+          </p>
+        </div>
+        <Button className="w-fit" onClick={() => setAjout(true)}>
+          <Plus className="w-4 h-4" /> Ajouter un réseau
+        </Button>
       </div>
 
-      {list.error && <Erreur error={list.error} />}
-      {!list.error && !list.data && <Chargement />}
+      {error && <Erreur error={error} />}
+      {!error && (!list.data || !s) && <Chargement />}
 
-      {list.data && (
+      {!error && list.data && s && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Kpi icon={Network} label="Réseaux" value={nets.length} hint={[...new Set(nets.map((r) => TYPE_LABEL[r.type] || r.type))].join(" · ")} />
-            <Kpi icon={Cable} label="Lignes rattachées" value={nets.reduce((a, r) => a + r.nombreLignes, 0)} hint="Relation contient" />
-            <Kpi icon={Ruler} label="Longueur cumulée" value={formatKm(nets.reduce((a, r) => a + r.longueurTotaleKm, 0))} hint="SUM(longueurKm) par réseau" />
-            <Kpi icon={Home} label="Consommateurs desservis" value={nets.reduce((a, r) => a + r.consommateursDesservis, 0)} hint="Via les lignes de chaque réseau" />
+            <Kpi icon={Network} label="Réseaux" value={s.nombre} hint={[...new Set(nets.map((r) => TYPE_LABEL[r.type] || r.type))].join(" · ")} />
+            <Kpi icon={Cable} label="Lignes rattachées" value={s.lignes} hint="Chaque ligne comptée une seule fois" />
+            <Kpi icon={Ruler} label="Longueur totale" value={formatKm(s.longueurTotaleKm)} hint="Lignes rattachées à un réseau" />
+            <Kpi icon={Home} label="Consommateurs desservis" value={s.consommateursDesservis} hint="Alimentés par les lignes des réseaux" />
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -132,16 +177,16 @@ function ReseauxPage() {
                 <button
                   key={r.id}
                   type="button"
-                  onClick={() => setReseau(r.id)}
+                  onClick={() => setParams({ id: r.id }, { replace: true })}
                   className={`w-full text-left rounded-xl border p-4 transition-colors cursor-pointer bg-card ${
-                    selected === r.id ? "border-primary ring-2 ring-primary/30" : "border-border hover:border-primary/50"
+                    selected?.id === r.id ? "border-primary ring-2 ring-primary/30" : "border-border hover:border-primary/50"
                   }`}
                 >
                   <div className="flex items-center gap-1.5 font-semibold text-foreground">
                     <Network className="w-4 h-4 text-primary shrink-0" />
-                    <span className="truncate" title={r.nom}>{r.nom || label(r.id)}</span>
+                    <span className="truncate" title={nomDe(r)}>{nomDe(r)}</span>
                   </div>
-                  <div className="text-xs text-muted-foreground mt-0.5">{TYPE_LABEL[r.type] || r.type} · {r.id}</div>
+                  <div className="text-xs text-muted-foreground mt-0.5">{TYPE_LABEL[r.type] || r.type}</div>
                   <div className="text-xs text-foreground mt-2 font-mono">
                     {r.nombreLignes} ligne(s) · {formatKm(r.longueurTotaleKm)} · {r.consommateursDesservis} consommateur(s)
                   </div>
@@ -152,7 +197,7 @@ function ReseauxPage() {
             <Card expandable={false} className="lg:col-span-2">
               <CardHeader>
                 <CardTitle className="text-lg font-bold text-foreground">Longueur par réseau</CardTitle>
-                <CardDescription className="text-xs">Somme des longueurs des lignes contenues (km)</CardDescription>
+                <CardDescription className="text-xs">Somme des longueurs des lignes de chaque réseau (km)</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-[220px] w-full">
@@ -174,9 +219,18 @@ function ReseauxPage() {
             </Card>
           </div>
 
-          {selected && <DetailReseau reseauId={selected} />}
+          {selected && <DetailReseau key={selected.id} reseau={selected} onSupprime={() => setParams({}, { replace: true })} />}
         </>
       )}
+
+      <FormReseau
+        open={ajout}
+        onClose={() => setAjout(false)}
+        onSaved={(r) => {
+          setAjout(false);
+          setParams({ id: r.id }, { replace: true });
+        }}
+      />
     </div>
   );
 }

@@ -13,19 +13,29 @@ export const TYPE_LABEL = {
 };
 
 export const TYPE_COLOR = { LigneHauteTension: "#ef4444", LigneMoyenneTension: "#f59e0b", LigneBasseTension: "#22c55e" };
+export const TYPES_LIGNE = ["LigneHauteTension", "LigneMoyenneTension", "LigneBasseTension"];
+export const ETATS_LIGNE = ["Fonctionnel", "Alerte", "En panne"];
 
 export const label = (id) => (id ? id.replaceAll("_", " ") : "—");
+// Nom lisible d'un élément renvoyé par l'API ({ id, nom }) : le nom de l'ontologie, sinon l'identifiant
+export const nomDe = (x) => x?.nom || label(x?.id);
+export const formatDate = (d) => {
+  const date = d ? new Date(d) : null;
+  return date && !isNaN(date) ? date.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }) : d || "—";
+};
 export const formatKm = (km) => (km == null ? "—" : `${km.toLocaleString("fr-FR", { maximumFractionDigits: 1 })} km`);
 export const formatKv = (kv) => (kv == null ? "—" : `${kv.toLocaleString("fr-FR", { maximumFractionDigits: 1 })} kV`);
 
-export function Kpi({ icon: Icon, label, value, hint }) {
+// alerte : la valeur s'affiche en rouge quand elle est supérieure à 0 (ex. lignes en panne)
+export function Kpi({ icon: Icon, label, value, hint, alerte = false }) {
+  const rouge = alerte && Number(value) > 0;
   return (
-    <Card expandable={false}>
+    <Card expandable={false} className={rouge ? "border-red-500/40" : undefined}>
       <CardContent className="p-5">
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+        <div className={cn("flex items-center gap-2 text-xs", rouge ? "text-red-600 dark:text-red-400" : "text-muted-foreground")}>
           <Icon className="w-3.5 h-3.5" /> {label}
         </div>
-        <div className="text-2xl font-black font-mono text-foreground mt-1">{value}</div>
+        <div className={cn("text-2xl font-black font-mono mt-1", rouge ? "text-red-600 dark:text-red-400" : "text-foreground")}>{value}</div>
         {hint && <div className="text-xs text-muted-foreground mt-1">{hint}</div>}
       </CardContent>
     </Card>
