@@ -40,6 +40,9 @@ export default function ConsommateursPage() {
   const [seuil, setSeuil] = useState(30);
   const [importText, setImportText] = useState("");
   const [importing, setImporting] = useState(false);
+  const [thresholds, setThresholds] = useState(() => {
+    try { return JSON.parse(localStorage.getItem("consoThresholds") || "{}"); } catch { return {}; }
+  });
 
   const loadVilles = useCallback(() => {
     localisationApi.villes().then(setVilles).catch((e) => setMessage({ type: "error", text: e.message }));
@@ -65,6 +68,12 @@ export default function ConsommateursPage() {
     consommateurApi.statsAvancees().then(setStats).catch(() => {});
     consommateurApi.alertes({ seuil, jours: 7 }).then(setAlertes).catch(() => {});
   }, [seuil]);
+
+  const saveThreshold = (id, value) => {
+    const next = { ...thresholds, [id]: Number(value) };
+    setThresholds(next);
+    localStorage.setItem("consoThresholds", JSON.stringify(next));
+  };
 
   const exportCsv = () => {
     const header = ["id", "nom", "type", "ville", "surfaceM2", "nbMesures"];
@@ -224,7 +233,10 @@ export default function ConsommateursPage() {
           <h1 className="text-3xl font-extrabold tracking-tight text-foreground">Consommateurs</h1>
           <p className="text-sm text-muted-foreground mt-1">Gestion des consommateurs et de leurs mesures de consommation.</p>
         </div>
-        <Button variant="outline" onClick={exportCsv}><Download className="w-4 h-4 mr-2" /> Export CSV</Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={exportCsv}><Download className="w-4 h-4 mr-2" /> Export CSV</Button>
+          <Button variant="outline" onClick={() => window.print()}>Imprimer</Button>
+        </div>
       </div>
 
       {message && (
@@ -419,6 +431,7 @@ export default function ConsommateursPage() {
                     <th className="text-left py-2">Ville</th>
                     <th className="text-left py-2">Surface</th>
                     <th className="text-left py-2">Mesures</th>
+                    <th className="text-left py-2">Seuil %</th>
                     <th className="text-right py-2">Actions</th>
                   </tr>
                 </thead>
@@ -430,6 +443,9 @@ export default function ConsommateursPage() {
                       <td className="py-2">{c.villeNom || c.ville}</td>
                       <td className="py-2">{c.surfaceM2 ?? "—"}</td>
                       <td className="py-2">{c.nbMesures}</td>
+                      <td className="py-2">
+                        <Input type="number" className="w-20 h-8" value={thresholds[c.id] ?? ""} onChange={(e) => saveThreshold(c.id, e.target.value)} />
+                      </td>
                       <td className="py-2 text-right space-x-1">
                         <Button size="sm" variant="outline" onClick={() => selectConsumer(c)}>Mesures</Button>
                         <Button size="sm" variant="ghost" onClick={() => edit(c)}><Pencil className="w-4 h-4" /></Button>
