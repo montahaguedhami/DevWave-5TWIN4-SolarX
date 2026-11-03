@@ -5,7 +5,7 @@ import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, LineChart, Line } from "recharts";
 import { consommateurApi, mesureApi, localisationApi, meteoApi } from "@/services/semantic-api";
 
 const TYPES_CONSOMMATEUR = ["Ecole", "Entreprise", "Hopital", "Maison", "Particulier", "Institution", "Usine"];
@@ -32,6 +32,9 @@ export default function ConsommateursPage() {
   const [weather, setWeather] = useState(null);
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
+  const [seuil, setSeuil] = useState(30);
+  const [importText, setImportText] = useState("");
+  const [importing, setImporting] = useState(false);
 
   const loadVilles = useCallback(() => {
     localisationApi.villes().then(setVilles).catch((e) => setMessage({ type: "error", text: e.message }));
@@ -55,8 +58,8 @@ export default function ConsommateursPage() {
 
   const loadStats = useCallback(() => {
     consommateurApi.statsAvancees().then(setStats).catch(() => {});
-    consommateurApi.alertes().then(setAlertes).catch(() => {});
-  }, []);
+    consommateurApi.alertes({ seuil, jours: 7 }).then(setAlertes).catch(() => {});
+  }, [seuil]);
 
   const exportCsv = () => {
     const header = ["id", "nom", "type", "ville", "surfaceM2", "nbMesures"];
@@ -256,22 +259,29 @@ export default function ConsommateursPage() {
         </CardContent>
       </Card>
 
-      {alertes.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Alertes</CardTitle>
-          </CardHeader>
-          <CardContent>
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Alertes</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <div className="flex items-center gap-2 text-sm">
+            <span>Seuil %</span>
+            <Input type="number" className="w-24" value={seuil} onChange={(e) => setSeuil(Number(e.target.value))} />
+            <Button size="sm" onClick={loadStats}>Actualiser</Button>
+          </div>
+          {alertes.length === 0 ? (
+            <p className="text-sm text-muted-foreground">Aucune alerte.</p>
+          ) : (
             <ul className="space-y-1 text-sm">
               {alertes.map((a, i) => (
                 <li key={i} className="text-muted-foreground">
-                  <span className="font-medium text-foreground">{a.nom}</span> ({a.type}) — dernière mesure {a.derniereValeur} kWh le {a.dateMesure}
+                  <span className="font-medium text-foreground">{a.nom}</span> ({a.type}) — {a.raison}
                 </li>
               ))}
             </ul>
-          </CardContent>
-        </Card>
-      )}
+          )}
+        </CardContent>
+      </Card>
 
       {stats && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -309,6 +319,33 @@ export default function ConsommateursPage() {
           </Card>
         </div>
       )}
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Import en masse (JSON)</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-2">
+          <textarea className="w-full h-24 rounded-md border border-input bg-transparent p-2 text-sm font-mono" placeholder='[{"type":"MesureConsommation","valeur":10,"unite":"kWh","dateMesure":"2026-09-30","concerne":"Maison_Djerba"}]' value={importText} onChange={(e) => setImportText(e.target.value)} />
+          <Button size="sm" disabled={importing} onClick={async () => {
+            setImporting(true);
+            try {
+              const items = JSON.parse(importText);
+              await mesureApi.create && fetch(`${import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1"}/mesures/bulk`, {
+                method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(items),
+              });
+              setMessage({ type: "success", text: "Import réussi." });
+              setImportText("");
+              if (selected) loadMesures(selected);
+              loadConsommateurs();
+              loadStats();
+            } catch (e) {
+              setMessage({ type: "error", text: e.message });
+            } finally {
+              setImporting(false);
+            }
+          }}>{importing ? <Loader2 className="w-4 h-4 animate-spin" /> : "Importer"}</Button>
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader>
@@ -445,6 +482,19 @@ export default function ConsommateursPage() {
                 </tbody>
               </table>
             </div>
+            {mesures.length > 0 && (
+              <div className="h-[220px] mt-4">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={[...mesures].sort((a, b) => a.dateMesure.localeCompare(b.dateMesure))} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                    <XAxis dataKey="dateMesure" fontSize={10} />
+                    <YAxis fontSize={10} />
+                    <Tooltip />
+                    <Line type="monotone" dataKey="valeur" stroke="var(--primary)" dot={false} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            )}
           </CardContent>
         </Card>
       )}

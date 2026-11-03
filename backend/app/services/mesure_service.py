@@ -139,3 +139,9 @@ class MesureService:
             raise HTTPException(status.HTTP_404_NOT_FOUND, f"Mesure introuvable : {mesure_id}")
         self.fuseki.update(f"DELETE WHERE {{ {mesure} ?p ?o }}")
         return {"supprimee": mesure_id}
+
+    def create_mesures_bulk(self, items: list[MesureCreate]) -> list[Mesure]:
+        created = []
+        for item in items:
+            created.append(self.create_mesure(item))
+        return created

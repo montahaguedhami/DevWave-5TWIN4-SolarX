@@ -69,7 +69,7 @@ export const consommateurApi = {
   mesures: (id) => request(`/consommateurs/${enc(id)}/mesures`),
   stats: () => request("/consommateurs/stats"),
   statsAvancees: () => request("/consommateurs/stats/avancees"),
-  alertes: () => request("/consommateurs/alertes"),
+  alertes: (params) => request("/consommateurs/alertes", { params }),
   question: (q) => request("/consommateurs/question", { method: "POST", body: { question: q } }),
 };
 

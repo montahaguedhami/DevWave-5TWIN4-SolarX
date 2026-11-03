@@ -247,30 +247,45 @@ class ConsommateurService:
             "tauxAutoconsommation": round((total_prod / total_conso * 100) if total_conso else 0.0, 1),
         }
 
-    def alertes(self, seuil_pct: float = 30.0) -> list[dict]:
-        # Consommateurs dont la dernière mesure dépasse la moyenne de leur historique de plus de seuil_pct %
-        rows = self.fuseki.select(
-            """
-            SELECT ?c ?nom ?type ?villeNom ?valeur ?date WHERE {
-              ?m a/rdfs:subClassOf* solarx:MesureConsommation ; solarx:valeur ?valeur ; solarx:dateMesure ?date ; solarx:concerne ?c .
-              ?c a ?type . ?type rdfs:subClassOf* solarx:Consommateur . FILTER(?type != solarx:Consommateur)
-              OPTIONAL { ?c solarx:nom ?nom }
-              OPTIONAL { ?c solarx:situeDans ?v . ?v solarx:nom ?villeNom }
-              FILTER NOT EXISTS { ?m2 a/rdfs:subClassOf* solarx:MesureConsommation ; solarx:concerne ?c ; solarx:dateMesure ?d2 . FILTER(?d2 > ?date) }
-            }
-            """
-        )
+    def alertes(self, seuil_pct: float = 30.0, jours_sans_mesure: int = 7) -> list[dict]:
+        from datetime import datetime, timedelta, timezone
+
+        from app.services.mesure_service import MesureService
+
+        consommateurs = self.list_consommateurs()
         alertes = []
-        for r in rows:
-            alertes.append({
-                "consommateur": local_name(r["c"]),
-                "nom": r.get("nom") or local_name(r["c"]),
-                "type": local_name(r["type"]),
-                "ville": r.get("villeNom"),
-                "derniereValeur": float(r["valeur"]),
-                "dateMesure": r["date"],
-                "niveau": "info",
-            })
+        maintenant = datetime.now(timezone.utc)
+        for c in consommateurs:
+            mesures = MesureService(self.fuseki).list_mesures(concerne=c.id, type_="MesureConsommation")
+            if not mesures:
+                alertes.append({
+                    "consommateur": c.id, "nom": c.nom, "type": c.type, "ville": c.villeNom or c.ville,
+                    "niveau": "warning", "raison": "Aucune mesure de consommation enregistrée.",
+                })
+                continue
+            mesures_triees = sorted(mesures, key=lambda m: m.dateMesure, reverse=True)
+            derniere = mesures_triees[0]
+            try:
+                date_derniere = datetime.fromisoformat(derniere.dateMesure.replace("Z", "+00:00"))
+            except ValueError:
+                date_derniere = maintenant
+            if (maintenant - date_derniere).days >= jours_sans_mesure:
+                alertes.append({
+                    "consommateur": c.id, "nom": c.nom, "type": c.type, "ville": c.villeNom or c.ville,
+                    "niveau": "warning",
+                    "raison": f"Aucune mesure depuis { (maintenant - date_derniere).days } jours.",
+                    "derniereValeur": derniere.valeur, "dateMesure": derniere.dateMesure,
+                })
+            if len(mesures_triees) >= 2:
+                historique = [m.valeur for m in mesures_triees[1:]]
+                moyenne = sum(historique) / len(historique) if historique else 0
+                if moyenne > 0 and derniere.valeur > moyenne * (1 + seuil_pct / 100.0):
+                    alertes.append({
+                        "consommateur": c.id, "nom": c.nom, "type": c.type, "ville": c.villeNom or c.ville,
+                        "niveau": "critical",
+                        "raison": f"Consommation anormale : {derniere.valeur} kWh vs moyenne {round(moyenne,2)} kWh (+{seuil_pct}%).",
+                        "derniereValeur": derniere.valeur, "dateMesure": derniere.dateMesure,
+                    })
         return alertes
 
     def repondre_question(self, question: str) -> dict:

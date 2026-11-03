@@ -31,8 +31,12 @@ def stats_avancees(service: ConsommateurService = Depends(get_service)):
 
 
 @router.get("/alertes")
-def alertes(service: ConsommateurService = Depends(get_service)):
-    return service.alertes()
+def alertes(
+    seuil: float = Query(30.0),
+    jours: int = Query(7),
+    service: ConsommateurService = Depends(get_service),
+):
+    return service.alertes(seuil_pct=seuil, jours_sans_mesure=jours)
 
 
 @router.post("/question")
