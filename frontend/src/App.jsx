@@ -22,6 +22,7 @@ import LocalisationPage from "@/pages/localisation/page";
 import MeteoPage from "@/pages/meteo/page";
 import HistoriqueMeteoPage from "@/pages/historique-meteo/page";
 import AnalyticsPage from "@/pages/analytics/page";
+import EnergyBalancePage from "@/pages/energy-balance/page";
 import SettingsPage from "@/pages/settings/page";
 import NotesAppPage from "@/pages/apps/notes/page";
 import TicketsAppPage from "@/pages/apps/tickets/page";
@@ -56,7 +57,7 @@ function App() {
   }
                 <Route path="/" element={<Layout />}>
                   <Route index element={<DashboardPage />} />
-                  <Route path="solar-production" element={<SolarProductionPage />} />
+                  <Route path="production" element={<SolarProductionPage />} />
                   <Route path="solar-simulator" element={<SolarSimulatorPage />} />
                   <Route path="battery" element={<BatteryPage />} />
                   <Route path="consumption" element={<ConsumptionPage />} />
@@ -72,6 +73,7 @@ function App() {
                   <Route path="meteo" element={<MeteoPage />} />
                   <Route path="historique-meteo" element={<HistoriqueMeteoPage />} />
                   <Route path="analytics" element={<AnalyticsPage />} />
+                  <Route path="energy-balance" element={<EnergyBalancePage />} />
                   <Route path="settings" element={<SettingsPage />} />
 
                   <Route path="apps/notes" element={<NotesAppPage />} />

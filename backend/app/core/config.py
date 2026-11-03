@@ -30,7 +30,16 @@ class Settings(BaseSettings):
     PORT: int = 8000
 
     # CORS
-    CORS_ORIGINS: list[str] = ["http://localhost:3000"]
+    CORS_ORIGINS: list[str] = [
+        "http://localhost:3000",
+        "http://localhost:4173",
+        "http://localhost:4174",
+        "http://localhost:4175",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:4173",
+        "http://127.0.0.1:4174",
+        "http://127.0.0.1:4175",
+    ]
 
     # Database
     DATABASE_URL: str = "sqlite:///./solarx.db"

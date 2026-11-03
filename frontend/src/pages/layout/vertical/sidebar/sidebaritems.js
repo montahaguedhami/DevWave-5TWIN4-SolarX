@@ -24,9 +24,9 @@ const SidebarContent= [
       },
       {
         id: uniqueId(),
-        name: "Production solaire",
+        name: "Production",
         icon: Sun,
-        url: "/solar-production",
+        url: "/production",
       },
       {
         id: uniqueId(),
@@ -62,6 +62,12 @@ const SidebarContent= [
         name: "Analyse énergétique",
         icon: BarChart3,
         url: "/analytics",
+      },
+      {
+        id: uniqueId(),
+        name: "Équilibre énergétique",
+        icon: BarChart3,
+        url: "/energy-balance",
       },
       {
         id: uniqueId(),
