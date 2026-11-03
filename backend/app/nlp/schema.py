@@ -21,6 +21,16 @@ class Edge:
 
 
 @dataclass
+class Condition:
+    """Une condition d'une classe définie (owl:equivalentClass) : classe de base, ou restriction sur `prop`."""
+    cls: str | None = None         # l'élément appartient à cette classe
+    prop: str | None = None
+    has_value: object = None       # owl:hasValue
+    some_class: str | None = None  # owl:someValuesFrom une classe
+    minimum: float | None = None   # owl:someValuesFrom un type de données avec xsd:minInclusive
+
+
+@dataclass
 class OntologySchema:
     parents: dict[str, set[str]] = field(default_factory=lambda: defaultdict(set))
     classes: set[str] = field(default_factory=set)
@@ -32,6 +42,7 @@ class OntologySchema:
     names: dict[str, str] = field(default_factory=dict)  # individu -> valeur de :nom
     class_data_props: dict[str, dict[str, int]] = field(default_factory=lambda: defaultdict(dict))
     string_values: dict[str, set[str]] = field(default_factory=lambda: defaultdict(set))
+    defined: dict[str, list[Condition]] = field(default_factory=lambda: defaultdict(list))
 
     # --- hiérarchie -------------------------------------------------------
     def ancestors(self, cls: str) -> set[str]:
@@ -62,7 +73,9 @@ class OntologySchema:
     def data_props_of(self, cls: str) -> dict[str, int]:
         """Propriétés de données réellement remplies pour cette classe (et ses sous-classes)."""
         counts: dict[str, int] = defaultdict(int)
-        for c in self.descendants(cls) | {cls}:
+        # une classe définie n'a pas d'individu déclaré : ce sont ceux de sa classe de base
+        bases = {c.cls for c in self.defined.get(cls, ()) if c.cls}
+        for c in self.descendants(cls) | {cls} | {d for b in bases for d in self.descendants(b)}:
             for p, n in self.class_data_props.get(c, {}).items():
                 counts[p] += n
         return counts
@@ -77,6 +90,18 @@ _CLASSES = """
 SELECT ?c ?parent WHERE {
   ?c a owl:Class . FILTER(STRSTARTS(STR(?c), "$NS"))
   OPTIONAL { ?c rdfs:subClassOf ?parent . FILTER(isIRI(?parent)) }
+}"""
+
+# Classes définies : Fuseki n'a pas de raisonneur, aucun individu n'y est rangé.
+# On lit leur définition pour la traduire en conditions SPARQL.
+_DEFINED = """
+SELECT ?c ?m ?prop ?valeur ?classe ?minimum WHERE {
+  ?c owl:equivalentClass/owl:intersectionOf/rdf:rest*/rdf:first ?m .
+  FILTER(STRSTARTS(STR(?c), "$NS"))
+  OPTIONAL { ?m owl:onProperty ?prop }
+  OPTIONAL { ?m owl:hasValue ?valeur }
+  OPTIONAL { ?m owl:someValuesFrom ?classe . FILTER(isIRI(?classe)) }
+  OPTIONAL { ?m owl:someValuesFrom/owl:withRestrictions/rdf:rest*/rdf:first/xsd:minInclusive ?minimum }
 }"""
 
 _PROPERTIES = """
@@ -126,6 +151,14 @@ def load_schema(run_query: QueryFn, namespace: str) -> OntologySchema:
             s.parents[r["c"]].add(r["parent"])
             s.classes.add(r["parent"])
     s.classes.discard("Thing")
+
+    for r in run(_DEFINED):
+        if not r.get("prop"):
+            s.defined[r["c"]].append(Condition(cls=r["m"]))
+            s.parents[r["c"]].add(r["m"])
+        elif r.get("valeur") is not None or r.get("classe") or r.get("minimum") is not None:
+            s.defined[r["c"]].append(Condition(prop=r["prop"], has_value=r.get("valeur"),
+                                               some_class=r.get("classe"), minimum=r.get("minimum")))
 
     declared: dict[str, tuple[set[str], set[str]]] = defaultdict(lambda: (set(), set()))
     inverse_candidates: dict[str, set[str]] = defaultdict(set)

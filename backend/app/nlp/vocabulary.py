@@ -18,6 +18,8 @@ CLASS_LABELS = {
     "Stockage": ("stockage", "stockages"),
     "Batterie": ("batterie", "batteries"),
     "StockageHydraulique": ("stockage hydraulique", "stockages hydrauliques"),
+    "GrandStockage": ("grand stockage", "grands stockages"),
+    "BatterieDomestique": ("batterie domestique", "batteries domestiques"),
     "Equipement": ("équipement", "équipements"),
     "Capteur": ("capteur", "capteurs"),
     "CompteurIntelligent": ("compteur intelligent", "compteurs intelligents"),
