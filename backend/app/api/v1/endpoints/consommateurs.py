@@ -25,6 +25,16 @@ def stats(service: ConsommateurService = Depends(get_service)):
     return service.stats()
 
 
+@router.get("/stats/avancees")
+def stats_avancees(service: ConsommateurService = Depends(get_service)):
+    return service.stats_avancees()
+
+
+@router.get("/alertes")
+def alertes(service: ConsommateurService = Depends(get_service)):
+    return service.alertes()
+
+
 @router.get("/", response_model=list[Consommateur])
 def list_consommateurs(
     type: str | None = Query(None),

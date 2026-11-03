@@ -182,3 +182,88 @@ class ConsommateurService:
             "totalConsommateurs": sum(int(r["nb"]) for r in rows),
             "totalMesures": int(total_mesures[0]["n"]) if total_mesures else 0,
         }
+
+    def stats_avancees(self) -> dict:
+        # Consommation totale par type de consommateur
+        par_type_consommation = self.fuseki.select(
+            """
+            SELECT ?type (SUM(?v) AS ?total) (COUNT(DISTINCT ?m) AS ?nbMesures) WHERE {
+              ?m a/rdfs:subClassOf* solarx:MesureConsommation ; solarx:valeur ?v ; solarx:concerne ?c .
+              ?c a ?type . ?type rdfs:subClassOf* solarx:Consommateur . FILTER(?type != solarx:Consommateur)
+            } GROUP BY ?type ORDER BY DESC(?total)
+            """
+        )
+        # Top consommateurs par consommation totale
+        top_rows = self.fuseki.select(
+            """
+            SELECT ?c ?nom ?type (SUM(?v) AS ?total) (COUNT(?m) AS ?nb) WHERE {
+              ?m a/rdfs:subClassOf* solarx:MesureConsommation ; solarx:valeur ?v ; solarx:concerne ?c .
+              ?c a ?type . ?type rdfs:subClassOf* solarx:Consommateur . FILTER(?type != solarx:Consommateur)
+              OPTIONAL { ?c solarx:nom ?nom }
+            } GROUP BY ?c ?nom ?type ORDER BY DESC(?total) LIMIT 5
+            """
+        )
+        # Consommation par ville
+        par_ville = self.fuseki.select(
+            """
+            SELECT ?ville ?villeNom (SUM(?v) AS ?total) WHERE {
+              ?m a/rdfs:subClassOf* solarx:MesureConsommation ; solarx:valeur ?v ; solarx:concerne ?c .
+              ?c solarx:situeDans ?ville . ?ville a solarx:Ville .
+              OPTIONAL { ?ville solarx:nom ?villeNom }
+            } GROUP BY ?ville ?villeNom ORDER BY DESC(?total)
+            """
+        )
+        # Production vs consommation
+        prod = self.fuseki.select(
+            "SELECT (SUM(?v) AS ?total) WHERE { ?m a/rdfs:subClassOf* solarx:MesureProduction ; solarx:valeur ?v }"
+        )
+        conso = self.fuseki.select(
+            "SELECT (SUM(?v) AS ?total) WHERE { ?m a/rdfs:subClassOf* solarx:MesureConsommation ; solarx:valeur ?v }"
+        )
+        total_prod = float(prod[0]["total"]) if prod and "total" in prod[0] else 0.0
+        total_conso = float(conso[0]["total"]) if conso and "total" in conso[0] else 0.0
+        return {
+            "consommationParType": [
+                {"type": local_name(r["type"]), "total": round(float(r["total"]), 2), "nbMesures": int(r["nbMesures"])}
+                for r in par_type_consommation
+            ],
+            "topConsommateurs": [
+                {"id": local_name(r["c"]), "nom": r.get("nom") or local_name(r["c"]), "type": local_name(r["type"]),
+                 "total": round(float(r["total"]), 2), "nbMesures": int(r["nb"])}
+                for r in top_rows
+            ],
+            "consommationParVille": [
+                {"ville": local_name(r["ville"]), "villeNom": r.get("villeNom") or local_name(r["ville"]),
+                 "total": round(float(r["total"]), 2)}
+                for r in par_ville
+            ],
+            "productionTotale": round(total_prod, 2),
+            "consommationTotale": round(total_conso, 2),
+            "tauxAutoconsommation": round((total_prod / total_conso * 100) if total_conso else 0.0, 1),
+        }
+
+    def alertes(self, seuil_pct: float = 30.0) -> list[dict]:
+        # Consommateurs dont la dernière mesure dépasse la moyenne de leur historique de plus de seuil_pct %
+        rows = self.fuseki.select(
+            """
+            SELECT ?c ?nom ?type ?villeNom ?valeur ?date WHERE {
+              ?m a/rdfs:subClassOf* solarx:MesureConsommation ; solarx:valeur ?valeur ; solarx:dateMesure ?date ; solarx:concerne ?c .
+              ?c a ?type . ?type rdfs:subClassOf* solarx:Consommateur . FILTER(?type != solarx:Consommateur)
+              OPTIONAL { ?c solarx:nom ?nom }
+              OPTIONAL { ?c solarx:situeDans ?v . ?v solarx:nom ?villeNom }
+              FILTER NOT EXISTS { ?m2 a/rdfs:subClassOf* solarx:MesureConsommation ; solarx:concerne ?c ; solarx:dateMesure ?d2 . FILTER(?d2 > ?date) }
+            }
+            """
+        )
+        alertes = []
+        for r in rows:
+            alertes.append({
+                "consommateur": local_name(r["c"]),
+                "nom": r.get("nom") or local_name(r["c"]),
+                "type": local_name(r["type"]),
+                "ville": r.get("villeNom"),
+                "derniereValeur": float(r["valeur"]),
+                "dateMesure": r["date"],
+                "niveau": "info",
+            })
+        return alertes

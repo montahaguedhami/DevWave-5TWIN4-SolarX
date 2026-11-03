@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { Plus, Trash2, Pencil, X, Loader2 } from "lucide-react";
+import { Plus, Trash2, Pencil, X, Loader2, AlertTriangle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 import { consommateurApi, mesureApi, localisationApi } from "@/services/semantic-api";
 
 const TYPES_CONSOMMATEUR = ["Ecole", "Entreprise", "Hopital", "Maison", "Particulier", "Institution", "Usine"];
@@ -24,6 +25,8 @@ export default function ConsommateursPage() {
   const [mesureSaving, setMesureSaving] = useState(false);
   const [filtreType, setFiltreType] = useState("");
   const [filtreVille, setFiltreVille] = useState("");
+  const [stats, setStats] = useState(null);
+  const [alertes, setAlertes] = useState([]);
 
   const loadVilles = useCallback(() => {
     localisationApi.villes().then(setVilles).catch((e) => setMessage({ type: "error", text: e.message }));
@@ -45,9 +48,15 @@ export default function ConsommateursPage() {
     loadVilles();
   }, [loadVilles]);
 
+  const loadStats = useCallback(() => {
+    consommateurApi.statsAvancees().then(setStats).catch(() => {});
+    consommateurApi.alertes().then(setAlertes).catch(() => {});
+  }, []);
+
   useEffect(() => {
     loadConsommateurs();
-  }, [loadConsommateurs]);
+    loadStats();
+  }, [loadConsommateurs, loadStats]);
 
   const loadMesures = useCallback((id) => {
     consommateurApi
@@ -212,6 +221,60 @@ export default function ConsommateursPage() {
           </select>
         </CardContent>
       </Card>
+
+      {alertes.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Alertes</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-1 text-sm">
+              {alertes.map((a, i) => (
+                <li key={i} className="text-muted-foreground">
+                  <span className="font-medium text-foreground">{a.nom}</span> ({a.type}) — dernière mesure {a.derniereValeur} kWh le {a.dateMesure}
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      )}
+
+      {stats && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Consommation par type</CardTitle>
+            </CardHeader>
+            <CardContent className="h-[260px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={stats.consommationParType} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                  <XAxis dataKey="type" fontSize={11} />
+                  <YAxis fontSize={11} />
+                  <Tooltip />
+                  <Bar dataKey="total" fill="var(--primary)" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Top consommateurs</CardTitle>
+            </CardHeader>
+            <CardContent className="h-[260px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={stats.topConsommateurs} layout="vertical" margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                  <XAxis type="number" fontSize={11} />
+                  <YAxis dataKey="nom" type="category" fontSize={11} width={120} />
+                  <Tooltip />
+                  <Bar dataKey="total" fill="var(--chart-2, #10b981)" radius={[0, 4, 4, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
       <Card>
         <CardHeader>

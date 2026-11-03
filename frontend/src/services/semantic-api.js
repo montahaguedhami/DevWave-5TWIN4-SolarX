@@ -68,6 +68,8 @@ export const consommateurApi = {
     request(`/consommateurs/${enc(id)}`, { method: "DELETE", params: { cascade } }),
   mesures: (id) => request(`/consommateurs/${enc(id)}/mesures`),
   stats: () => request("/consommateurs/stats"),
+  statsAvancees: () => request("/consommateurs/stats/avancees"),
+  alertes: () => request("/consommateurs/alertes"),
 };
 
 export const mesureApi = {
