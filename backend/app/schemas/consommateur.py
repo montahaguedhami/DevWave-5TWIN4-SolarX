@@ -50,4 +50,6 @@ class Consommateur(BaseModel):
     surfaceM2: float | None = None
     ville: str | None = None
     villeNom: str | None = None
+    latitude: float | None = None
+    longitude: float | None = None
     nbMesures: int = 0

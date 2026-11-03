@@ -35,6 +35,11 @@ def alertes(service: ConsommateurService = Depends(get_service)):
     return service.alertes()
 
 
+@router.post("/question")
+def question(body: dict, service: ConsommateurService = Depends(get_service)):
+    return service.repondre_question(body.get("question", ""))
+
+
 @router.get("/", response_model=list[Consommateur])
 def list_consommateurs(
     type: str | None = Query(None),

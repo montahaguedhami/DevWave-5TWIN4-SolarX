@@ -38,17 +38,22 @@ def _to_consommateur(row: dict) -> Consommateur:
         surfaceM2=float(row["surface"]) if "surface" in row else None,
         ville=local_name(row["ville"]) if "ville" in row else None,
         villeNom=row.get("villeNom") or (local_name(row["ville"]) if "ville" in row else None),
+        latitude=float(row["lat"]) if "lat" in row else None,
+        longitude=float(row["lon"]) if "lon" in row else None,
         nbMesures=int(row.get("nbMesures", 0)),
     )
 
 
 _LIST_QUERY = """
-SELECT ?c ?type ?nom ?surface ?ville ?villeNom ?nbMesures WHERE {{
+SELECT ?c ?type ?nom ?surface ?ville ?villeNom ?lat ?lon ?nbMesures WHERE {{
   ?c a ?type .
   ?type rdfs:subClassOf* solarx:Consommateur . FILTER(?type != solarx:Consommateur)
   OPTIONAL {{ ?c solarx:nom ?nom }}
   OPTIONAL {{ ?c solarx:surfaceM2 ?surface }}
-  OPTIONAL {{ ?c solarx:situeDans ?ville . ?ville a solarx:Ville . OPTIONAL {{ ?ville solarx:nom ?villeNom }} }}
+  OPTIONAL {{ ?c solarx:situeDans ?ville . ?ville a solarx:Ville .
+              OPTIONAL {{ ?ville solarx:nom ?villeNom }}
+              OPTIONAL {{ ?ville solarx:latitude ?lat }}
+              OPTIONAL {{ ?ville solarx:longitude ?lon }} }}
   OPTIONAL {{ SELECT ?c (COUNT(DISTINCT ?m) AS ?nbMesures) WHERE {{ ?m solarx:concerne ?c ; a/rdfs:subClassOf* solarx:Mesure }} GROUP BY ?c }}
   {filters}
 }}
@@ -267,3 +272,25 @@ class ConsommateurService:
                 "niveau": "info",
             })
         return alertes
+
+    def repondre_question(self, question: str) -> dict:
+        q = (question or "").lower()
+        stats = self.stats_avancees()
+        if "top" in q or "plus" in q or "plus grand" in q:
+            top = stats["topConsommateurs"]
+            if top:
+                t = top[0]
+                return {"reponse": f"Le plus grand consommateur est {t['nom']} ({t['type']}) avec {t['total']} kWh."}
+        if "total" in q or "consommation" in q:
+            return {"reponse": f"Consommation totale : {stats['consommationTotale']} kWh ; production : {stats['productionTotale']} kWh ; taux d'autoconsommation : {stats['tauxAutoconsommation']} %."}
+        if "ville" in q:
+            villes = stats["consommationParVille"]
+            if villes:
+                v = villes[0]
+                return {"reponse": f"Ville la plus consommatrice : {v['villeNom']} avec {v['total']} kWh."}
+        if "type" in q:
+            types = stats["consommationParType"]
+            if types:
+                t = types[0]
+                return {"reponse": f"Type le plus consommateur : {t['type']} avec {t['total']} kWh."}
+        return {"reponse": "Je peux répondre sur : top consommateur, total consommation, ville la plus consommatrice, type le plus consommateur."}

@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
-import { Plus, Trash2, Pencil, X, Loader2, AlertTriangle } from "lucide-react";
+import { Plus, Trash2, Pencil, X, Loader2, AlertTriangle, Download, MapPin } from "lucide-react";
+import "leaflet/dist/leaflet.css";
+import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
-import { consommateurApi, mesureApi, localisationApi } from "@/services/semantic-api";
+import { consommateurApi, mesureApi, localisationApi, meteoApi } from "@/services/semantic-api";
 
 const TYPES_CONSOMMATEUR = ["Ecole", "Entreprise", "Hopital", "Maison", "Particulier", "Institution", "Usine"];
 const TYPES_MESURE = ["MesureConsommation", "MesureProduction", "MesureStockage"];
@@ -27,6 +29,9 @@ export default function ConsommateursPage() {
   const [filtreVille, setFiltreVille] = useState("");
   const [stats, setStats] = useState(null);
   const [alertes, setAlertes] = useState([]);
+  const [weather, setWeather] = useState(null);
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
 
   const loadVilles = useCallback(() => {
     localisationApi.villes().then(setVilles).catch((e) => setMessage({ type: "error", text: e.message }));
@@ -52,6 +57,29 @@ export default function ConsommateursPage() {
     consommateurApi.statsAvancees().then(setStats).catch(() => {});
     consommateurApi.alertes().then(setAlertes).catch(() => {});
   }, []);
+
+  const exportCsv = () => {
+    const header = ["id", "nom", "type", "ville", "surfaceM2", "nbMesures"];
+    const rows = consommateurs.map((c) => [c.id, c.nom, c.type, c.villeNom || c.ville, c.surfaceM2 ?? "", c.nbMesures]);
+    const csv = [header, ...rows].map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "consommateurs.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const askAssistant = async () => {
+    if (!question.trim()) return;
+    try {
+      const res = await consommateurApi.question(question);
+      setAnswer(res.reponse);
+    } catch (e) {
+      setAnswer(e.message);
+    }
+  };
 
   useEffect(() => {
     loadConsommateurs();
@@ -129,6 +157,11 @@ export default function ConsommateursPage() {
     setSelected(c.id);
     setMesureForm((f) => ({ ...f, concerne: c.id }));
     loadMesures(c.id);
+    if (c.ville) {
+      meteoApi.actuelle(c.ville).then(setWeather).catch(() => setWeather(null));
+    } else {
+      setWeather(null);
+    }
   };
 
   const submitMesure = async (e) => {
@@ -175,6 +208,7 @@ export default function ConsommateursPage() {
           <h1 className="text-3xl font-extrabold tracking-tight text-foreground">Consommateurs</h1>
           <p className="text-sm text-muted-foreground mt-1">Gestion des consommateurs et de leurs mesures de consommation.</p>
         </div>
+        <Button variant="outline" onClick={exportCsv}><Download className="w-4 h-4 mr-2" /> Export CSV</Button>
       </div>
 
       {message && (
@@ -275,6 +309,48 @@ export default function ConsommateursPage() {
           </Card>
         </div>
       )}
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg flex items-center gap-2"><MapPin className="w-4 h-4" /> Carte des consommateurs</CardTitle>
+        </CardHeader>
+        <CardContent className="h-[320px]">
+          <MapContainer center={[34.6, 9.6]} zoom={6} style={{ height: "100%", width: "100%" }}>
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            {consommateurs.filter((c) => c.latitude != null && c.longitude != null).map((c) => (
+              <CircleMarker key={c.id} center={[c.latitude, c.longitude]} radius={8} pathOptions={{ color: "#2563eb" }}>
+                <Popup>{c.nom} ({c.type}) — {c.villeNom || c.ville}</Popup>
+              </CircleMarker>
+            ))}
+          </MapContainer>
+        </CardContent>
+      </Card>
+
+      {selected && weather && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Météo — {weather.villeNom || selected}</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm text-muted-foreground">
+            {weather.mesures?.map((m) => (
+              <span key={m.classe} className="mr-4">{m.label}: {m.valeur} {m.unite}</span>
+            ))}
+          </CardContent>
+        </Card>
+      )}
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Assistant consommation</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-2">
+          <div className="flex gap-2">
+            <Input placeholder="Posez une question (ex. top consommateur)" value={question} onChange={(e) => setQuestion(e.target.value)} />
+            <Button onClick={askAssistant}>Demander</Button>
+          </div>
+          {answer && <p className="text-sm text-muted-foreground">{answer}</p>}
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader>

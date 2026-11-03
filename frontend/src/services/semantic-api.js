@@ -70,6 +70,7 @@ export const consommateurApi = {
   stats: () => request("/consommateurs/stats"),
   statsAvancees: () => request("/consommateurs/stats/avancees"),
   alertes: () => request("/consommateurs/alertes"),
+  question: (q) => request("/consommateurs/question", { method: "POST", body: { question: q } }),
 };
 
 export const mesureApi = {
