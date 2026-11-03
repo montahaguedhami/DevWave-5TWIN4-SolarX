@@ -1,4 +1,6 @@
 """Rédaction de la réponse en français à partir des résultats SPARQL (gabarits de phrases)."""
+import re
+
 from .generator import QueryPlan
 from .schema import OntologySchema
 from .text import humanize, plural_word
@@ -24,8 +26,20 @@ PROP_LABELS = {
     "dateEvenement": ("date", ""),
     "dateOccurrence": ("date", ""),
     "dateMesure": ("date de mesure", ""),
+    "dateRecuperation": ("date de récupération", ""),
+    "sourceDonnees": ("source des données", ""),
+    "latitude": ("latitude", "°"),
+    "longitude": ("longitude", "°"),
+}
+# Unité de :valeur selon le type de mesure (quand :unite n'est pas dans le résultat)
+VALUE_UNITS = {
+    "Temperature": "°C", "Humidite": "%", "CouvertureNuageuse": "%", "Precipitation": "mm",
+    "VitesseVent": "m/s", "Ensoleillement": "W/m²",
 }
 MAX_NAMES = 8
+MOIS = ("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre",
+        "novembre", "décembre")
+_DATE = re.compile(r"(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}))?")
 
 
 def class_label(cls: str | None, n: int = 1) -> str:
@@ -49,9 +63,32 @@ def fmt(x) -> str:
     return str(x)
 
 
-def with_unit(value, prop: str | None) -> str:
+def fmt_date(value) -> str:
+    """'2023-02-14T00:00:00' -> '14 février 2023' ; l'heure n'est gardée que si elle est renseignée."""
+    m = _DATE.match(str(value))
+    if not m or not 1 <= int(m[2]) <= 12:
+        return str(value)
+    jour = "1er" if int(m[3]) == 1 else str(int(m[3]))
+    texte = f"{jour} {MOIS[int(m[2]) - 1]} {m[1]}"
+    if m[4] and (m[4], m[5]) != ("00", "00"):
+        texte += f" à {int(m[4])} h {m[5]}"
+    return texte
+
+
+def de(word: str) -> str:
+    """« de batteries », « d'équipements »."""
+    return ("d'" if word[0].lower() in "aeiouéèêh" else "de ") + word
+
+
+def with_unit(value, prop: str | None, row: dict | None = None, cls: str | None = None) -> str:
+    if (prop or "").startswith("date"):
+        return fmt_date(value)
     unit = PROP_LABELS.get(prop or "", ("", ""))[1]
-    return f"{fmt(value)} {unit}".strip()
+    if prop == "valeur":
+        # :valeur n'a pas d'unité fixe : celle de la ligne (:unite), sinon celle du type de mesure
+        unit = (row or {}).get("unite") or VALUE_UNITS.get(cls or "", "")
+    sep = "" if unit == "°" else " "
+    return f"{fmt(value)}{sep}{unit}".strip()
 
 
 def prop_label(prop: str | None) -> str:
@@ -76,7 +113,7 @@ def write_answer(plan: QueryPlan, rows: list[dict], schema: OntologySchema) -> s
             if not rows:
                 return f"Aucun résultat pour les {class_label(plan.target, 2)}."
             parts = [f"{label(r.get('groupe'))} : {fmt(r['nombre'])}" for r in rows[:MAX_NAMES]]
-            return f"Nombre de {class_label(plan.target, 2)} par {group_word()} — " + ", ".join(parts) + "."
+            return f"Nombre {de(class_label(plan.target, 2))} par {group_word()} — " + ", ".join(parts) + "."
         n = int(rows[0]["nombre"]) if rows else 0
         if n == 0:
             return f"Aucun résultat : 0 {class_label(plan.target)} ne correspond à la question."
@@ -86,14 +123,14 @@ def write_answer(plan: QueryPlan, rows: list[dict], schema: OntologySchema) -> s
         key = "total" if k == "somme" else "moyenne"
         word = "totale" if k == "somme" else "moyenne"
         if not rows or rows[0].get(key) is None:
-            return f"Aucune valeur de {prop_label(plan.prop)} n'est renseignée pour ces éléments."
+            return f"Aucune valeur {de(prop_label(plan.prop))} n'est renseignée pour ces éléments."
         if plan.group:
-            parts = [f"{label(r.get('groupe'))} : {with_unit(r[key], plan.prop)}" for r in rows[:MAX_NAMES]]
+            parts = [f"{label(r.get('groupe'))} : {with_unit(r[key], plan.prop, cls=plan.target)}" for r in rows[:MAX_NAMES]]
             return f"{prop_label(plan.prop).capitalize()} {word} des {class_label(plan.target, 2)} par {group_word()} — " + ", ".join(parts) + "."
         r = rows[0]
         n = int(r.get("nombre", 0))
         return (f"{prop_label(plan.prop).capitalize()} {word} des {class_label(plan.target, 2)}{context} : "
-                f"{with_unit(r[key], plan.prop)} (calcul sur {n} {class_label(plan.target, n)}).")
+                f"{with_unit(r[key], plan.prop, cls=plan.target)} (calcul sur {n} {class_label(plan.target, n)}).")
 
     if k in ("maximum", "minimum"):
         if not rows:
@@ -101,8 +138,8 @@ def write_answer(plan: QueryPlan, rows: list[dict], schema: OntologySchema) -> s
         adj = "la plus élevée" if k == "maximum" else "la plus faible"
         if len(rows) == 1:
             r = rows[0]
-            return f"{name(r)} a {the(plan.prop)} {adj} : {with_unit(r.get(plan.prop), plan.prop)}."
-        parts = [f"{name(r)} ({with_unit(r.get(plan.prop), plan.prop)})" for r in rows]
+            return f"{name(r)} a {the(plan.prop)} {adj} : {with_unit(r.get(plan.prop), plan.prop, r, plan.target)}."
+        parts = [f"{name(r)} ({with_unit(r.get(plan.prop), plan.prop, r, plan.target)})" for r in rows]
         return f"Les {len(rows)} {class_label(plan.target, 2)} avec {the(plan.prop)} {adj} : " + ", ".join(parts) + "."
 
     if k == "le_plus_de":
@@ -110,13 +147,14 @@ def write_answer(plan: QueryPlan, rows: list[dict], schema: OntologySchema) -> s
             return "Aucun résultat."
         r = rows[0]
         return (f"C'est {schema.label(str(r['element']))} qui compte le "
-                f"{'moins' if plan.order == 'min' else 'plus'} de {class_label(plan.counted, 2)} "
+                f"{'moins' if plan.order == 'min' else 'plus'} {de(class_label(plan.counted, 2))} "
                 f"({fmt(r['nombre'])}).")
 
     if k == "ou":
         if not rows:
             return f"La localisation de {schema.label(plan.individual)} n'est pas renseignée."
-        return f"{schema.label(plan.individual)} se trouve à {', '.join(name(r) for r in rows)}."
+        lieux = [("dans la région " if schema.is_a(str(r.get("element")), "Region") else "à ") + name(r) for r in rows]
+        return f"{schema.label(plan.individual)} se trouve {', '.join(lieux)}."
 
     if k == "decrire":
         if not rows:
@@ -138,12 +176,21 @@ def write_answer(plan: QueryPlan, rows: list[dict], schema: OntologySchema) -> s
         if not rows:
             return f"Cette information n'est pas renseignée pour {schema.label(plan.individual)}."
         r = rows[0]
-        return f"{prop_label(str(r['propriete'])).capitalize()} de {schema.label(plan.individual)} : {with_unit(r['valeur'], str(r['propriete']))}."
+        return f"{prop_label(str(r['propriete'])).capitalize()} {de(schema.label(plan.individual))} : {with_unit(r['valeur'], str(r['propriete']))}."
 
     # lister
     n = len(rows)
     if n == 0:
-        return f"Aucun résultat : aucun élément de type « {class_label(plan.target)} » ne correspond à la question."
-    names = ", ".join(name(r) for r in rows[:MAX_NAMES])
+        if not plan.context:
+            return f"Aucun résultat : aucun élément de type « {class_label(plan.target)} » ne correspond à la question."
+        texte = f"Aucun résultat : l'ontologie ne contient pas {de(class_label(plan.target))} pour {', '.join(plan.context)}."
+        if plan.target and schema.is_a_class(plan.target, "ConditionMeteo"):
+            texte += " La page Météo peut enregistrer la mesure du jour pour cette ville."
+        return texte
+    def item(r):
+        if r.get("valeur") is None:
+            return name(r)
+        return f"{name(r)} ({with_unit(r['valeur'], 'valeur', r, plan.target)})"
+    names = ", ".join(item(r) for r in rows[:MAX_NAMES])
     more = f" et {n - MAX_NAMES} autre(s)" if n > MAX_NAMES else ""
     return f"J'ai trouvé {n} {class_label(plan.target, n)}{context} : {names}{more}."

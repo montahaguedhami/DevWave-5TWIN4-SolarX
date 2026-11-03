@@ -162,6 +162,10 @@ class Analyzer:
             self._add(phrase, "state", state, 4)
         for p in INDEXED_VALUE_PROPERTIES & set(s.string_values):
             for v in s.string_values[p]:
+                # « Maintenance » (valeur de :etat) ne doit pas cacher la classe Maintenance ;
+                # l'état reste compris avec « en maintenance » (voir STATES)
+                if any(kind == "class" for _, kind, _ in self.lexicon.get(tuple(norm_tokens(v)), ())):
+                    continue
                 self._add(v, "value", (p, v, False), 3)
                 first = norm_tokens(v)[:1]
                 if first and len(first[0]) >= 4 and tuple(first) not in self.lexicon:

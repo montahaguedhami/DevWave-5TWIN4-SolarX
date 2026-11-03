@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 
 from .analyzer import Analysis, Mention
 from .schema import OntologySchema
+from .text import split_camel
 from .vocabulary import DEFAULT_NUMERIC, DISPLAY_PRIORITY
 
 NUMERIC_TYPES = {"decimal", "integer", "double", "float", "int", "long", "nonNegativeInteger"}
@@ -127,7 +128,27 @@ class SparqlGenerator:
         return f":{name}" if _SAFE_NAME.fullmatch(name) else f"<{self.ns}{name}>"
 
     def type_of(self, var: str, cls: str) -> str:
+        if cls in self.s.defined:
+            return self._defined(var, cls)
         return f"{var} rdf:type/rdfs:subClassOf* {self.term(cls)} ."
+
+    def _defined(self, var: str, cls: str) -> str:
+        """Classe définie par des axiomes OWL : sa définition devient des conditions SPARQL."""
+        parts = []
+        for c in self.s.defined[cls]:
+            if c.cls:
+                parts.append(self.type_of(var, c.cls))
+                continue
+            path = self.paths.step(c.prop, True, self.term)
+            other = f"{var}_{_var(c.prop)}"
+            if c.has_value is not None:
+                known = c.has_value in self.s.individuals
+                parts.append(f"{var} {path} {self.term(c.has_value) if known else _lit(str(c.has_value))} .")
+            elif c.some_class:
+                parts.append(f"{var} {path} {other} . {self.type_of(other, c.some_class)}")
+            else:
+                parts.append(f"{var} {path} {other} . FILTER({other} >= {_num(c.minimum)})")
+        return " ".join(parts)
 
     def link(self, a_var: str, a_classes: set[str], b: str, b_classes: set[str], cues: set[str],
              allowed: set[str] | None = None, max_len: int = 2) -> str | None:
@@ -263,7 +284,7 @@ class SparqlGenerator:
 
         for m in others:
             if m.kind == "individual":
-                notes_ctx.append(self.s.label(m.value))
+                notes_ctx.append(self.s.names.get(m.value) or split_camel(m.value))
             else:
                 notes_ctx.append(m.text)
         for m in [*a.of_kind("state"), *a.of_kind("value")]:

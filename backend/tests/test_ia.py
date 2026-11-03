@@ -12,11 +12,19 @@ from app.services.fuseki import SOLARX_NS
 from app.services.typed_sparql import PREFIXES, GraphSparql
 
 OWL_FILE = Path(__file__).resolve().parents[2] / "database" / "solarx.owl"
+P2_FILE = OWL_FILE.with_name("p2_stockage_equipement.ttl")
 
 
 @pytest.fixture(scope="module")
 def assistant() -> SolarXAssistant:
     graph = Graph().parse(OWL_FILE, format="xml")
+    return SolarXAssistant(GraphSparql(graph).run, PREFIXES, SOLARX_NS)
+
+
+@pytest.fixture(scope="module")
+def assistant_p2() -> SolarXAssistant:
+    # comme dans Fuseki après load_ontology et load_p2 : solarx.owl + le fichier du module P2
+    graph = Graph().parse(OWL_FILE, format="xml").parse(P2_FILE, format="turtle")
     return SolarXAssistant(GraphSparql(graph).run, PREFIXES, SOLARX_NS)
 
 
@@ -70,6 +78,36 @@ def test_comptage(assistant, question, nombre):
     r = assistant.ask(question)
     assert r["intention"] == "compter"
     assert r["resultats"][0]["nombre"] == nombre, r["sparql"]
+
+
+@pytest.mark.parametrize("question, attendu", [
+    # données Météo + Localisation : l'IA les comprend sans code propre à ces classes
+    ("Quelles villes sont dans le sud tunisien ?", {"Djerba", "Gabes", "Gafsa", "Tozeur"}),
+    ("Quelles mesures météo influencent le parc solaire Djerba ?", {"Ensoleillement_Djerba", "Temperature_Djerba"}),
+    ("Quelles couvertures nuageuses ?", {"CouvertureNuageuse_Bizerte"}),
+])
+def test_meteo_localisation(assistant, question, attendu):
+    r = assistant.ask(question)
+    assert elements(r) == attendu, r["sparql"]
+
+
+@pytest.mark.parametrize("question, extrait", [
+    ("Quelle est la température à Tunis ?", "Temperature_Tunis (24,5 °C)"),      # valeur + unité de la mesure
+    ("Quelle est l'humidité à Tunis ?", "(62 %)"),
+    ("Quelles mesures concernent la maison Djerba ?", "Mesure_002 (9 kWh)"),     # unité lue dans :unite
+    ("Quelle est la température moyenne ?", "°C"),
+    ("Quelle est la latitude de Tunis ?", "36,81°"),
+    ("Quelle est la source des données de Vent_Tunis ?", "Capteur_01"),
+    ("Quelle est la provenance de Vent_Tunis ?", "Capteur_01"),
+    ("Où se trouve Sfax ?", "dans la région Centre tunisien"),
+    ("Combien de villes par région ?", "Sud tunisien : 4"),
+    # aucune mesure enregistrée : la réponse nomme la ville et explique comment l'obtenir
+    ("quel est la temperature a kairouan", "pas de température pour Kairouan"),
+    ("Quelle est l'humidité à Gafsa ?", "pas d'humidité pour Gafsa. La page Météo"),
+])
+def test_reponses_meteo_localisation(assistant, question, extrait):
+    r = assistant.ask(question)
+    assert extrait in r["reponse"], r["reponse"]
 
 
 def test_somme(assistant):
@@ -145,3 +183,35 @@ def test_exemples_executables(assistant):
     for q in EXAMPLE_QUESTIONS:
         r = assistant.ask(q)
         assert r["sparql"] and r["resultats"], q
+
+
+# --- avec les données du module P2 (Stockage + Équipement) -------------------
+
+@pytest.mark.parametrize("question, attendu", [
+    ("Quels stockages hydrauliques ?", {"StockageHydraulique_01", "StockageHydraulique_02", "StockageHydraulique_03"}),
+    ("Quels équipements sont en panne ?", {"Capteur_05", "Compteur_04"}),
+    ("Quelles batteries ont une capacité supérieure à 1000 kWh ?", {"Batterie_03", "Batterie_04", "Batterie_06"}),
+    ("Quelles batteries installées en 2023 ?", {"Batterie_04", "Batterie_07"}),
+    # classes définies par des axiomes : Fuseki n'a pas de raisonneur, la définition devient du SPARQL
+    ("Quels grands stockages ?", {"StockageHydraulique_01", "StockageHydraulique_02", "StockageHydraulique_03"}),
+    ("Quelles batteries domestiques ?", {"Batterie_01", "Batterie_07"}),
+    # P2 a la valeur etat "Maintenance" : elle ne doit pas cacher la classe Maintenance
+    ("Quelles maintenances ?", {"Maintenance_01"}),
+    ("Quelle maintenance porte sur l'onduleur 01 ?", {"Maintenance_01"}),
+    ("Quels capteurs sont en maintenance ?", {"Capteur_04"}),
+])
+def test_questions_module_p2(assistant_p2, question, attendu):
+    assert elements(assistant_p2.ask(question)) == attendu
+
+
+@pytest.mark.parametrize("question, extrait", [
+    ("Combien de grands stockages ?", "3 grands stockages"),
+    ("Quelle est la marque de l'onduleur 03 ?", "Huawei"),
+    ("Quelle est la marque de l'onduleur 03 ?", "Marque d'Onduleur"),
+    ("Quelle est la date d'installation de la batterie 04 ?", "14 février 2023"),
+    ("Combien d'équipements par type ?", "Nombre d'équipements par type"),
+    ("Quelle batterie alimente l'hôpital Tunis ?", "(Hopital Tunis)"),
+    ("Quels incidents affectent la ligne haute tension 01 ?", "(Ligne HT 90 kV"),
+])
+def test_reponses_module_p2(assistant_p2, question, extrait):
+    assert extrait in assistant_p2.ask(question)["reponse"]
