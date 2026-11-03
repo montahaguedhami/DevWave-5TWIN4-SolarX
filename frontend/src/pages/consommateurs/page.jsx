@@ -24,6 +24,9 @@ export default function ConsommateursPage() {
   const [selected, setSelected] = useState(null);
   const [mesures, setMesures] = useState([]);
   const [mesureForm, setMesureForm] = useState(EMPTY_MESURE);
+  const [mesureFilters, setMesureFilters] = useState({ type: "", source: "", debut: "", fin: "" });
+  const [mesurePage, setMesurePage] = useState(1);
+  const mesurePageSize = 10;
   const [mesureSaving, setMesureSaving] = useState(false);
   const [filtreType, setFiltreType] = useState("");
   const [filtreVille, setFiltreVille] = useState("");
@@ -92,11 +95,16 @@ export default function ConsommateursPage() {
   }, [loadConsommateurs, loadStats]);
 
   const loadMesures = useCallback((id) => {
-    consommateurApi
-      .mesures(id)
+    const params = { concerne: id, skip: (mesurePage - 1) * mesurePageSize, limit: mesurePageSize };
+    if (mesureFilters.type) params.type = mesureFilters.type;
+    if (mesureFilters.source) params.source = mesureFilters.source;
+    if (mesureFilters.debut) params.debut = mesureFilters.debut;
+    if (mesureFilters.fin) params.fin = mesureFilters.fin;
+    mesureApi
+      .list(params)
       .then(setMesures)
       .catch((e) => setMessage({ type: "error", text: e.message }));
-  }, []);
+  }, [mesureFilters, mesurePage]);
 
   const resetForm = () => setForm(EMPTY_FORM);
 
@@ -161,13 +169,16 @@ export default function ConsommateursPage() {
   const selectConsumer = (c) => {
     setSelected(c.id);
     setMesureForm((f) => ({ ...f, concerne: c.id }));
-    loadMesures(c.id);
     if (c.ville) {
       meteoApi.actuelle(c.ville).then(setWeather).catch(() => setWeather(null));
     } else {
       setWeather(null);
     }
   };
+
+  useEffect(() => {
+    if (selected) loadMesures(selected);
+  }, [selected, loadMesures]);
 
   const submitMesure = async (e) => {
     e.preventDefault();
@@ -458,6 +469,16 @@ export default function ConsommateursPage() {
               <Button type="submit" disabled={mesureSaving}>{mesureSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}</Button>
             </form>
 
+            <div className="flex gap-2 flex-wrap text-sm">
+              <select className="h-9 rounded-md border border-input bg-transparent px-3 text-sm" value={mesureFilters.type} onChange={(e) => { setMesureFilters({ ...mesureFilters, type: e.target.value }); setMesurePage(1); }}>
+                <option value="">Tous types</option>
+                {TYPES_MESURE.map((t) => <option key={t} value={t}>{t}</option>)}
+              </select>
+              <Input placeholder="Source" className="w-32" value={mesureFilters.source} onChange={(e) => { setMesureFilters({ ...mesureFilters, source: e.target.value }); setMesurePage(1); }} />
+              <Input placeholder="Début (YYYY-MM-DD)" className="w-40" value={mesureFilters.debut} onChange={(e) => { setMesureFilters({ ...mesureFilters, debut: e.target.value }); setMesurePage(1); }} />
+              <Input placeholder="Fin (YYYY-MM-DD)" className="w-40" value={mesureFilters.fin} onChange={(e) => { setMesureFilters({ ...mesureFilters, fin: e.target.value }); setMesurePage(1); }} />
+            </div>
+
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -502,6 +523,11 @@ export default function ConsommateursPage() {
                 </ResponsiveContainer>
               </div>
             )}
+            <div className="flex justify-end gap-2 mt-3">
+              <Button size="sm" variant="outline" disabled={mesurePage <= 1} onClick={() => setMesurePage((p) => Math.max(1, p - 1))}>Précédent</Button>
+              <span className="text-sm self-center">Page {mesurePage}</span>
+              <Button size="sm" variant="outline" disabled={mesures.length < mesurePageSize} onClick={() => setMesurePage((p) => p + 1)}>Suivant</Button>
+            </div>
           </CardContent>
         </Card>
       )}
