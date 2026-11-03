@@ -1,5 +1,5 @@
 import { uniqueId } from "lodash";
-import { LayoutDashboard, Sun, Zap, BatteryCharging, BarChart3, TrendingUp, Globe, Sparkles, Bell, Calculator, Settings, ShieldCheck, MapPin, CloudSun, CalendarDays, LucideIcon, Cable, Network, MessageSquareText } from "lucide-react";
+import { LayoutDashboard, Sun, Zap, BatteryCharging, BarChart3, TrendingUp, Globe, Sparkles, Bell, Calculator, Settings, ShieldCheck, MapPin, CloudSun, CalendarDays, LucideIcon, Cable, Network, MessageSquareText, Users } from "lucide-react";
 
 const SidebarContent= [
   {
@@ -97,6 +97,12 @@ const SidebarContent= [
         name: "Historique météo",
         icon: CalendarDays,
         url: "/historique-meteo",
+      },
+      {
+        id: uniqueId(),
+        name: "Consommateurs",
+        icon: Users,
+        url: "/consommateurs",
       },
     ],
   },

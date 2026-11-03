@@ -20,6 +20,7 @@ import ReseauxPage from "@/pages/reseaux/page";
 import AssistantIaPage from "@/pages/assistant-ia/page";
 import LocalisationPage from "@/pages/localisation/page";
 import MeteoPage from "@/pages/meteo/page";
+import ConsommateursPage from "@/pages/consommateurs/page";
 import HistoriqueMeteoPage from "@/pages/historique-meteo/page";
 import AnalyticsPage from "@/pages/analytics/page";
 import SettingsPage from "@/pages/settings/page";
@@ -70,6 +71,7 @@ function App() {
                   <Route path="assistant-ia" element={<AssistantIaPage />} />
                   <Route path="localisation" element={<LocalisationPage />} />
                   <Route path="meteo" element={<MeteoPage />} />
+                  <Route path="consommateurs" element={<ConsommateursPage />} />
                   <Route path="historique-meteo" element={<HistoriqueMeteoPage />} />
                   <Route path="analytics" element={<AnalyticsPage />} />
                   <Route path="settings" element={<SettingsPage />} />

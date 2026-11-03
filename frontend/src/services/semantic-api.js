@@ -58,3 +58,21 @@ export const meteoApi = {
   supprimerMesure: (mesureId) => request(`/meteo/mesures/${enc(mesureId)}`, { method: "DELETE" }),
   alertes: () => request("/meteo/alertes"),
 };
+
+export const consommateurApi = {
+  list: (params) => request("/consommateurs", { params }),
+  get: (id) => request(`/consommateurs/${enc(id)}`),
+  create: (body) => request("/consommateurs", { method: "POST", body }),
+  update: (id, body) => request(`/consommateurs/${enc(id)}`, { method: "PUT", body }),
+  delete: (id, cascade = false) =>
+    request(`/consommateurs/${enc(id)}`, { method: "DELETE", params: { cascade } }),
+  mesures: (id) => request(`/consommateurs/${enc(id)}/mesures`),
+  stats: () => request("/consommateurs/stats"),
+};
+
+export const mesureApi = {
+  list: (params) => request("/mesures", { params }),
+  get: (id) => request(`/mesures/${enc(id)}`),
+  create: (body) => request("/mesures", { method: "POST", body }),
+  delete: (id) => request(`/mesures/${enc(id)}`, { method: "DELETE" }),
+};
