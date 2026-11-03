@@ -1,0 +1,207 @@
+@prefix :     <http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+#################################################################
+#  SolarX — Module P2 : Stockage + Équipement
+#
+#  Fichier SÉPARÉ de solarx.owl : il complète l'ontologie commune
+#  sans la modifier. À charger dans le même dataset Fuseki :
+#      cd backend
+#      python -m scripts.load_p2
+#  (ou Fuseki → add data → p2_stockage_equipement.ttl)
+#
+#  Ce fichier ne crée QUE des individus des classes Stockage et
+#  Equipement. Il réutilise les individus existants des autres
+#  modules (villes, consommateurs, installations) sans les changer.
+#################################################################
+
+#################################################################
+#    Nouvelles data properties (P2)
+#################################################################
+
+:puissanceMaxKW   a owl:DatatypeProperty , owl:FunctionalProperty ;
+                  rdfs:label "puissance maximale (kW)" ;
+                  rdfs:range xsd:decimal .
+:technologie      a owl:DatatypeProperty ;
+                  rdfs:label "technologie" ;
+                  rdfs:domain :Stockage ; rdfs:range xsd:string .
+:marque           a owl:DatatypeProperty ;
+                  rdfs:label "marque" ;
+                  rdfs:domain :Equipement ; rdfs:range xsd:string .
+:dateInstallation a owl:DatatypeProperty , owl:FunctionalProperty ;
+                  rdfs:label "date d'installation" ;
+                  rdfs:range xsd:dateTime .
+:etat             a owl:DatatypeProperty , owl:FunctionalProperty ;
+                  rdfs:label "état" ;
+                  rdfs:range xsd:string ;
+                  rdfs:comment "Fonctionnel | Maintenance | En panne. Si absent, l'état est déduit des événements (Maintenance porteSur / Incident affecte)." .
+
+#################################################################
+#    Axiomes OWL (P2)
+#################################################################
+
+# 1. Classes disjointes
+[] a owl:AllDisjointClasses ; owl:members ( :Batterie :StockageHydraulique ) .
+[] a owl:AllDisjointClasses ; owl:members ( :Capteur :CompteurIntelligent :Onduleur ) .
+:Stockage owl:disjointWith :Equipement .
+
+# 2. Propriétés fonctionnelles (une seule valeur par individu)
+:capaciteKWh       a owl:FunctionalProperty .
+:energieStockeeKWh a owl:FunctionalProperty .
+
+# 3. Restriction : tout stockage a exactement une capacité
+:Stockage rdfs:subClassOf [
+    a owl:Restriction ; owl:onProperty :capaciteKWh ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger ] .
+
+# 4. Classe définie : GrandStockage ≡ Stockage ⊓ capaciteKWh ≥ 10 000 kWh
+:GrandStockage a owl:Class ;
+    rdfs:label "Grand stockage (≥ 10 MWh)" ;
+    owl:equivalentClass [ a owl:Class ;
+        owl:intersectionOf ( :Stockage
+            [ a owl:Restriction ; owl:onProperty :capaciteKWh ;
+              owl:someValuesFrom [ a rdfs:Datatype ; owl:onDatatype xsd:decimal ;
+                                   owl:withRestrictions ( [ xsd:minInclusive "10000"^^xsd:decimal ] ) ] ] ) ] .
+
+# 5. Classe définie : BatterieDomestique ≡ Batterie ⊓ ∃alimente.Maison
+:BatterieDomestique a owl:Class ;
+    rdfs:label "Batterie qui alimente une maison" ;
+    owl:equivalentClass [ a owl:Class ;
+        owl:intersectionOf ( :Batterie
+            [ a owl:Restriction ; owl:onProperty :alimente ; owl:someValuesFrom :Maison ] ) ] .
+
+# 6. Classe définie : EquipementEnPanne ≡ Equipement ⊓ etat = "En panne"
+:EquipementEnPanne a owl:Class ;
+    rdfs:label "Équipement en panne" ;
+    owl:equivalentClass [ a owl:Class ;
+        owl:intersectionOf ( :Equipement
+            [ a owl:Restriction ; owl:onProperty :etat ; owl:hasValue "En panne" ] ) ] .
+
+#################################################################
+#    Stockage — Batteries (Batterie_01 et _02 existent déjà :
+#    on leur ajoute seulement un nom et une technologie)
+#################################################################
+
+:Batterie_01 :nom "Batterie Maison Djerba" ; :technologie "Lithium-fer-phosphate (LFP)" ;
+    :puissanceMaxKW "5"^^xsd:decimal .
+:Batterie_02 :nom "Batterie Hôpital Tunis" ; :technologie "Lithium-ion NMC" ;
+    :puissanceMaxKW "25"^^xsd:decimal .
+
+:Batterie_03 a owl:NamedIndividual, :Batterie ;
+    :nom "Stockage parc solaire Djerba" ; :technologie "Lithium-ion NMC" ;
+    :capaciteKWh "2000"^^xsd:decimal ; :energieStockeeKWh "1280"^^xsd:decimal ;
+    :puissanceMaxKW "800"^^xsd:decimal ; :dateInstallation "2021-09-01T00:00:00"^^xsd:dateTime ;
+    :situeDans :Djerba .
+:ParcSolaire_Djerba :alimenteStockage :Batterie_03 .
+
+:Batterie_04 a owl:NamedIndividual, :Batterie ;
+    :nom "Stockage solaire Tozeur" ; :technologie "Lithium-fer-phosphate (LFP)" ;
+    :capaciteKWh "5000"^^xsd:decimal ; :energieStockeeKWh "2750"^^xsd:decimal ;
+    :puissanceMaxKW "2000"^^xsd:decimal ; :dateInstallation "2023-02-14T00:00:00"^^xsd:dateTime ;
+    :situeDans :Tozeur .
+:CentraleSolaire_01 :alimenteStockage :Batterie_04 .
+
+:Batterie_05 a owl:NamedIndividual, :Batterie ;
+    :nom "Batterie École Tunis" ; :technologie "Plomb-acide" ;
+    :capaciteKWh "40"^^xsd:decimal ; :energieStockeeKWh "7"^^xsd:decimal ;
+    :puissanceMaxKW "10"^^xsd:decimal ; :dateInstallation "2018-04-30T00:00:00"^^xsd:dateTime ;
+    :etat "En panne" ;
+    :situeDans :Tunis ; :alimente :Ecole_Tunis .
+
+:Batterie_06 a owl:NamedIndividual, :Batterie ;
+    :nom "Stockage Usine Tunis" ; :technologie "Sodium-soufre (NaS)" ;
+    :capaciteKWh "1200"^^xsd:decimal ; :energieStockeeKWh "840"^^xsd:decimal ;
+    :puissanceMaxKW "400"^^xsd:decimal ; :dateInstallation "2022-12-01T00:00:00"^^xsd:dateTime ;
+    :situeDans :Tunis ; :alimente :Usine_Tunis .
+:ParcEolien_Tunis :alimenteStockage :Batterie_06 .
+
+:Batterie_07 a owl:NamedIndividual, :Batterie ;
+    :nom "Batterie Maison 01" ; :technologie "Lithium-ion NMC" ;
+    :capaciteKWh "13.5"^^xsd:decimal ; :energieStockeeKWh "5.7"^^xsd:decimal ;
+    :puissanceMaxKW "5"^^xsd:decimal ; :dateInstallation "2023-11-05T00:00:00"^^xsd:dateTime ;
+    :situeDans :Sousse ; :alimente :Maison_01 .
+
+#################################################################
+#    Stockage — Stockage hydraulique (STEP)
+#################################################################
+
+:StockageHydraulique_01 a owl:NamedIndividual, :StockageHydraulique ;
+    :nom "STEP Sidi Salem" ; :technologie "Pompage-turbinage" ;
+    :capaciteKWh "60000"^^xsd:decimal ; :energieStockeeKWh "43200"^^xsd:decimal ;
+    :puissanceMaxKW "20000"^^xsd:decimal ; :dateInstallation "2019-05-10T00:00:00"^^xsd:dateTime ;
+    :situeDans :Bizerte .
+:ParcEolien_01 :alimenteStockage :StockageHydraulique_01 .
+
+:StockageHydraulique_02 a owl:NamedIndividual, :StockageHydraulique ;
+    :nom "Réservoir Kairouan" ; :technologie "Pompage-turbinage" ;
+    :capaciteKWh "25000"^^xsd:decimal ; :energieStockeeKWh "12000"^^xsd:decimal ;
+    :puissanceMaxKW "8000"^^xsd:decimal ; :dateInstallation "2020-08-22T00:00:00"^^xsd:dateTime ;
+    :situeDans :Kairouan .
+
+:StockageHydraulique_03 a owl:NamedIndividual, :StockageHydraulique ;
+    :nom "Bassin Sfax" ; :technologie "Pompage-turbinage" ;
+    :capaciteKWh "12000"^^xsd:decimal ; :energieStockeeKWh "3600"^^xsd:decimal ;
+    :puissanceMaxKW "4000"^^xsd:decimal ; :dateInstallation "2021-01-15T00:00:00"^^xsd:dateTime ;
+    :etat "Maintenance" ;
+    :situeDans :Sfax .
+
+#################################################################
+#    Équipements (Capteur_01, Compteur_01, Onduleur_01 existent :
+#    on leur ajoute seulement un nom et une marque)
+#################################################################
+
+:Capteur_01  :nom "Capteur Hôpital Tunis" ; :marque "Schneider Electric" .
+:Compteur_01 :nom "Compteur intelligent Maison Djerba" ; :marque "Sagemcom" .
+:Onduleur_01 :nom "Onduleur parc solaire Djerba" ; :marque "SMA" ; :puissanceMaxKW "100"^^xsd:decimal .
+
+:Capteur_02 a owl:NamedIndividual, :Capteur ;
+    :nom "Capteur température centrale solaire" ; :marque "Siemens" ;
+    :dateInstallation "2023-02-14T00:00:00"^^xsd:dateTime .
+:Capteur_03 a owl:NamedIndividual, :Capteur ;
+    :nom "Capteur irradiance Djerba" ; :marque "Kipp & Zonen" ;
+    :dateInstallation "2021-09-01T00:00:00"^^xsd:dateTime .
+:Capteur_04 a owl:NamedIndividual, :Capteur ;
+    :nom "Anémomètre parc éolien Tunis" ; :marque "Vaisala" ;
+    :dateInstallation "2020-03-03T00:00:00"^^xsd:dateTime ; :etat "Maintenance" .
+:Capteur_05 a owl:NamedIndividual, :Capteur ;
+    :nom "Capteur courant Usine Tunis" ; :marque "Schneider Electric" ;
+    :dateInstallation "2022-12-01T00:00:00"^^xsd:dateTime ; :etat "En panne" .
+
+:Compteur_02 a owl:NamedIndividual, :CompteurIntelligent ;
+    :nom "Compteur Maison 01" ; :marque "Itron" ;
+    :dateInstallation "2023-11-05T00:00:00"^^xsd:dateTime .
+:Compteur_03 a owl:NamedIndividual, :CompteurIntelligent ;
+    :nom "Compteur Hôpital Tunis" ; :marque "Landis+Gyr" ;
+    :dateInstallation "2022-06-20T00:00:00"^^xsd:dateTime .
+:Compteur_04 a owl:NamedIndividual, :CompteurIntelligent ;
+    :nom "Compteur École Tunis" ; :marque "Itron" ;
+    :dateInstallation "2018-04-30T00:00:00"^^xsd:dateTime ; :etat "En panne" .
+:Compteur_05 a owl:NamedIndividual, :CompteurIntelligent ;
+    :nom "Compteur Usine Tunis" ; :marque "Landis+Gyr" ;
+    :dateInstallation "2022-12-01T00:00:00"^^xsd:dateTime .
+
+:Onduleur_02 a owl:NamedIndividual, :Onduleur ;
+    :nom "Onduleur Maison 01" ; :marque "SMA" ; :puissanceMaxKW "4.6"^^xsd:decimal ;
+    :dateInstallation "2023-11-05T00:00:00"^^xsd:dateTime .
+:Onduleur_03 a owl:NamedIndividual, :Onduleur ;
+    :nom "Onduleur centrale solaire 01" ; :marque "Huawei" ; :puissanceMaxKW "2500"^^xsd:decimal ;
+    :dateInstallation "2023-02-14T00:00:00"^^xsd:dateTime .
+:Onduleur_04 a owl:NamedIndividual, :Onduleur ;
+    :nom "Onduleur Hôpital Tunis" ; :marque "Fronius" ; :puissanceMaxKW "100"^^xsd:decimal ;
+    :dateInstallation "2022-06-20T00:00:00"^^xsd:dateTime .
+:Onduleur_05 a owl:NamedIndividual, :Onduleur ;
+    :nom "Onduleur Maison Djerba" ; :marque "Huawei" ; :puissanceMaxKW "5"^^xsd:decimal ;
+    :dateInstallation "2024-03-12T00:00:00"^^xsd:dateTime .
+
+# Qui possède quoi (la localisation d'un équipement = celle de son propriétaire)
+:Maison_01          :possede :Compteur_02, :Onduleur_02 .
+:Hopital_Tunis      :possede :Compteur_03, :Onduleur_04 .
+:Ecole_Tunis        :possede :Compteur_04 .
+:Usine_Tunis        :possede :Compteur_05, :Capteur_05 .
+:Maison_Djerba      :possede :Onduleur_05 .
+:ParcSolaire_Djerba :possede :Capteur_03 .
+:CentraleSolaire_01 :possede :Capteur_02, :Onduleur_03 .
+:ParcEolien_Tunis   :possede :Capteur_04 .
