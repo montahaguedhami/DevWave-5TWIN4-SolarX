@@ -60,6 +60,8 @@ class MesureService:
         debut: str | None = None,
         fin: str | None = None,
         source: str | None = None,
+        skip: int = 0,
+        limit: int = 100,
     ) -> list[Mesure]:
         filters = []
         if type_:
@@ -73,7 +75,8 @@ class MesureService:
             filters.append(f"FILTER(?date <= {datetime_literal(f'{fin}T23:59:59')})")
         if source:
             filters.append(f"FILTER(?source = {string_literal(source)})")
-        rows = self.fuseki.select(_LIST_QUERY.format(filters="\n  ".join(filters)))
+        query = _LIST_QUERY.format(filters="\n  ".join(filters)) + f"\nOFFSET {int(skip)} LIMIT {int(limit)}"
+        rows = self.fuseki.select(query)
         result: dict[str, Mesure] = {}
         for row in rows:
             m = _to_mesure(row)

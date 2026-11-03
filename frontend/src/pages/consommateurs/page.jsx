@@ -27,6 +27,8 @@ export default function ConsommateursPage() {
   const [mesureSaving, setMesureSaving] = useState(false);
   const [filtreType, setFiltreType] = useState("");
   const [filtreVille, setFiltreVille] = useState("");
+  const [page, setPage] = useState(1);
+  const pageSize = 10;
   const [stats, setStats] = useState(null);
   const [alertes, setAlertes] = useState([]);
   const [weather, setWeather] = useState(null);
@@ -42,7 +44,7 @@ export default function ConsommateursPage() {
 
   const loadConsommateurs = useCallback(() => {
     setLoading(true);
-    const params = {};
+    const params = { skip: (page - 1) * pageSize, limit: pageSize };
     if (filtreType) params.type = filtreType;
     if (filtreVille) params.ville = filtreVille;
     consommateurApi
@@ -50,7 +52,7 @@ export default function ConsommateursPage() {
       .then(setConsommateurs)
       .catch((e) => setMessage({ type: "error", text: e.message }))
       .finally(() => setLoading(false));
-  }, [filtreType, filtreVille]);
+  }, [filtreType, filtreVille, page]);
 
   useEffect(() => {
     loadVilles();
@@ -431,6 +433,11 @@ export default function ConsommateursPage() {
               </table>
             </div>
           )}
+          <div className="flex justify-end gap-2 mt-3">
+            <Button size="sm" variant="outline" disabled={page <= 1} onClick={() => setPage((p) => Math.max(1, p - 1))}>Précédent</Button>
+            <span className="text-sm self-center">Page {page}</span>
+            <Button size="sm" variant="outline" disabled={consommateurs.length < pageSize} onClick={() => setPage((p) => p + 1)}>Suivant</Button>
+          </div>
         </CardContent>
       </Card>
 

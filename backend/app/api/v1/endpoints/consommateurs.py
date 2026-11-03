@@ -49,9 +49,11 @@ def list_consommateurs(
     type: str | None = Query(None),
     ville: str | None = Query(None, pattern=LOCAL_NAME_PATTERN),
     q: str | None = Query(None, max_length=80),
+    skip: int = Query(0, ge=0),
+    limit: int = Query(50, ge=1, le=200),
     service: ConsommateurService = Depends(get_service),
 ):
-    return service.list_consommateurs(type_=type, ville=ville, q=q)
+    return service.list_consommateurs(type_=type, ville=ville, q=q, skip=skip, limit=limit)
 
 
 @router.get("/{consommateur_id}", response_model=Consommateur)

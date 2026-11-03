@@ -74,7 +74,8 @@ class ConsommateurService:
             raise HTTPException(status.HTTP_400_BAD_REQUEST, f"Type de consommateur inconnu : {type_!r}")
 
     def list_consommateurs(
-        self, type_: str | None = None, ville: str | None = None, q: str | None = None
+        self, type_: str | None = None, ville: str | None = None, q: str | None = None,
+        skip: int = 0, limit: int = 100,
     ) -> list[Consommateur]:
         filters = []
         if type_:
@@ -86,7 +87,8 @@ class ConsommateurService:
             filters.append(
                 f"FILTER(CONTAINS(LCASE(STR(COALESCE(?nom, ?c))), LCASE({string_literal(q.strip())})))"
             )
-        rows = self.fuseki.select(_LIST_QUERY.format(filters="\n  ".join(filters)))
+        query = _LIST_QUERY.format(filters="\n  ".join(filters)) + f"\nOFFSET {int(skip)} LIMIT {int(limit)}"
+        rows = self.fuseki.select(query)
         result: dict[str, Consommateur] = {}
         for row in rows:
             c = _to_consommateur(row)

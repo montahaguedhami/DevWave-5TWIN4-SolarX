@@ -22,9 +22,11 @@ def list_mesures(
     debut: str | None = Query(None),
     fin: str | None = Query(None),
     source: str | None = Query(None),
+    skip: int = Query(0, ge=0),
+    limit: int = Query(50, ge=1, le=200),
     service: MesureService = Depends(get_service),
 ):
-    return service.list_mesures(type_=type, concerne=concerne, debut=debut, fin=fin, source=source)
+    return service.list_mesures(type_=type, concerne=concerne, debut=debut, fin=fin, source=source, skip=skip, limit=limit)
 
 
 @router.get("/{mesure_id}", response_model=Mesure)
