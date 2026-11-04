@@ -116,8 +116,8 @@ export function IncidentModal({ isOpen, onClose, initialData, mode = "incident",
                   value={formData.type || "Panne"}
                   onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                 >
-                  <option value="Panne">Panne (Rouge)</option>
-                  <option value="Alerte">Alerte (Orange)</option>
+                  <option value="Panne">Panne</option>
+                  <option value="Alerte">Alerte</option>
                   <option value="Surcharge">Surcharge</option>
                 </select>
               )}

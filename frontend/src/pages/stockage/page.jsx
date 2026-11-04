@@ -258,7 +258,7 @@ function StockagePage() {
             <Card expandable={false} className="lg:col-span-2">
               <CardHeader>
                 <CardTitle className="text-lg font-bold text-foreground">Niveau de charge par unité</CardTitle>
-                <CardDescription className="text-xs">Rouge &lt; 25 %, orange &lt; 50 %, vert au-delà</CardDescription>
+                <CardDescription className="text-xs">Seuils : &lt; 25 % (critique), &lt; 50 % (modéré), nominal au-delà</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-[280px] w-full">

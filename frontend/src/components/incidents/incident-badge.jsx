@@ -11,12 +11,10 @@ export function IncidentBadge({ type, size = "md" }) {
   let Icon = AlertCircle;
 
   if (isPanne) {
-    // Rouge = panne
     colorClasses = "bg-rose-500/15 text-rose-700 dark:text-rose-300 border-rose-500/30";
     label = "Panne";
     Icon = ShieldAlert;
   } else if (isAlerte) {
-    // Orange = alerte
     colorClasses = "bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/30";
     label = "Alerte";
     Icon = AlertTriangle;
