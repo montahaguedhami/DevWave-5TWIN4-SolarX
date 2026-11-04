@@ -109,7 +109,7 @@ function ContenuLigne({ ligne, onClose, onSaved }) {
       open
       onClose={onClose}
       titre={ligne ? "Modifier la ligne" : "Ajouter une ligne"}
-      description="Les changements sont écrits dans Fuseki (SPARQL UPDATE)."
+      description="Les changements sont enregistrés dans le système."
       enregistrer={enregistrer}
     >
       <Champ label="Type" aide={ligne ? "Le type ne se modifie pas : il fait partie de l'identifiant de la ligne." : undefined}>
@@ -155,7 +155,7 @@ function ContenuReseau({ reseau, lignesActuelles, onClose, onSaved }) {
       open
       onClose={onClose}
       titre={reseau ? "Modifier le réseau" : "Ajouter un réseau"}
-      description="Les changements sont écrits dans Fuseki (SPARQL UPDATE)."
+      description="Les changements sont enregistrés dans le système."
       enregistrer={enregistrer}
     >
       {!reseau && (

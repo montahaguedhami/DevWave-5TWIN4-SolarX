@@ -62,7 +62,7 @@ export function EtatLigne({ etat }) {
 export function Chargement() {
   return (
     <div className="flex items-center justify-center gap-2 py-10 text-sm text-muted-foreground">
-      <Loader2 className="w-4 h-4 animate-spin" /> Chargement des données de l'ontologie…
+      <Loader2 className="w-4 h-4 animate-spin" /> Chargement des données du réseau…
     </div>
   );
 }
@@ -72,7 +72,7 @@ export function Erreur({ error }) {
     <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-600 dark:text-red-400">
       <div className="font-semibold flex items-center gap-2"><XCircle className="w-4 h-4" /> Impossible de charger les données</div>
       <div className="mt-1">{error?.message}</div>
-      <div className="mt-1 text-xs text-muted-foreground">Vérifiez que Fuseki et le backend sont lancés.</div>
+      <div className="mt-1 text-xs text-muted-foreground">Vérifiez la connexion au service de données SolarX.</div>
     </div>
   );
 }
