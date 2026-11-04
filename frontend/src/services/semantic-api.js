@@ -59,6 +59,8 @@ export const meteoApi = {
 };
 
 export const consommateurApi = {
+  types: () => request("/consommateurs/types"),
+  equipements: () => request("/consommateurs/equipements"),
   list: (params) => request("/consommateurs/", { params }),
   get: (id) => request(`/consommateurs/${enc(id)}`),
   create: (body) => request("/consommateurs/", { method: "POST", body }),
