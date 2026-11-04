@@ -12,6 +12,7 @@ pour modifier, DELETE WHERE pour supprimer.
 
 from fastapi import HTTPException, status
 
+from app.nlp import vocabulary
 from app.services.fuseki import FusekiClient, decimal_literal, iri, string_literal
 from app.services.typed_sparql import TypedSparql, term
 
@@ -123,7 +124,10 @@ def _completer_lieux(rows: list[dict], deduits: dict[str, dict]) -> list[dict]:
 
 
 def _etat(incidents: list[dict]) -> str:
-    types = {i["type"] for i in incidents}
+    """L'ontologie n'a pas de statut « résolu » : seuls les incidents récents comptent pour l'état.
+    Un incident sans date compte, par prudence. L'historique complet reste dans ``incidents``."""
+    debut = vocabulary.debut_etat_recent()
+    types = {i["type"] for i in incidents if str(i.get("date") or debut) >= debut}
     if "Panne" in types:
         return "En panne"
     if types:
@@ -232,11 +236,13 @@ GROUP BY ?type
 ORDER BY DESC(?tensionMaxKV)
 """)
         rows = [r for r in rows if "type" in r]
-        en_panne = self.sparql.run("""
-SELECT (COUNT(DISTINCT ?l) AS ?n) WHERE {
+        en_panne = self.sparql.run(f"""
+SELECT (COUNT(DISTINCT ?l) AS ?n) WHERE {{
   ?p (:affecte|^:estAffectePar) ?l ; rdf:type :Panne .
   ?l rdf:type/rdfs:subClassOf* :LigneTransport .
-}""")
+  OPTIONAL {{ ?p :dateOccurrence ?date }}
+  FILTER(!BOUND(?date) || STR(?date) >= "{vocabulary.debut_etat_recent()}")
+}}""")
         desservis = self.sparql.run("""
 SELECT (COUNT(DISTINCT ?c) AS ?n) WHERE {
   ?l rdf:type/rdfs:subClassOf* :LigneTransport ; (:dessert|^:estDesserviPar) ?c .

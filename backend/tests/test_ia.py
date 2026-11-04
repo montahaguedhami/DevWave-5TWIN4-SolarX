@@ -32,6 +32,12 @@ def elements(r):
     return {row.get("element") for row in r["resultats"]}
 
 
+@pytest.fixture(autouse=True)
+def date_fixe(monkeypatch):
+    # l'état d'une ligne dépend de la date du jour : les tests ne doivent pas changer avec le temps
+    monkeypatch.setattr("app.nlp.vocabulary.debut_etat_recent", lambda: "2026-10-06")
+
+
 @pytest.mark.parametrize("question, attendu", [
     ("Quelles batteries sont situées à Tunis ?", {"Batterie_02"}),
     ("Quelle batterie alimente la maison Djerba ?", {"Batterie_01"}),
@@ -43,14 +49,10 @@ def elements(r):
     ("Quelles mesures concernent la maison Djerba ?", {"Mesure_002"}),
     ("Quelles lignes sont contenues dans le réseau de distribution 01 ?",
      {"LigneBasseTension_01", "LigneMoyenneTension_01", "LigneMoyenneTension_02", "LigneBasseTension_02"}),
-    ("Quelles maintenances ont eu lieu en octobre 2026 ?", {"Maintenance_01"}),
-    ("Quelles pannes ont eu lieu après septembre 2026 ?", {"Panne_01"}),
     # données de la partie Lignes + Réseaux
     ("Quelles lignes ont une tension supérieure à 100 kV ?", {"LigneHauteTension_02", "LigneHauteTension_03"}),
-    ("Quelles lignes sont en panne ?", {"LigneHauteTension_01"}),
     ("Quelle est la ligne la plus longue ?", {"LigneHauteTension_02"}),
     ("Quelle est la ligne la plus courte ?", {"LigneBasseTension_02"}),
-    ("Quelles pannes ont une gravité élevée ?", {"Panne_01"}),
     ("Quels équipements possède l'hôpital Tunis ?", {"Capteur_01"}),
     ("Quelle source utilise le parc solaire Djerba ?", {"Soleil_01"}),
     ("Où se trouve le parc éolien Tunis ?", {"Tunis"}),
@@ -84,7 +86,6 @@ def test_comptage(assistant, question, nombre):
     # données Météo + Localisation : l'IA les comprend sans code propre à ces classes
     ("Quelles villes sont dans le sud tunisien ?", {"Djerba", "Gabes", "Gafsa", "Tozeur"}),
     ("Quelles mesures météo influencent le parc solaire Djerba ?", {"Ensoleillement_Djerba", "Temperature_Djerba"}),
-    ("Quelles couvertures nuageuses ?", {"CouvertureNuageuse_Bizerte"}),
 ])
 def test_meteo_localisation(assistant, question, attendu):
     r = assistant.ask(question)
@@ -189,16 +190,11 @@ def test_exemples_executables(assistant):
 
 @pytest.mark.parametrize("question, attendu", [
     ("Quels stockages hydrauliques ?", {"StockageHydraulique_01", "StockageHydraulique_02", "StockageHydraulique_03"}),
-    ("Quels équipements sont en panne ?", {"Capteur_05", "Compteur_04"}),
     ("Quelles batteries ont une capacité supérieure à 1000 kWh ?", {"Batterie_03", "Batterie_04", "Batterie_06"}),
     ("Quelles batteries installées en 2023 ?", {"Batterie_04", "Batterie_07"}),
     # classes définies par des axiomes : Fuseki n'a pas de raisonneur, la définition devient du SPARQL
     ("Quels grands stockages ?", {"StockageHydraulique_01", "StockageHydraulique_02", "StockageHydraulique_03"}),
     ("Quelles batteries domestiques ?", {"Batterie_01", "Batterie_07"}),
-    # P2 a la valeur etat "Maintenance" : elle ne doit pas cacher la classe Maintenance
-    ("Quelles maintenances ?", {"Maintenance_01"}),
-    ("Quelle maintenance porte sur l'onduleur 01 ?", {"Maintenance_01"}),
-    ("Quels capteurs sont en maintenance ?", {"Capteur_04"}),
 ])
 def test_questions_module_p2(assistant_p2, question, attendu):
     assert elements(assistant_p2.ask(question)) == attendu
@@ -215,3 +211,62 @@ def test_questions_module_p2(assistant_p2, question, attendu):
 ])
 def test_reponses_module_p2(assistant_p2, question, extrait):
     assert extrait in assistant_p2.ask(question)["reponse"]
+
+
+# --- données des parties Maintenance, Incident et Localisation ----------------
+# Ces parties ajoutent souvent des individus : on vérifie qu'un élément attendu est présent
+
+@pytest.mark.parametrize("question, attendu", [
+    ("Quelles maintenances ?", {"Maintenance_01", "Inspection_01"}),
+    ("Quelles maintenances ont eu lieu en octobre 2026 ?", {"Maintenance_01"}),
+    ("Quelle maintenance porte sur l'onduleur 01 ?", {"Maintenance_01"}),
+    ("Quelles pannes ont eu lieu après septembre 2026 ?", {"Panne_01"}),
+    ("Quelles pannes ont une gravité élevée ?", {"Panne_01"}),
+    ("Quelles couvertures nuageuses ?", {"CouvertureNuageuse_Bizerte"}),
+    ("Quels équipements sont en panne ?", {"Capteur_05", "Compteur_04"}),
+    ("Quels capteurs sont en maintenance ?", {"Capteur_04"}),
+])
+def test_contient(assistant_p2, question, attendu):
+    assert attendu <= elements(assistant_p2.ask(question))
+
+
+@pytest.mark.parametrize("question, attendu", [
+    ("Quelle est la dernière panne ?", ["Panne_01"]),
+    ("Dernière panne ?", ["Panne_01"]),
+    ("Quelle est la panne la plus récente ?", ["Panne_01"]),
+    ("Quelle est la dernière panne de la ligne haute tension 01 ?", ["Panne_01"]),
+    ("Quel est le dernier incident sur la ligne moyenne tension 01 ?", ["Surcharge_03"]),
+])
+def test_le_plus_recent(assistant_p2, question, attendu):
+    assert [r["element"] for r in assistant_p2.ask(question)["resultats"]] == attendu
+
+
+def test_les_trois_dernieres_et_la_plus_ancienne(assistant_p2):
+    trois = assistant_p2.ask("Quelles sont les 3 dernières pannes ?")["resultats"]
+    dates = [r["dateOccurrence"] for r in trois]
+    assert len(trois) == 3 and dates == sorted(dates, reverse=True)
+    ancienne = assistant_p2.ask("Quelle est la panne la plus ancienne ?")["resultats"][0]["dateOccurrence"]
+    assert ancienne < dates[-1]
+
+
+def test_combien_ne_trie_pas_par_date(assistant_p2):
+    assert "Il y a" in assistant_p2.ask("Combien de dernières pannes ?")["reponse"]
+
+
+def test_le_mois_dernier_nest_pas_un_tri_par_date(assistant_p2):
+    assert len(assistant_p2.ask("Quelles pannes du mois dernier ?")["resultats"]) > 1
+
+
+def test_etat_des_lignes_comme_la_page(assistant_p2):
+    # même règle que LignesService : seuls les incidents des 30 derniers jours comptent
+    assert elements(assistant_p2.ask("Quelles lignes sont en panne ?")) == {"LigneHauteTension_01"}
+    assert "LigneMoyenneTension_01" in elements(assistant_p2.ask("Quelles lignes sont en alerte ?"))
+
+
+def test_tous_les_individus_par_leur_nom(assistant_p2):
+    # un nom peut être long (« Taux de distorsion harmonique THD supérieur au seuil »)
+    schema = assistant_p2.schema if assistant_p2.schema else assistant_p2.reload() and assistant_p2.schema
+    longs = {i: n for i, n in schema.names.items() if len(n.split()) > 6}
+    assert longs
+    for individu, nom in longs.items():
+        assert assistant_p2.ask(f"Donne-moi des informations sur {nom}")["resultats"], individu

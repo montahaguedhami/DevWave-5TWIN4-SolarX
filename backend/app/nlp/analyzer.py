@@ -14,7 +14,6 @@ from .vocabulary import (
 )
 
 FUZZY_THRESHOLD = 86
-MAX_NGRAM = 6
 _TOKEN = re.compile(r"[a-z0-9]+(?:[.,][0-9]+)?|[<>]=?|=")
 
 MONTHS = {
@@ -39,6 +38,11 @@ MAX_CUES = ["le plus", "la plus", "les plus", "plus grand", "plus grande", "plus
 AGGREGATION_WORDS = {"moyenne", "moyen", "total", "totale", "maximum", "minimum", "max", "min", "elevee", "eleve", "faible"}
 MIN_CUES = ["le moins", "la moins", "les moins", "plus petit", "plus petite", "plus faible", "plus bas",
             "plus basse", "plus court", "plus courte", "minimum", "minimale", "minimal", "min"]
+
+
+# « la dernière panne », « la plus récente » ; pas « le mois dernier »
+RECENT_CUE = re.compile(r"(?<!mois )(?<!annee )(?<!semaine )\bdernier(e|s|es)?\b|\bplus recent(e|s|es)?\b")
+OLDEST_CUE = re.compile(r"\bplus ancien(ne|s|nes)?\b")
 
 
 @dataclass
@@ -89,6 +93,7 @@ class Analysis:
     asks_where: bool
     asks_who: bool = False           # "Qui occupe la maison Djerba ?"
     unknown: list[str] = field(default_factory=list)   # noms propres / propriétés absents de l'ontologie
+    recent: str | None = None        # tri par date : max = le plus récent, min = le plus ancien
 
     def of_kind(self, kind: str) -> list[Mention]:
         return [m for m in self.mentions if m.kind == kind]
@@ -127,6 +132,7 @@ class Analyzer:
         self.nlp = nlp
         self.lexicon: dict[tuple[str, ...], list[tuple[int, str, object]]] = defaultdict(list)
         self._build_lexicon()
+        self.max_ngram = max(map(len, self.lexicon), default=1)  # le nom le plus long de l'ontologie
         self._fuzzy_keys = {n: [" ".join(k) for k in self.lexicon if len(k) == n] for n in (1, 2, 3)}
         # mots de propriété connus du vocabulaire mais absents de cette version de l'ontologie ("marque")
         self.missing_props = {tuple(norm_tokens(phrase)): phrase for phrase, props in DATA_PROPERTY_SYNONYMS.items()
@@ -254,7 +260,8 @@ class Analyzer:
 
         return Analysis(question, tokens, raw, lemmas, pos, mentions, numbers, dates, cues,
                         superlative, most_of, limit, group_by, group_by_type, asks_where, asks_who,
-                        self._unknown(question, raw, tokens, starts, mentions, used))
+                        self._unknown(question, raw, tokens, starts, mentions, used),
+                        "max" if RECENT_CUE.search(text) else "min" if OLDEST_CUE.search(text) else None)
 
     def _unknown(self, question, raw, tokens, starts, mentions, used) -> list[str]:
         """Mots que l'ontologie ne connaît pas : on le dit au lieu de les ignorer en silence."""
@@ -319,7 +326,7 @@ class Analyzer:
         covered = [False] * len(tokens)
         # 1) correspondance exacte, la plus longue d'abord
         while i < len(tokens):
-            for n in range(min(MAX_NGRAM, len(tokens) - i), 0, -1):
+            for n in range(min(self.max_ngram, len(tokens) - i), 0, -1):
                 key = tuple(tokens[i:i + n])
                 if key in self.lexicon:
                     _, kind, value = self._best(key)

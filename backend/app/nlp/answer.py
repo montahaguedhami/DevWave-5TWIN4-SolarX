@@ -142,6 +142,16 @@ def write_answer(plan: QueryPlan, rows: list[dict], schema: OntologySchema) -> s
         parts = [f"{name(r)} ({with_unit(r.get(plan.prop), plan.prop, r, plan.target)})" for r in rows]
         return f"Les {len(rows)} {class_label(plan.target, 2)} avec {the(plan.prop)} {adj} : " + ", ".join(parts) + "."
 
+    if k == "recent":
+        mot = "récent" if plan.order == "max" else "ancien"
+        classes = class_label(plan.target, 2)
+        if not rows:
+            return f"Aucun résultat : aucune date n'est renseignée pour les {classes}{context}."
+        parts = [f"{name(r)} ({fmt_date(r.get(plan.prop))})" for r in rows]
+        if len(rows) == 1:
+            return f"Résultat le plus {mot} pour les {classes}{context} : {parts[0]}."
+        return f"Les {len(rows)} résultats les plus {mot}s pour les {classes}{context} : " + ", ".join(parts) + "."
+
     if k == "le_plus_de":
         if not rows:
             return "Aucun résultat."
