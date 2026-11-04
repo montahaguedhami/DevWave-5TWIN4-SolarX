@@ -23,6 +23,9 @@ import MeteoPage from "@/pages/meteo/page";
 import ConsommateursPage from "@/pages/consommateurs/page";
 import HistoriqueMeteoPage from "@/pages/historique-meteo/page";
 import AnalyticsPage from "@/pages/analytics/page";
+import EnergyBalancePage from "@/pages/energy-balance/page";
+import StockagePage from "@/pages/stockage/page"; // module P2
+import EquipementsPage from "@/pages/equipements/page"; // module P2
 import SettingsPage from "@/pages/settings/page";
 import NotesAppPage from "@/pages/apps/notes/page";
 import TicketsAppPage from "@/pages/apps/tickets/page";
@@ -57,7 +60,7 @@ function App() {
   }
                 <Route path="/" element={<Layout />}>
                   <Route index element={<DashboardPage />} />
-                  <Route path="solar-production" element={<SolarProductionPage />} />
+                  <Route path="production" element={<SolarProductionPage />} />
                   <Route path="solar-simulator" element={<SolarSimulatorPage />} />
                   <Route path="battery" element={<BatteryPage />} />
                   <Route path="consumption" element={<ConsumptionPage />} />
@@ -74,6 +77,9 @@ function App() {
                   <Route path="consommateurs" element={<ConsommateursPage />} />
                   <Route path="historique-meteo" element={<HistoriqueMeteoPage />} />
                   <Route path="analytics" element={<AnalyticsPage />} />
+                  <Route path="energy-balance" element={<EnergyBalancePage />} />
+                  <Route path="stockage" element={<StockagePage />} />
+                  <Route path="equipements" element={<EquipementsPage />} />
                   <Route path="settings" element={<SettingsPage />} />
 
                   <Route path="apps/notes" element={<NotesAppPage />} />

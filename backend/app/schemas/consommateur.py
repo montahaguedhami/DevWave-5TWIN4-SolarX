@@ -1,4 +1,6 @@
-"""Schemas for the Consommateur module."""
+"""Schemas for the Consommateur module (merged with installation consumer sites)."""
+
+from enum import Enum
 
 from pydantic import BaseModel, Field, field_validator
 
@@ -9,10 +11,26 @@ TYPES_CONSOMMATEUR = [
 ]
 
 
+class ConsumerType(str, Enum):
+    MAISON = "Maison"
+    PARTICULIER = "Particulier"
+    ENTREPRISE = "Entreprise"
+    ECOLE = "Ecole"
+    HOPITAL = "Hopital"
+    INSTITUTION = "Institution"
+    USINE = "Usine"
+
+
 def _validate_type(value: str) -> str:
     if value not in TYPES_CONSOMMATEUR:
         raise ValueError(f"Type de consommateur inconnu : {value!r}")
     return value
+
+
+class ConsumerEquipment(BaseModel):
+    id: str
+    nom: str
+    type: str
 
 
 class ConsommateurBase(BaseModel):
@@ -20,6 +38,7 @@ class ConsommateurBase(BaseModel):
     type: str
     surfaceM2: float | None = Field(None, ge=0, allow_inf_nan=False)
     ville: str = Field(pattern=LOCAL_NAME_PATTERN, description="Identifiant de la ville (ex. Tunis)")
+    equipement_ids: list[str] = Field(default_factory=list, max_length=40)
 
     @field_validator("nom")
     @classmethod
@@ -53,3 +72,5 @@ class Consommateur(BaseModel):
     latitude: float | None = None
     longitude: float | None = None
     nbMesures: int = 0
+    localisation: dict[str, str] | None = None
+    equipements: list[ConsumerEquipment] = Field(default_factory=list)

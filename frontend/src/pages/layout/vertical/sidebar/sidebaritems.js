@@ -1,5 +1,5 @@
 import { uniqueId } from "lodash";
-import { LayoutDashboard, Sun, Zap, BatteryCharging, BarChart3, TrendingUp, Globe, Sparkles, Bell, Calculator, Settings, ShieldCheck, MapPin, CloudSun, CalendarDays, Cable, Network, MessageSquareText, Users } from "lucide-react";
+import { LayoutDashboard, Sun, Zap, BatteryCharging, BarChart3, TrendingUp, Globe, Sparkles, Bell, Calculator, Settings, ShieldCheck, MapPin, CloudSun, CalendarDays, Cable, Network, MessageSquareText, Users, Database, Cpu } from "lucide-react";
 
 const SidebarContent= [
   {
@@ -24,9 +24,9 @@ const SidebarContent= [
       },
       {
         id: uniqueId(),
-        name: "Production solaire",
+        name: "Production",
         icon: Sun,
-        url: "/solar-production",
+        url: "/production",
       },
       {
         id: uniqueId(),
@@ -52,6 +52,18 @@ const SidebarContent= [
         icon: Network,
         url: "/reseaux",
       },
+      {
+        id: uniqueId(),
+        name: "Stockage",
+        icon: Database,
+        url: "/stockage",
+      },
+      {
+        id: uniqueId(),
+        name: "Équipements",
+        icon: Cpu,
+        url: "/equipements",
+      },
     ],
   },
   {
@@ -62,6 +74,12 @@ const SidebarContent= [
         name: "Analyse énergétique",
         icon: BarChart3,
         url: "/analytics",
+      },
+      {
+        id: uniqueId(),
+        name: "Équilibre énergétique",
+        icon: BarChart3,
+        url: "/energy-balance",
       },
       {
         id: uniqueId(),

@@ -1,11 +1,13 @@
-"""CRUD endpoints for Consommateur."""
+"""CRUD endpoints for Consommateur (merged with installation consumer sites)."""
 
-from fastapi import APIRouter, Depends, HTTPException, Path, Query
+from fastapi import APIRouter, Depends, HTTPException, Path, Query, Response
 
 from app.schemas.consommateur import (
     Consommateur,
     ConsommateurCreate,
     ConsommateurUpdate,
+    ConsumerEquipment,
+    ConsumerType,
 )
 from app.schemas.mesure import Mesure
 from app.services.consommateur_service import ConsommateurService
@@ -18,6 +20,16 @@ ConsommateurId = Path(pattern=LOCAL_NAME_PATTERN, description="Identifiant du co
 
 def get_service(fuseki: FusekiClient = Depends(get_fuseki)) -> ConsommateurService:
     return ConsommateurService(fuseki)
+
+
+@router.get("/types", response_model=list[ConsumerType])
+def consumer_types():
+    return list(ConsumerType)
+
+
+@router.get("/equipements", response_model=list[ConsumerEquipment])
+def list_equipment(service: ConsommateurService = Depends(get_service)):
+    return service.list_equipment()
 
 
 @router.get("/stats")

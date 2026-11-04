@@ -1,5 +1,5 @@
 import { uniqueId } from "lodash";
-import { LayoutDashboard, Sun, Zap, BatteryCharging, BarChart3, TrendingUp, Globe, Sparkles, Bell, Calculator, Settings, ShieldCheck, MapPin, CloudSun, CalendarDays, LucideIcon, Cable, Network, MessageSquareText, Users } from "lucide-react";
+import { LayoutDashboard, Sun, Zap, BatteryCharging, BarChart3, TrendingUp, Globe, Sparkles, Bell, Calculator, Settings, ShieldCheck, MapPin, CloudSun, CalendarDays, LucideIcon, Cable, Network, MessageSquareText, Users, Database, Cpu } from "lucide-react";
 
 const SidebarContent= [
   {
@@ -51,6 +51,18 @@ const SidebarContent= [
         name: "Réseaux",
         icon: Network,
         url: "/reseaux",
+      },
+      {
+        id: uniqueId(),
+        name: "Stockage",
+        icon: Database,
+        url: "/stockage",
+      },
+      {
+        id: uniqueId(),
+        name: "Équipements",
+        icon: Cpu,
+        url: "/equipements",
       },
     ],
   },
