@@ -132,14 +132,14 @@ export default function IncidentsPage() {
 
       {/* Cartes KPI Synthétiques */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {/* Pannes (Rouge) */}
+        {/* Pannes */}
         <div
           onClick={() => { setActiveTab("incidents"); setTypeIncident("Panne"); }}
           className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-4 space-y-1 cursor-pointer transition-all hover:border-rose-500/50 hover:shadow-xs"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">
-              Pannes (Rouge)
+              Pannes
             </span>
             <span className="p-1.5 rounded-lg bg-rose-500/10 text-rose-600">
               <ShieldAlert className="w-4 h-4" />
@@ -151,14 +151,14 @@ export default function IncidentsPage() {
           <p className="text-[11px] text-muted-foreground">Avaries matérielles bloquantes</p>
         </div>
 
-        {/* Alertes (Orange) */}
+        {/* Alertes */}
         <div
           onClick={() => { setActiveTab("incidents"); setTypeIncident("Alerte"); }}
           className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-4 space-y-1 cursor-pointer transition-all hover:border-amber-500/50 hover:shadow-xs"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
-              Alertes (Orange)
+              Alertes
             </span>
             <span className="p-1.5 rounded-lg bg-amber-500/10 text-amber-600">
               <AlertTriangle className="w-4 h-4" />
@@ -288,7 +288,7 @@ export default function IncidentsPage() {
                     Incidents récents du réseau
                   </CardTitle>
                   <CardDescription className="text-xs text-muted-foreground mt-0.5">
-                    Signalements enregistrés : rouge = panne, orange = alerte.
+                    Signalements et anomalies enregistrés sur les équipements et le réseau.
                   </CardDescription>
                 </div>
                 <button

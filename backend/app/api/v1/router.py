@@ -17,3 +17,4 @@ api_router.include_router(maintenances.router, prefix="/maintenances", tags=["ma
 # Module Analytics
 api_router.include_router(analytics.router, prefix="/analytics", tags=["analytics"])
 
+
