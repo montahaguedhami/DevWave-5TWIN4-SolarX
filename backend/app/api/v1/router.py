@@ -4,21 +4,16 @@ from fastapi import APIRouter
 
 from app.api.v1.endpoints import consommation, consommateurs, health, ia, lignes, localisation, meteo, production, reseaux
 from app.api.v1.endpoints import equipements, stockage  # module P2
+from app.api.v1.endpoints import incidents, maintenances  # module P6 (Maintenance + Incident)
+from app.api.v1.endpoints import analytics  # analyse énergétique reliée à Fuseki
 
 api_router = APIRouter()
 api_router.include_router(health.router, tags=["health"])
 api_router.include_router(localisation.router, prefix="/localisation", tags=["localisation"])
 api_router.include_router(meteo.router, prefix="/meteo", tags=["meteo"])
 api_router.include_router(lignes.router, prefix="/lignes", tags=["lignes"])
-api_router.include_router(reseaux.router, prefix="/reseaux", tags=["reseaux"])
-api_router.include_router(ia.router, prefix="/ia", tags=["ia"])
-api_router.include_router(production.router, prefix="/production", tags=["production"])
-api_router.include_router(consommateurs.router, prefix="/consommateurs", tags=["consommateurs"])
-api_router.include_router(consommation.router, prefix="/consommation", tags=["consommation"])
-# Module P2 — Stockage + Équipement
-api_router.include_router(stockage.router, prefix="/stockage", tags=["stockage"])
-api_router.include_router(equipements.router, prefix="/equipements", tags=["equipements"])
 
-# TODO (team): register routers for new entities here, e.g.
-# from app.api.v1.endpoints import notes
-# api_router.include_router(notes.router, prefix="/notes", tags=["notes"])
+api_router.include_router(maintenances.router, prefix="/maintenances", tags=["maintenances"])
+# Module Analytics
+api_router.include_router(analytics.router, prefix="/analytics", tags=["analytics"])
+

@@ -74,7 +74,7 @@ function AssistantIaPage() {
           Assistant IA
         </h1>
         <p className="text-sm text-muted-foreground mt-1">
-          Posez une question en français : elle est traduite en requête SPARQL et exécutée sur l'ontologie SolarX (Fuseki).
+          Posez une question en français : l'assistant intelligent analyse les données du réseau SolarX en temps réel.
         </p>
       </div>
 

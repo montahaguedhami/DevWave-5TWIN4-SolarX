@@ -19,7 +19,7 @@ export function ErrorState({ error }) {
           <div className="font-semibold text-foreground">Impossible de charger les données</div>
           <div className="text-muted-foreground">{error?.message}</div>
           <div className="text-muted-foreground text-xs">
-            Vérifiez que le backend tourne sur <code>{API_URL}</code> et que Fuseki est lancé avec le dataset <code>solarx</code>.
+            Vérifiez que le serveur de données SolarX est accessible sur <code>{API_URL}</code>.
           </div>
         </div>
       </CardContent>

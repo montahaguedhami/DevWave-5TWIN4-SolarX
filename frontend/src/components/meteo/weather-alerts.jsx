@@ -66,7 +66,7 @@ export function WeatherAlertsCard() {
             Alertes météo ({alertes.length})
           </CardTitle>
           <CardDescription className="text-xs text-muted-foreground">
-            Dernières mesures ConditionMeteo de chaque ville (Fuseki) — chaleur &gt; 40 °C, vent &gt; 25 m/s, rayonnement &lt; 200 W/m².
+            Dernières mesures météorologiques de chaque ville — chaleur &gt; 40 °C, vent &gt; 25 m/s, rayonnement &lt; 200 W/m².
           </CardDescription>
         </div>
         <Button variant="ghost" size="icon-sm" onClick={load} disabled={loading} aria-label="Rafraîchir">
