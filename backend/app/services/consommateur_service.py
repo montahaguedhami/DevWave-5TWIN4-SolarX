@@ -302,6 +302,8 @@ class ConsommateurService:
             derniere = mesures_triees[0]
             try:
                 date_derniere = datetime.fromisoformat(derniere.dateMesure.replace("Z", "+00:00"))
+                if date_derniere.tzinfo is None:
+                    date_derniere = date_derniere.replace(tzinfo=timezone.utc)
             except ValueError:
                 date_derniere = maintenant
             if (maintenant - date_derniere).days >= jours_sans_mesure:

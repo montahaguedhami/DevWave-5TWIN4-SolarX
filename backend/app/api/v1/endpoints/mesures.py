@@ -44,6 +44,13 @@ def create_mesures_bulk(data: list[MesureCreate], service: MesureService = Depen
     return service.create_mesures_bulk(data)
 
 
+@router.put("/{mesure_id}", response_model=Mesure)
+def update_mesure(
+    data: MesureCreate, mesure_id: str = MesureId, service: MesureService = Depends(get_service)
+):
+    return service.update_mesure(mesure_id, data)
+
+
 @router.delete("/{mesure_id}")
 def delete_mesure(mesure_id: str = MesureId, service: MesureService = Depends(get_service)):
     return service.delete_mesure(mesure_id)

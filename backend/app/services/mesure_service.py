@@ -89,41 +89,12 @@ class MesureService:
             raise HTTPException(status.HTTP_404_NOT_FOUND, f"Mesure introuvable : {mesure_id}")
         return _to_mesure(rows[0])
 
-    def create_mesure(self, data: MesureCreate) -> Mesure:
-        self._ensure_type(data.type)
-        # validate date
-        datetime_literal(data.dateMesure if "T" in data.dateMesure else f"{data.dateMesure}T00:00:00")
-        # ensure target exists (best-effort: accept any IRI present in the ontology)
-        if not self.fuseki.ask(f"ASK {{ {{ {iri(data.concerne)} ?p ?o }} UNION {{ ?s ?p {iri(data.concerne)} }} }}"):
-            raise HTTPException(status.HTTP_400_BAD_REQUEST, f"Cible inconnue : {data.concerne}")
-
-        mesure_id = f"{data.type}_{data.concerne}".replace(" ", "_")
-        # ensure uniqueness
-        counter = 1
-        base = mesure_id
-        while self.fuseki.ask(f"ASK {{ {{ {iri(mesure_id)} ?p ?o }} UNION {{ ?s ?p {iri(mesure_id)} }} }}"):
-            mesure_id = f"{base}_{counter}"
-            counter += 1
-
+    def _triples(self, subject: str, data: MesureCreate, date: str) -> list[str]:
         triples = [
-            f"{iri(mesure_id)} a owl:NamedIndividual, solarx:{data.type} ;",
+            f"{subject} a owl:NamedIndividual, solarx:{data.type} ;",
             f"  solarx:valeur {decimal_literal(data.valeur)} ;",
             f"  solarx:unite {string_literal(data.unite)} ;",
-            f"  solarx:dateMesure {datetime_literal(data.dateMesure if 'T' in data.dateMesure else f'{data.dateMesure}T00:00:00')} ;",
-            f"  solarx:concerne {iri(data.concerne)} .",
-        ]
-        if data.mesureePar:
-            triples[-1] = triples[-1].rstrip(" .") + " ;"
-            triples.append(f"  solarx:mesureePar {iri(data.mesureePar)} .")
-        if data.sourceDonnees:
-            # reopen last triple
-            pass
-        # Rebuild cleanly to handle optional fields
-        triples = [
-            f"{iri(mesure_id)} a owl:NamedIndividual, solarx:{data.type} ;",
-            f"  solarx:valeur {decimal_literal(data.valeur)} ;",
-            f"  solarx:unite {string_literal(data.unite)} ;",
-            f"  solarx:dateMesure {datetime_literal(data.dateMesure if 'T' in data.dateMesure else f'{data.dateMesure}T00:00:00')} ;",
+            f"  solarx:dateMesure {datetime_literal(date)} ;",
             f"  solarx:concerne {iri(data.concerne)}",
         ]
         if data.mesureePar:
@@ -133,6 +104,43 @@ class MesureService:
             triples[-1] += " ;"
             triples.append(f"  solarx:sourceDonnees {string_literal(data.sourceDonnees)}")
         triples[-1] += " ."
+        return triples
+
+    def _validate(self, data: MesureCreate) -> str:
+        self._ensure_type(data.type)
+        date = data.dateMesure if "T" in data.dateMesure else f"{data.dateMesure}T00:00:00"
+        datetime_literal(date)
+        # ensure target exists (best-effort: accept any IRI present in the ontology)
+        if not self.fuseki.ask(f"ASK {{ {{ {iri(data.concerne)} ?p ?o }} UNION {{ ?s ?p {iri(data.concerne)} }} }}"):
+            raise HTTPException(status.HTTP_400_BAD_REQUEST, f"Cible inconnue : {data.concerne}")
+        return date
+
+    def create_mesure(self, data: MesureCreate) -> Mesure:
+        date = self._validate(data)
+
+        mesure_id = f"{data.type}_{data.concerne}".replace(" ", "_")
+        # ensure uniqueness
+        counter = 1
+        base = mesure_id
+        while self.fuseki.ask(f"ASK {{ {{ {iri(mesure_id)} ?p ?o }} UNION {{ ?s ?p {iri(mesure_id)} }} }}"):
+            mesure_id = f"{base}_{counter}"
+            counter += 1
+
+        triples = self._triples(iri(mesure_id), data, date)
+        self.fuseki.update("INSERT DATA { " + "\n".join(triples) + " }")
+        return self.get_mesure(mesure_id)
+
+    def update_mesure(self, mesure_id: str, data: MesureCreate) -> Mesure:
+        self.get_mesure(mesure_id)
+        date = self._validate(data)
+        subject = iri(mesure_id)
+        for predicate in ("valeur", "unite", "dateMesure", "concerne", "mesureePar", "sourceDonnees"):
+            self.fuseki.update(f"DELETE WHERE {{ {subject} solarx:{predicate} ?value }}")
+        self.fuseki.update(
+            f"DELETE {{ {subject} a ?oldType }} WHERE {{ {subject} a ?oldType . "
+            f"VALUES ?oldType {{ solarx:MesureConsommation solarx:MesureProduction solarx:MesureStockage }} }}"
+        )
+        triples = self._triples(subject, data, date)
         self.fuseki.update("INSERT DATA { " + "\n".join(triples) + " }")
         return self.get_mesure(mesure_id)
 

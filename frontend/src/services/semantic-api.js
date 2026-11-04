@@ -59,9 +59,9 @@ export const meteoApi = {
 };
 
 export const consommateurApi = {
-  list: (params) => request("/consommateurs", { params }),
+  list: (params) => request("/consommateurs/", { params }),
   get: (id) => request(`/consommateurs/${enc(id)}`),
-  create: (body) => request("/consommateurs", { method: "POST", body }),
+  create: (body) => request("/consommateurs/", { method: "POST", body }),
   update: (id, body) => request(`/consommateurs/${enc(id)}`, { method: "PUT", body }),
   delete: (id, cascade = false) =>
     request(`/consommateurs/${enc(id)}`, { method: "DELETE", params: { cascade } }),
@@ -73,9 +73,10 @@ export const consommateurApi = {
 };
 
 export const mesureApi = {
-  list: (params) => request("/mesures", { params }),
+  list: (params) => request("/mesures/", { params }),
   get: (id) => request(`/mesures/${enc(id)}`),
-  create: (body) => request("/mesures", { method: "POST", body }),
+  create: (body) => request("/mesures/", { method: "POST", body }),
+  update: (id, body) => request(`/mesures/${enc(id)}`, { method: "PUT", body }),
   delete: (id) => request(`/mesures/${enc(id)}`, { method: "DELETE" }),
   bulk: (items) => request("/mesures/bulk", { method: "POST", body: items }),
 };
