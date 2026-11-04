@@ -177,7 +177,7 @@ function ConsumptionPage() {
     </Card>
 
     <Card variant="glass" expandable={false}>
-      <CardHeader><CardTitle>Historique de consommation</CardTitle><CardDescription>Les points affichés correspondent aux relevés en kWh présents dans Fuseki.</CardDescription></CardHeader>
+      <CardHeader><CardTitle>Historique de consommation</CardTitle><CardDescription>Les points affichés correspondent aux relevés en kWh enregistrés.</CardDescription></CardHeader>
       <CardContent>{loading ? <Loading /> : chartData.length ? <div className="h-[280px] w-full"><ResponsiveContainer width="100%" height="100%"><AreaChart data={chartData} margin={{ top: 10, right: 12, left: 0, bottom: 0 }}><defs><linearGradient id="consumptionFill" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="var(--primary)" stopOpacity={0.55} /><stop offset="95%" stopColor="var(--primary)" stopOpacity={0} /></linearGradient></defs><CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.15)" /><XAxis dataKey="date" stroke="rgba(255,255,255,0.7)" fontSize={11} /><YAxis stroke="rgba(255,255,255,0.7)" fontSize={11} unit=" kWh" /><Tooltip formatter={(value) => [`${value} kWh`, "Consommation"]} /><Area type="monotone" dataKey="value" name="Consommation" stroke="var(--primary)" fill="url(#consumptionFill)" connectNulls /></AreaChart></ResponsiveContainer></div> : <p className="py-12 text-center text-sm text-muted-foreground">Aucune mesure en kWh datée à représenter.</p>}</CardContent>
     </Card>
 

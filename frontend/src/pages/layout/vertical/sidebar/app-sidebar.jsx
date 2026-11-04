@@ -1,11 +1,9 @@
 import { Suspense } from "react";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader } from "@/components/ui/sidebar";
+import { Sidebar, SidebarContent, SidebarGroup, SidebarHeader } from "@/components/ui/sidebar";
 import FullLogo from "../../shared/logo/full-logo";
 import sidebaritems from "./sidebaritems";
 import NavCollapse from "./nav-collapse";
 import SimpleBar from "simplebar-react";
-import { NavSecondary } from "./nav-secondary";
-import { NavUser } from "./nav-user";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 function NavSkeleton() {
@@ -30,7 +28,7 @@ function AppSidebar({ ...props }) {
       <SidebarHeader className="p-3 group-data-[state=collapsed]:px-2.5 flex flex-row items-center justify-between border-b border-sidebar-border">
         <FullLogo />
         <Badge className="group-data-[state=collapsed]:hidden bg-sidebar-accent text-sidebar-accent-foreground border-sidebar-border font-bold text-[10px]" variant="secondary">
-          v2.4 Pro
+          v1.0
         </Badge>
       </SidebarHeader>
 
@@ -45,13 +43,6 @@ function AppSidebar({ ...props }) {
           </SidebarGroup>
         </SimpleBar>
       </SidebarContent>
-
-      <SidebarFooter className="p-3 border-t border-sidebar-border">
-        <div className="hide-menu flex flex-col gap-2">
-          <NavSecondary />
-          <NavUser />
-        </div>
-      </SidebarFooter>
     </Sidebar>;
 }
 export {

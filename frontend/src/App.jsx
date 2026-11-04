@@ -26,6 +26,7 @@ import AnalyticsPage from "@/pages/analytics/page";
 import EnergyBalancePage from "@/pages/energy-balance/page";
 import StockagePage from "@/pages/stockage/page"; // module P2
 import EquipementsPage from "@/pages/equipements/page"; // module P2
+import IncidentsPage from "@/pages/incidents/page"; // module P6
 import SettingsPage from "@/pages/settings/page";
 import NotesAppPage from "@/pages/apps/notes/page";
 import TicketsAppPage from "@/pages/apps/tickets/page";
@@ -80,6 +81,7 @@ function App() {
                   <Route path="energy-balance" element={<EnergyBalancePage />} />
                   <Route path="stockage" element={<StockagePage />} />
                   <Route path="equipements" element={<EquipementsPage />} />
+                  <Route path="incidents" element={<IncidentsPage />} />
                   <Route path="settings" element={<SettingsPage />} />
 
                   <Route path="apps/notes" element={<NotesAppPage />} />

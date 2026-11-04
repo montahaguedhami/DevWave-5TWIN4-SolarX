@@ -3,13 +3,16 @@
 from fastapi import APIRouter
 
 from app.api.v1.endpoints import (
+    analytics,
     consommation,
     consommateurs,
     equipements,
     health,
     ia,
+    incidents,
     lignes,
     localisation,
+    maintenances,
     mesures,
     meteo,
     production,
@@ -30,7 +33,6 @@ api_router.include_router(consommation.router, prefix="/consommation", tags=["co
 api_router.include_router(stockage.router, prefix="/stockage", tags=["stockage"])
 api_router.include_router(equipements.router, prefix="/equipements", tags=["equipements"])
 api_router.include_router(mesures.router, prefix="/mesures", tags=["mesures"])
-
-# TODO (team): register routers for new entities here, e.g.
-# from app.api.v1.endpoints import notes
-# api_router.include_router(notes.router, prefix="/notes", tags=["notes"])
+api_router.include_router(incidents.router, prefix="/incidents", tags=["incidents"])
+api_router.include_router(maintenances.router, prefix="/maintenances", tags=["maintenances"])
+api_router.include_router(analytics.router, prefix="/analytics", tags=["analytics"])
