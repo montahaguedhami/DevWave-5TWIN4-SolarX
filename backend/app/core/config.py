@@ -1,6 +1,7 @@
 """Application settings loaded from environment variables."""
 
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -53,6 +54,7 @@ class Settings(BaseSettings):
     FUSEKI_DATASET: str = "solarx"
     FUSEKI_USER: str | None = None
     FUSEKI_PASSWORD: str | None = None
+    ONTOLOGY_FILE: Path = Path(__file__).resolve().parents[3] / "database" / "solarx.owl"
 
     # Open-Meteo (https://open-meteo.com/)
     OPEN_METEO_URL: str = "https://api.open-meteo.com/v1/forecast"

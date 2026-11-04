@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 from fastapi import HTTPException
-from rdflib import Graph
+from rdflib import Dataset, Graph
 
 from app.schemas.localisation import VilleCreate, VilleUpdate
 from app.services.fuseki import PREFIXES
@@ -54,11 +54,13 @@ def meteo(client, monkeypatch) -> MeteoService:
 def test_villes_recherche_et_filtre(client):
     service = LocalisationService(client)
     villes = {v.id: v for v in service.list_villes()}
-    assert len(villes) == 10
+    assert len(villes) == 13
     assert villes["Tunis"].region == "Nord_Tunisie" and villes["Tunis"].nbLiens >= 3
     assert [v.id for v in service.list_villes(q="sf")] == ["Sfax"]
     assert {v.id for v in service.list_villes(region="Sud_Tunisie")} == {"Djerba", "Gabes", "Gafsa", "Tozeur"}
-    assert {r.id for r in service.list_regions()} == {"Nord_Tunisie", "Centre_Tunisie", "Sud_Tunisie"}
+    assert {r.id for r in service.list_regions()} == {
+        "Nord_Tunisie", "Centre_Tunisie", "Sud_Tunisie", "Nord_Ouest_Tunisie", "Sud_Est_Tunisie"
+    }
 
 
 def test_crud_ville(client):
@@ -122,6 +124,15 @@ def test_une_seule_fois_par_ville_et_par_jour(client, monkeypatch):
     assert [r.dateMesure for r in releves] == ["2026-10-31T08:00:00", "2026-10-30T09:00:00"]
 
 
+def test_nouveaux_releves_de_demonstration(meteo):
+    assert meteo.historique("2026-11-03", "2026-11-03") == []
+    releves = meteo.historique("2026-11-03", "2026-11-03", source=None)
+    assert {releve.ville for releve in releves} == {"Beja", "Monastir", "Tataouine"}
+    assert all(len(releve.mesures) == 6 for releve in releves)
+    assert all(releve.source == "Données de démonstration" for releve in releves)
+    assert all(releve.dateMesure == "2026-11-03T12:00:00" for releve in releves)
+
+
 def test_mesure_liee_a_une_installation_protegee(meteo):
     with pytest.raises(HTTPException) as exc:
         meteo.supprimer_mesure("Temperature_Djerba")
@@ -144,6 +155,60 @@ def test_consulter_enregistre_automatiquement_et_historique(meteo):
     assert meteo.historique("2026-10-30", "2026-10-30") == []
 
 
+def test_historique_apres_restauration_schema_meteo(client, meteo):
+    from rdflib import Namespace, RDFS
+    from scripts.load_ontology import meteo_schema
+
+    solarx = Namespace("http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#")
+    schema = meteo_schema(client.graph)
+    meteo.consulter("Sousse")
+    for classe in list(client.graph.subjects(RDFS.subClassOf, solarx.ConditionMeteo)):
+        client.graph.remove((classe, RDFS.subClassOf, solarx.ConditionMeteo))
+    assert meteo.historique("2026-10-30", "2026-10-30") == []
+
+    client.graph += schema
+    releves = meteo.historique("2026-10-30", "2026-10-30")
+    assert len(releves) == 1
+    assert releves[0].ville == "Sousse"
+    assert len(releves[0].mesures) == 6
+    assert not list(schema.subjects(None, solarx.Sousse))
+
+
+def test_initialisation_base_neuve_et_historique(monkeypatch):
+    from app.services.semantic_bootstrap import initialise_module_data
+
+    monkeypatch.setattr("rdflib.plugins.sparql.SPARQL_DEFAULT_GRAPH_UNION", False)
+    client = RdflibClient(Dataset())
+    initialise_module_data(client)
+    service = LocalisationService(client)
+    assert len(service.list_regions()) == 5
+    assert len(service.list_villes()) == 13
+    meteo = MeteoService(client)
+    monkeypatch.setattr(meteo, "_appel_open_meteo", lambda lat, lon: OPEN_METEO_FAKE)
+    assert len(meteo.consulter("Sousse").enregistrement.enregistrees) == 6
+    assert len(meteo.historique("2026-10-30", "2026-10-30")) == 1
+
+
+def test_redemarrage_preserve_crud_et_historique(monkeypatch):
+    from app.services.semantic_bootstrap import initialise_module_data
+
+    monkeypatch.setattr("rdflib.plugins.sparql.SPARQL_DEFAULT_GRAPH_UNION", False)
+    client = RdflibClient(Dataset())
+    initialise_module_data(client)
+    service = LocalisationService(client)
+    service.delete_ville("Bizerte")
+    service.update_ville("Tunis", VilleUpdate(nom="Tunis modifiee", region="Nord_Tunisie", latitude=36.81, longitude=10.19))
+    meteo = MeteoService(client)
+    monkeypatch.setattr(meteo, "_appel_open_meteo", lambda lat, lon: OPEN_METEO_FAKE)
+    meteo.consulter("Sousse")
+    count = len(client.graph)
+    initialise_module_data(client)
+    assert len(client.graph) == count
+    assert "Bizerte" not in {ville.id for ville in service.list_villes()}
+    assert service.get_ville("Tunis").nom == "Tunis modifiee"
+    assert len(meteo.historique("2026-10-30", "2026-10-30")) == 1
+
+
 def test_geocodage_inverse_region_la_plus_proche(client, monkeypatch):
     class FakeResponse:
         def raise_for_status(self):
@@ -154,7 +219,7 @@ def test_geocodage_inverse_region_la_plus_proche(client, monkeypatch):
 
     monkeypatch.setattr("app.services.localisation_service.httpx.get", lambda *a, **k: FakeResponse())
     geo = LocalisationService(client).geocodage_inverse(35.7643, 10.8113)
-    assert (geo.nom, geo.villeProche, geo.regionSuggeree, geo.villeExistante) == ("Monastir", "Sousse", "Centre_Tunisie", None)
+    assert (geo.nom, geo.villeProche, geo.regionSuggeree, geo.villeExistante) == ("Monastir", "Monastir", "Centre_Tunisie", "Monastir")
 
 
 def test_alertes_depuis_ontologie(meteo):

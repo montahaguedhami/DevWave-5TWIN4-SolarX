@@ -109,4 +109,8 @@ class FusekiClient:
 
 
 def get_fuseki() -> FusekiClient:
-    return FusekiClient()
+    from app.services.semantic_bootstrap import ensure_semantic_modules
+
+    client = FusekiClient()
+    ensure_semantic_modules(client)
+    return client

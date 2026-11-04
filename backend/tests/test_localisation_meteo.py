@@ -51,3 +51,30 @@ def test_ontologie_localisation_meteo():
             assert g.value(m, SOLARX.unite) is not None
             assert g.value(m, SOLARX.dateMesure) is not None
             assert g.value(m, SOLARX.situeDans) in villes
+
+
+def test_nouveaux_individus_localisation_meteo():
+    graph = Graph().parse(OWL_FILE, format="xml")
+    expected_regions = {
+        "Beja": SOLARX.Nord_Ouest_Tunisie,
+        "Monastir": SOLARX.Centre_Tunisie,
+        "Tataouine": SOLARX.Sud_Est_Tunisie,
+    }
+    units = {
+        "Temperature": "°C", "Ensoleillement": "W/m²", "Precipitation": "mm",
+        "VitesseVent": "m/s", "Humidite": "%", "CouvertureNuageuse": "%",
+    }
+    assert len(set(graph.subjects(RDF.type, SOLARX.Ville))) == 13
+    assert len(set(graph.subjects(RDF.type, SOLARX.Region))) == 5
+    for city, region in expected_regions.items():
+        assert (SOLARX[city], SOLARX.situeDans, region) in graph
+        assert (region, RDF.type, SOLARX.Region) in graph
+        assert -90 <= float(graph.value(SOLARX[city], SOLARX.latitude)) <= 90
+        assert -180 <= float(graph.value(SOLARX[city], SOLARX.longitude)) <= 180
+        for kind, unit in units.items():
+            subject = SOLARX[f"{kind}_{city}_Demo_20261103"]
+            assert (subject, RDF.type, SOLARX[kind]) in graph
+            assert graph.value(subject, SOLARX.situeDans) == SOLARX[city]
+            assert str(graph.value(subject, SOLARX.unite)) == unit
+            assert str(graph.value(subject, SOLARX.sourceDonnees)) == "Données de démonstration"
+            assert graph.value(subject, SOLARX.valeur).datatype == Namespace("http://www.w3.org/2001/XMLSchema#").decimal

@@ -13,17 +13,45 @@ import sys
 from pathlib import Path
 
 import httpx
-from rdflib import Graph
+from rdflib import BNode, Graph, Namespace, RDFS
 
 from app.core.config import settings
 
 OWL_FILE = Path(__file__).resolve().parents[2] / "database" / "solarx.owl"
 
 
+def meteo_schema(graph: Graph) -> Graph:
+    solarx = Namespace("http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#")
+    subjects = {
+        solarx.ConditionMeteo,
+        solarx.sourceDonnees,
+        solarx.dateRecuperation,
+        *graph.subjects(RDFS.subClassOf, solarx.ConditionMeteo),
+    }
+    schema = Graph()
+    pending = list(subjects)
+    visited = set()
+    while pending:
+        subject = pending.pop()
+        if subject in visited:
+            continue
+        visited.add(subject)
+        for triple in graph.triples((subject, None, None)):
+            schema.add(triple)
+            if isinstance(triple[2], BNode):
+                pending.append(triple[2])
+    return schema
+
+
 def main() -> None:
     replace = "--replace" in sys.argv
+    schema_only = "--meteo-schema" in sys.argv
+    if schema_only and replace:
+        raise SystemExit("--meteo-schema ne peut pas être combiné avec --replace.")
     graph = Graph()
     graph.parse(OWL_FILE, format="xml")
+    if schema_only:
+        graph = meteo_schema(graph)
     print(f"Ontologie valide : {len(graph)} triplets lus depuis {OWL_FILE.name}")
 
     base = settings.FUSEKI_URL.rstrip("/")

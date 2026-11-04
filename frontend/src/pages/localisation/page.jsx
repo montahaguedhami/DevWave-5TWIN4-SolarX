@@ -345,6 +345,7 @@ function LocalisationPage() {
                     onChange={(e) => setForm({ ...form, region: e.target.value })}
                     className={`${selectClass} w-full`}
                   >
+                    <option value="" disabled>{regions.length ? "Choisir une région" : "Aucune région disponible"}</option>
                     {regions.map((r) => (
                       <option key={r.id} value={r.id}>
                         {r.nom}
@@ -364,7 +365,13 @@ function LocalisationPage() {
                       onChange={(e) => setForm({ ...form, longitude: e.target.value })} />
                   </label>
                 </div>
-                <Button type="submit" disabled={saving} className="w-full">
+                {!regions.length && (
+                  <div role="alert" className="text-sm text-amber-500">
+                    Aucune région disponible dans la base. Chargez les régions de l'ontologie puis actualisez la liste.
+                    <Button type="button" variant="outline" onClick={loadRegions}>Actualiser les régions</Button>
+                  </div>
+                )}
+                <Button type="submit" disabled={saving || !form.region} className="w-full">
                   {saving && <Loader2 className="animate-spin" />}
                   {form.mode === "create" ? "Ajouter" : "Enregistrer"}
                 </Button>
