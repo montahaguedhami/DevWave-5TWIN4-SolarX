@@ -354,6 +354,9 @@
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#CentraleSolaire"/>
         <solarx:possede rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Onduleur_01"/>
         <solarx:produitEnergie rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#EnergieSolaire_01"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Centrale solaire de Tozeur</solarx:nom>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Tozeur"/>
+        <solarx:puissanceKW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2500</solarx:puissanceKW>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Compteur_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#CompteurIntelligent"/>
@@ -369,16 +372,23 @@
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole"/>
         <solarx:possede rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Compteur_04"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">École 01</solarx:nom>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Sousse"/>
+        <solarx:surfaceM2 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1400</solarx:surfaceM2>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole_Tunis">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole"/>
         <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Tunis"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">École Tunis</solarx:nom>
+        <solarx:surfaceM2 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1400</solarx:surfaceM2>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#EnergieEolienne_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Eolienne"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Énergie éolienne 01</solarx:nom>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#EnergieSolaire_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Solaire"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Énergie solaire 01</solarx:nom>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ensoleillement_Djerba">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ensoleillement"/>
@@ -393,15 +403,21 @@
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Entreprise_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Entreprise"/>
         <solarx:occupe rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine_Tunis"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Entreprise 01</solarx:nom>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Tunis"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Hopital_Tunis">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Hopital"/>
         <solarx:possede rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Capteur_01"/>
         <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Tunis"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Hôpital Tunis</solarx:nom>
+        <solarx:surfaceM2 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">6000</solarx:surfaceM2>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Institution_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Institution"/>
         <solarx:occupe rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole_Tunis"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Institution 01</solarx:nom>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Tunis"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneBasseTension_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#LigneBasseTension"/>
@@ -464,20 +480,32 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Maison 01</solarx:nom>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Sousse"/>
+        <solarx:surfaceM2 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">95</solarx:surfaceM2>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison_Djerba">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison"/>
         <solarx:possede rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Compteur_04"/>
         <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Djerba"/>
         <solarx:surfaceM2 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">120</solarx:surfaceM2>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Maison Djerba</solarx:nom>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Mesure"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison_01"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-09-30T14:30:00</solarx:dateMesure>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">12</solarx:valeur>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureProduction_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Mesure"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureProduction"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#CentraleSolaire_01"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-09-30T23:00:00</solarx:dateMesure>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">12000</solarx:valeur>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Mesure_001">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureProduction"/>
@@ -515,12 +543,16 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ParcEolien_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ParcEolien"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Parc éolien de Bizerte</solarx:nom>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Bizerte"/>
+        <solarx:puissanceKW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1500</solarx:puissanceKW>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ParcEolien_Tunis">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ParcEolien"/>
         <solarx:alimenteStockage rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Batterie_05"/>
         <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Tunis"/>
         <solarx:puissanceKW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">250</solarx:puissanceKW>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Parc éolien Tunis</solarx:nom>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ParcSolaire_Djerba">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#CentraleSolaire"/>
@@ -529,10 +561,13 @@
         <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Djerba"/>
         <solarx:utiliseSource rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Soleil_01"/>
         <solarx:puissanceKW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">100</solarx:puissanceKW>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Parc solaire Djerba</solarx:nom>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Particulier_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Particulier"/>
         <solarx:occupe rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison_Djerba"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Particulier 01</solarx:nom>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Djerba"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ReseauDistribution_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ReseauDistribution"/>
@@ -555,12 +590,15 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Soleil_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Solaire"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Soleil 01</solarx:nom>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#SourceEolienne_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Eolienne"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Source éolienne 01</solarx:nom>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#SourceSolaire_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Solaire"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Source solaire 01</solarx:nom>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Sud_Tunisie">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Region"/>
@@ -585,9 +623,12 @@
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine_Tunis">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine"/>
         <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Tunis"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Usine Tunis</solarx:nom>
+        <solarx:surfaceM2 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3200</solarx:surfaceM2>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Vent_01">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Eolienne"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vent 01</solarx:nom>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Vent_Tunis">
         <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#VitesseVent"/>
@@ -2876,5 +2917,327 @@
         <solarx:porteSur rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Capteur_04"/>
         <solarx:dateOccurrence rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-01-25T08:12:00</solarx:dateOccurrence>
         <solarx:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Essuyage des lentilles des détecteurs optiques d étincelles avec chiffon antistatique.</solarx:description>
+    </owl:NamedIndividual>
+
+    <!-- ===================== Mesures de production et jeu de démonstration Consommateur + Mesure ===================== -->
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureProduction_02">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureProduction"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ParcEolien_Tunis"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-09-30T23:00:00</solarx:dateMesure>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1500</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureProduction_03">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureProduction"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#ParcEolien_01"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-09-30T23:00:00</solarx:dateMesure>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">9000</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison_Sfax_Demo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Maison Sfax Demo</solarx:nom>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Sfax"/>
+        <solarx:surfaceM2 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">95</solarx:surfaceM2>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Maison_Sfax_Demo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison_Sfax_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-25T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">7.6</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Maison_Sfax_Demo_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison_Sfax_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-26T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">9.12</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Maison_Sfax_Demo_2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison_Sfax_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-27T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">10.64</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Maison_Sfax_Demo_3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison_Sfax_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-28T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">7.98</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Maison_Sfax_Demo_4">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison_Sfax_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">9.5</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Maison_Sfax_Demo_5">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison_Sfax_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-30T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">11.02</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Maison_Sfax_Demo_6">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison_Sfax_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-31T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">8.36</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Maison_Sfax_Demo_7">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison_Sfax_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-01T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">9.88</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Maison_Sfax_Demo_8">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison_Sfax_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-02T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">11.4</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Maison_Sfax_Demo_9">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison_Sfax_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-03T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">8.74</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Maison_Sfax_Demo_10">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison_Sfax_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-04T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">10.26</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Maison_Sfax_Demo_11">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Maison_Sfax_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-05T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">18.0</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole_Sousse_Demo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ecole Sousse Demo</solarx:nom>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Sousse"/>
+        <solarx:surfaceM2 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1400</solarx:surfaceM2>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Ecole_Sousse_Demo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole_Sousse_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-25T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">25.6</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Ecole_Sousse_Demo_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole_Sousse_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-26T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30.72</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Ecole_Sousse_Demo_2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole_Sousse_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-27T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">35.84</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Ecole_Sousse_Demo_3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole_Sousse_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-28T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">26.88</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Ecole_Sousse_Demo_4">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole_Sousse_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">32.0</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Ecole_Sousse_Demo_5">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole_Sousse_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-30T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">37.12</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Ecole_Sousse_Demo_6">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole_Sousse_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-31T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">28.16</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Ecole_Sousse_Demo_7">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole_Sousse_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-01T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">33.28</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Ecole_Sousse_Demo_8">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole_Sousse_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-02T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">38.4</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Ecole_Sousse_Demo_9">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole_Sousse_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-03T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">29.44</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Ecole_Sousse_Demo_10">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole_Sousse_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-04T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">34.56</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Ecole_Sousse_Demo_11">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Ecole_Sousse_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-05T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">34.0</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine_Nabeul_Demo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine"/>
+        <solarx:nom rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Usine Nabeul Demo</solarx:nom>
+        <solarx:situeDans rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Nabeul"/>
+        <solarx:surfaceM2 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3200</solarx:surfaceM2>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Usine_Nabeul_Demo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine_Nabeul_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-25T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">128.0</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Usine_Nabeul_Demo_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine_Nabeul_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-26T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">153.6</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Usine_Nabeul_Demo_2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine_Nabeul_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-27T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">179.2</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Usine_Nabeul_Demo_3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine_Nabeul_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-28T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">134.4</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Usine_Nabeul_Demo_4">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine_Nabeul_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-29T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">160.0</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Usine_Nabeul_Demo_5">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine_Nabeul_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-30T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">185.6</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Usine_Nabeul_Demo_6">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine_Nabeul_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-31T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">140.8</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Usine_Nabeul_Demo_7">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine_Nabeul_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-01T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">166.4</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Usine_Nabeul_Demo_8">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine_Nabeul_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-02T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">192.0</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Usine_Nabeul_Demo_9">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine_Nabeul_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-03T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">147.2</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Usine_Nabeul_Demo_10">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine_Nabeul_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-04T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">172.8</solarx:valeur>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation_Usine_Nabeul_Demo_11">
+        <rdf:type rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#MesureConsommation"/>
+        <solarx:concerne rdf:resource="http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#Usine_Nabeul_Demo"/>
+        <solarx:dateMesure rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-05T00:00:00</solarx:dateMesure>
+        <solarx:sourceDonnees rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeu de démonstration</solarx:sourceDonnees>
+        <solarx:unite rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kWh</solarx:unite>
+        <solarx:valeur rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">150.0</solarx:valeur>
     </owl:NamedIndividual>
 </rdf:RDF>

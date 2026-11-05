@@ -28,12 +28,13 @@ def client() -> RdflibClient:
 
 
 def test_installations_list_includes_incomplete_individuals(client):
+    client.graph.update(PREFIXES + "INSERT DATA { solarx:ParcEolien_Incomplet a solarx:ParcEolien }")
     installations = InstallationService(client).list_installations()
     by_id = {item.id: item for item in installations}
     assert {"CentraleSolaire", "ParcEolien"}.issubset({item.type.value for item in installations})
-    assert by_id["ParcEolien_01"].nom == "ParcEolien_01"
-    assert by_id["ParcEolien_01"].puissance_kw is None
-    assert by_id["ParcEolien_01"].ville is None
+    assert by_id["ParcEolien_Incomplet"].nom == "ParcEolien_Incomplet"
+    assert by_id["ParcEolien_Incomplet"].puissance_kw is None
+    assert by_id["ParcEolien_Incomplet"].ville is None
 
 
 def test_wind_source_filter_includes_both_deduced_wind_parks(client):
@@ -50,8 +51,8 @@ def test_stats_have_all_source_types_measurements_and_power_shares(client):
     assert set(by_source) == {"Solaire", "Eolienne", "Hydraulique"}
     assert by_source["Hydraulique"].nombre_installations == 0
     assert by_source["Hydraulique"].puissance_totale_kw == 0
-    assert by_source["Solaire"].production_mesuree_kwh == 600
-    assert result.total.production_mesuree_kwh == 600
+    assert by_source["Solaire"].production_mesuree_kwh == 12600
+    assert result.total.production_mesuree_kwh == 23100
     assert result.total.puissance_totale_kw > 0
     assert sum(item.part_pct for item in result.sources) == pytest.approx(100, abs=0.02)
 
@@ -60,7 +61,7 @@ def test_stats_by_installation_type_and_zero_share_guard(client):
     result = ProductionService(client).stats_par_type()
     by_type = {item.type.value: item for item in result.types}
     assert set(by_type) == {"CentraleSolaire", "ParcEolien", "CentraleHydraulique"}
-    assert by_type["CentraleSolaire"].production_mesuree_kwh == 600
+    assert by_type["CentraleSolaire"].production_mesuree_kwh == 12600
     assert by_type["CentraleHydraulique"].nombre_installations == 0
     service = ProductionService(client)
     empty = service._totals([], {})

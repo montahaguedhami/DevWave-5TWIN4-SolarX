@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 from fastapi import HTTPException
-from rdflib import Graph
+from rdflib import Graph, URIRef
 
 from app.api.v1.endpoints.lignes import get_service
 from app.main import app
@@ -135,13 +135,17 @@ def test_lieu_des_extremites(service):
     d = service.get_ligne("LigneBasseTension_01")
     lieux = {c["id"]: (c.get("ville"), c.get("latitude")) for c in d["dessert"]}
     assert lieux == {"Ecole_Tunis": ("Tunis", 36.8065), "Maison_Djerba": ("Djerba", 33.8076)}
-    # une installation sans situeDans reste listée, sans coordonnées
-    assert "latitude" not in service.get_ligne("LigneHauteTension_02")["relie"][0]
+    # une vraie ville (situeDans) : le lieu n'est pas déduit
+    centrale = service.get_ligne("LigneHauteTension_02")["relie"][0]
+    assert centrale["ville"] == "Tozeur" and "lieuDeduit" not in centrale
 
 
 def test_lieu_deduit_du_stockage():
     # avec les données P2 : une installation sans ville prend celle du stockage qu'elle alimente
     graph = Graph().parse(OWL_FILE, format="xml").parse(P2_FILE, format="turtle")
+    ns = "http://www.semanticweb.org/monta/ontologies/2026/10/SolarX#"
+    for sans_ville in ("CentraleSolaire_01", "ParcEolien_01", "Maison_01", "Ecole_01"):
+        graph.remove((URIRef(ns + sans_ville), URIRef(ns + "situeDans"), None))
     service = LignesService(GraphSparql(graph))
 
     centrale = service.get_ligne("LigneHauteTension_02")["relie"][0]

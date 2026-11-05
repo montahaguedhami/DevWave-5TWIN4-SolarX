@@ -41,7 +41,8 @@ def date_fixe(monkeypatch):
 @pytest.mark.parametrize("question, attendu", [
     ("Quelles batteries sont situées à Tunis ?", {"Batterie_02"}),
     ("Quelle batterie alimente la maison Djerba ?", {"Batterie_01"}),
-    ("Quelles installations ont une puissance supérieure à 200 kW ?", {"ParcEolien_Tunis"}),
+    ("Quelles installations ont une puissance supérieure à 200 kW ?",
+     {"CentraleSolaire_01", "ParcEolien_01", "ParcEolien_Tunis"}),
     ("Quelles lignes desservent l'école Tunis ?", {"LigneBasseTension_01"}),
     ("Quelles lignes haute tension desservent l'usine Tunis ?", {"LigneHauteTension_01"}),
     ("Quel capteur a détecté la panne 01 ?", {"Capteur_01"}),
@@ -72,7 +73,7 @@ def test_listes(assistant, question, attendu):
 @pytest.mark.parametrize("question, nombre", [
     ("Combien de batteries ?", 2),
     ("combien de batteires a tunis", 1),           # faute de frappe corrigée par RapidFuzz
-    ("Combien de consommateurs ?", 9),
+    ("Combien de consommateurs ?", 12),
     ("Nombre de lignes électriques", 7),
     ("combien de lignes hautes tensoin", 3),       # faute + "lignes" et "haute tension" = une seule classe
 ])
@@ -126,20 +127,20 @@ def test_longueur_totale_des_lignes(assistant):
 def test_moyenne(assistant):
     r = assistant.ask("Puissance moyenne des installations")
     assert r["intention"] == "moyenne"
-    assert r["resultats"][0]["moyenne"] == pytest.approx(175)
+    assert r["resultats"][0]["moyenne"] == pytest.approx(1087.5)
 
 
 def test_regroupement_par_type(assistant):
     r = assistant.ask("Combien de consommateurs y a-t-il par type ?")
     assert {row["groupe"]: row["nombre"] for row in r["resultats"]} == {
-        "Ecole": 2, "Maison": 2, "Entreprise": 1, "Hopital": 1, "Institution": 1, "Particulier": 1, "Usine": 1}
+        "Ecole": 3, "Maison": 3, "Entreprise": 1, "Hopital": 1, "Institution": 1, "Particulier": 1, "Usine": 2}
 
 
 def test_regroupement_type_le_plus_precis(assistant):
     # MesureConsommation_01 est typé Mesure ET MesureConsommation : compté une seule fois
     r = assistant.ask("Combien de mesures par type ?")
     assert {row["groupe"]: row["nombre"] for row in r["resultats"]} == {
-        "MesureConsommation": 2, "MesureProduction": 2, "MesureStockage": 1}
+        "MesureConsommation": 38, "MesureProduction": 4, "MesureStockage": 1}
 
 
 @pytest.mark.parametrize("question, valeur", [
@@ -206,7 +207,7 @@ def test_questions_module_p2(assistant_p2, question, attendu):
     ("Quelle est la marque de l'onduleur 03 ?", "Marque d'Onduleur"),
     ("Quelle est la date d'installation de la batterie 04 ?", "14 février 2023"),
     ("Combien d'équipements par type ?", "Nombre d'équipements par type"),
-    ("Quelle batterie alimente l'hôpital Tunis ?", "(Hopital Tunis)"),
+    ("Quelle batterie alimente l'hôpital Tunis ?", "(Hôpital Tunis)"),
     ("Quels incidents affectent la ligne haute tension 01 ?", "(Ligne HT 90 kV"),
 ])
 def test_reponses_module_p2(assistant_p2, question, extrait):

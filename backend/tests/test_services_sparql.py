@@ -86,22 +86,22 @@ def test_suppression_ville_protegee(client):
 
 
 def test_enregistrer_lister_supprimer_mesures(client, meteo):
-    resultat = meteo.enregistrer("Sfax")
+    resultat = meteo.enregistrer("Gabes")
     assert len(resultat.enregistrees) == 6 and resultat.verifiees == 6
-    assert "Temperature_Sfax_20261030" in resultat.enregistrees
-    assert sorted(meteo.enregistrer("Sfax").dejaPresentes) == sorted(resultat.enregistrees)
+    assert "Temperature_Gabes_20261030" in resultat.enregistrees
+    assert sorted(meteo.enregistrer("Gabes").dejaPresentes) == sorted(resultat.enregistrees)
 
-    mesures = meteo.lister_mesures("Sfax")
+    mesures = meteo.lister_mesures("Gabes")
     assert len(mesures) == 6 and all(m.supprimable and m.source == "Open-Meteo" for m in mesures)
 
     with pytest.raises(HTTPException) as exc:
-        LocalisationService(client).delete_ville("Sfax")
+        LocalisationService(client).delete_ville("Gabes")
     assert exc.value.detail["requiresCascade"] is True
 
-    assert meteo.supprimer_mesure("Temperature_Sfax_20261030").supprimees
-    suppression = meteo.supprimer_releve("Sfax", "2026-10-30T13:00:00")
+    assert meteo.supprimer_mesure("Temperature_Gabes_20261030").supprimees
+    suppression = meteo.supprimer_releve("Gabes", "2026-10-30T13:00:00")
     assert len(suppression.supprimees) == 5
-    assert meteo.lister_mesures("Sfax") == []
+    assert meteo.lister_mesures("Gabes") == []
 
 
 def test_une_seule_fois_par_ville_et_par_jour(client, monkeypatch):
