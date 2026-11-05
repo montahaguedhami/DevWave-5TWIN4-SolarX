@@ -6,12 +6,14 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
-import { Kpi, EtatLigne, Chargement, Erreur, TYPE_LABEL, TYPE_COLOR, TYPES_LIGNE, ETATS_LIGNE, nomDe, formatKm, formatKv } from "@/components/reseau/ui";
+import { Kpi, EtatLigne, Chargement, Erreur, TYPE_LABEL, TYPE_COLOR, TYPES_LIGNE, ETATS_LIGNE, nomDe, formatKm, formatKv, formatDate } from "@/components/reseau/ui";
 import { DetailLigne } from "@/components/reseau/detail-ligne";
 import { CarteLignes } from "@/components/reseau/carte-lignes";
 import { FormLigne } from "@/components/reseau/formulaires";
 import { useApi } from "@/services/reseau-api";
 
+// Une carte montre les incidents les plus récents ; tout l'historique est dans le panneau de détail
+const INCIDENTS_MAX = 3;
 const ETAT_LABEL = { Fonctionnel: "Fonctionnelles", Alerte: "En alerte", "En panne": "En panne" };
 
 function Filtre({ options, valeur, onChange }) {
@@ -85,14 +87,17 @@ function LigneCard({ l, onOpen }) {
 
         {l.incidents.length > 0 && (
           <div className="rounded-lg border border-orange-500/30 bg-orange-500/10 p-2 text-xs space-y-0.5">
-            {l.incidents.map((i) => (
+            {l.incidents.slice(0, INCIDENTS_MAX).map((i) => (
               <div key={i.id} className="flex gap-1.5">
                 <AlertTriangle className="w-3 h-3 text-orange-500 shrink-0 mt-0.5" />
                 <span className="text-foreground">
-                  <b>{i.type}</b>{i.gravite && ` · gravité ${i.gravite}`}{i.description && ` — ${i.description}`}
+                  <b>{i.type}</b> · {formatDate(i.date)}{i.gravite && ` · gravité ${i.gravite}`}
                 </span>
               </div>
             ))}
+            {l.incidents.length > INCIDENTS_MAX && (
+              <div className="text-muted-foreground pl-[18px]">et {l.incidents.length - INCIDENTS_MAX} autre(s) dans le détail</div>
+            )}
           </div>
         )}
 
@@ -179,7 +184,7 @@ function LignesPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <Kpi icon={Cable} label="Lignes" value={s.nombre} hint={s.parType.map((p) => `${p.nombre} ${(TYPE_LABEL[p.type] || p.type).toLowerCase()}`).join(" · ")} />
             <Kpi icon={Ruler} label="Longueur totale" value={formatKm(s.longueurTotaleKm)} hint="Toutes les lignes mises bout à bout" />
-            <Kpi icon={AlertTriangle} label="Lignes en panne" value={s.lignesEnPanne} hint="Touchées par une panne" alerte />
+            <Kpi icon={AlertTriangle} label="Lignes en panne" value={s.lignesEnPanne} hint="Panne dans les 30 derniers jours" alerte />
             <Kpi icon={Home} label="Consommateurs desservis" value={s.consommateursDesservis} hint="Alimentés par au moins une ligne" />
           </div>
 

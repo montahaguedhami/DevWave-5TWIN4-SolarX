@@ -96,9 +96,10 @@ function Contenu({ ligneId, onClose }) {
           {l.dessert.length > 0 && <div className="space-y-2">{l.dessert.map((x) => <Element key={x.id} x={x} />)}</div>}
         </Section>
 
-        <Section icon={AlertTriangle} titre="Incidents" vide="Aucun incident sur cette ligne.">
+        <Section icon={AlertTriangle} titre={`Incidents (${l.incidents.length})`} vide="Aucun incident sur cette ligne.">
           {l.incidents.length > 0 && (
             <div className="space-y-2">
+              <div className="text-xs text-muted-foreground">L'état de la ligne tient compte des 30 derniers jours.</div>
               {l.incidents.map((i) => (
                 <div key={i.id} className="rounded-lg border border-orange-500/30 bg-orange-500/10 p-3 text-xs space-y-1">
                   <div className="flex items-center justify-between gap-2">

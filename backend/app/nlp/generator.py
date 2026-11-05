@@ -9,6 +9,7 @@ de l'ontologie le plus court chemin de propriétés objet entre leurs classes
 import re
 from dataclasses import dataclass, field
 
+from . import vocabulary
 from .analyzer import Analysis, Mention
 from .schema import OntologySchema
 from .text import split_camel
@@ -238,6 +239,10 @@ class SparqlGenerator:
         if most_of:
             return self._most_of(a, target, most_of, others)
 
+        # « la plus récente » trie par date, sauf vrai calcul (« moyenne tension » n'en est pas un)
+        calcul = intent == "somme" or intent == "moyenne" and not any("moyenne" in m.text for m in a.mentions)
+        if a.recent and "combien" not in a.raw and not calcul:
+            intent = "lister"
         if intent in ("maximum", "minimum") and not self.numeric_prop(target, self._prop_candidates(a)):
             intent = "lister"
         if intent in ("lister", "decrire", "maximum", "minimum") and (group_mention or a.group_by_type) \
@@ -264,6 +269,11 @@ class SparqlGenerator:
             return None
         common = set.intersection(*(self.s.ancestors(c) for c in found)) - {"Thing"}
         return max(common, key=lambda c: len(self.s.ancestors(c))) if common else None
+
+    def _date_prop(self, target: str | None) -> str | None:
+        available = self.props_of(target)
+        return next((p for p in DATE_PROPS if p in available), None) or \
+            next((p for p in available if p.lower().startswith("date")), None)
 
     def _prop_candidates(self, a: Analysis) -> list[str]:
         props = []
@@ -312,7 +322,16 @@ class SparqlGenerator:
                 link = self.link(f"?evt{k}", {incident}, "?element", tclasses or {"Thing"}, set(),
                                  allowed={"affecte", "porteSur"}, max_len=1)
                 link = link or f"?evt{k} (:affecte|^:estAffectePar) ?element ."
-                parts.append(f"{{ {self.type_of(f'?evt{k}', incident)} {link} }}")
+                # même règle que la page Lignes : l'état d'une ligne vient de ses incidents récents,
+                # et « en alerte » couvre tout incident qui n'est pas une panne (alerte, surcharge)
+                evt_class = incident
+                if target and self.s.is_a_class(target, "LigneTransport"):
+                    link += (f" OPTIONAL {{ ?evt{k} :dateOccurrence ?date{k} }}"
+                             f" FILTER(!BOUND(?date{k}) || STR(?date{k}) >= {_lit(vocabulary.debut_etat_recent())})")
+                    if incident == "Alerte":
+                        evt_class = "Incident"
+                        link += f" FILTER NOT EXISTS {{ ?evt{k} rdf:type :Panne }}"
+                parts.append(f"{{ {self.type_of(f'?evt{k}', evt_class)} {link} }}")
             if parts:
                 where.append(" UNION ".join(parts))
 
@@ -341,9 +360,7 @@ class SparqlGenerator:
                 where.append(f"FILTER({var} {n.op} {_num(n.value)})")
 
         if a.dates:
-            available = self.props_of(target)
-            date_prop = next((p for p in DATE_PROPS if p in available), None) or \
-                next((p for p in available if p.lower().startswith("date")), None)
+            date_prop = self._date_prop(target)
             if date_prop:
                 var = f"?v_{date_prop}"
                 where.append(f"?element {self.term(date_prop)} {var} .")
@@ -422,6 +439,12 @@ class SparqlGenerator:
         if intent in ("maximum", "minimum"):
             sort_prop = self.numeric_prop(target, self._prop_candidates(a))
             plan.prop = sort_prop
+        elif a.recent:
+            sort_prop = self._date_prop(target)
+            if sort_prop:
+                plan.kind, plan.prop, plan.order = "recent", sort_prop, a.recent
+            else:
+                plan.notes.append("Aucune date n'est renseignée pour ce type d'élément.")
         available = self.props_of(target)
         shown = [p for p in DISPLAY_PRIORITY if p in available][:4]
         for p in self._prop_candidates(a):
@@ -462,7 +485,8 @@ class SparqlGenerator:
         order = "ORDER BY ?element"
         limit = ""
         if sort_prop:
-            order = f"ORDER BY {'DESC' if intent == 'maximum' else 'ASC'}(?{sort_prop})"
+            descending = intent == "maximum" or plan.kind == "recent" and a.recent == "max"
+            order = f"ORDER BY {'DESC' if descending else 'ASC'}(?{sort_prop})"
             limit = f"\nLIMIT {a.limit or 1}"
         elif a.limit:
             limit = f"\nLIMIT {a.limit}"

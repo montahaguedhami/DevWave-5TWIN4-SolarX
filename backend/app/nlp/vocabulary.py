@@ -4,6 +4,15 @@ Le lexique de base est généré automatiquement depuis Fuseki (noms des classes
 des individus, valeur de :nom...). Ce fichier ne contient que ce qu'on ne peut
 pas déduire de l'ontologie : synonymes, libellés accentués, mots-clés des relations.
 """
+from datetime import date, timedelta
+
+# L'ontologie n'a pas de statut « résolu » : un incident compte pour l'état d'une ligne pendant 30 jours
+ETAT_RECENT_JOURS = 30
+
+
+def debut_etat_recent() -> str:
+    return (date.today() - timedelta(days=ETAT_RECENT_JOURS)).isoformat()
+
 
 # Libellés affichés dans les réponses : classe -> (singulier, pluriel)
 CLASS_LABELS = {

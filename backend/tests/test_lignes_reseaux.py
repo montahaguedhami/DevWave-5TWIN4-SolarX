@@ -20,6 +20,12 @@ OWL_FILE = Path(__file__).resolve().parents[2] / "database" / "solarx.owl"
 P2_FILE = OWL_FILE.with_name("p2_stockage_equipement.ttl")
 
 
+@pytest.fixture(autouse=True)
+def date_fixe(monkeypatch):
+    # l'état d'une ligne dépend de la date du jour : les tests ne doivent pas changer avec le temps
+    monkeypatch.setattr("app.nlp.vocabulary.debut_etat_recent", lambda: "2026-10-06")
+
+
 @pytest.fixture(scope="module")
 def service() -> LignesService:
     return LignesService(GraphSparql(Graph().parse(OWL_FILE, format="xml")))
@@ -70,7 +76,25 @@ def test_detail_ligne(service):
     assert ids(d["dessert"]) == {"Usine_Tunis"}
     assert ids(d["relie"]) == {"ParcEolien_Tunis"}
     assert ids(d["reseaux"]) == {"ReseauTransport_01"}
-    assert ids(d["incidents"]) == {"Panne_01"}
+    assert "Panne_01" in ids(d["incidents"])
+
+
+def test_etat_selon_les_incidents_recents(service, monkeypatch):
+    etats = lambda: {l["id"]: l["etat"] for l in service.list_lignes()}
+    # panne le 29 octobre ; surcharge le 19 octobre, mais pas de panne récente
+    assert etats()["LigneHauteTension_01"] == "En panne"
+    assert etats()["LigneMoyenneTension_01"] == "Alerte"
+    assert service.stats()["lignesEnPanne"] == 1
+    # plus d'un mois après le dernier incident : l'historique reste, l'état redevient normal
+    monkeypatch.setattr("app.nlp.vocabulary.debut_etat_recent", lambda: "2026-12-01")
+    assert etats()["LigneHauteTension_01"] == "Fonctionnel"
+    assert service.get_ligne("LigneHauteTension_01")["incidents"]
+    assert service.stats()["lignesEnPanne"] == 0
+
+
+def test_incidents_du_plus_recent_au_plus_ancien(service):
+    dates = [i["date"] for i in service.get_ligne("LigneHauteTension_01")["incidents"]]
+    assert len(dates) > 3 and dates == sorted(dates, reverse=True)
 
 
 def test_detail_ligne_introuvable(service):
@@ -227,7 +251,7 @@ def test_supprimer_ligne(crud):
 
 def test_supprimer_ligne_avec_incident_refuse(crud):
     assert code_erreur(crud.delete_ligne, "LigneHauteTension_01") == 409
-    assert ids(crud.get_ligne("LigneHauteTension_01")["incidents"]) == {"Panne_01"}  # rien n'a bougé
+    assert "Panne_01" in ids(crud.get_ligne("LigneHauteTension_01")["incidents"])  # rien n'a bougé
 
 
 def test_recherche_ligne(service):
